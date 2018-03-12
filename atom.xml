@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2018-03-12T06:30:59.153Z</updated>
+  <updated>2018-03-12T07:00:48.583Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,28 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>hexo博客编写问题总结</title>
+    <link href="http://yoursite.com/2018/03/12/hexo%E5%8D%9A%E5%AE%A2%E7%BC%96%E5%86%99%E9%97%AE%E9%A2%98%E6%80%BB%E7%BB%93/"/>
+    <id>http://yoursite.com/2018/03/12/hexo博客编写问题总结/</id>
+    <published>2018-03-12T06:38:12.000Z</published>
+    <updated>2018-03-12T07:00:48.583Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="一-环境搭建问题"><a href="#一-环境搭建问题" class="headerlink" title="一.环境搭建问题"></a>一.环境搭建问题</h1><p>###1.安装node.js</p><p>###2.安装git<br>    配置账户<br>    $ git config –global user.name “your_username” #设置用户名<br>    $ git config –global user.email “your_registered_github_Email” #设置邮箱地址(建议用注册giuhub的邮箱)  </p><pre><code>关联远程库$ git remote add origin git@github.com:nutter123/nutter123.github.io.git</code></pre><p>###3.创建github新远程库</p><blockquote><p>在添加远程库时，由于本地之前已经添加了公司的远程库，在重新注册了账户之后，公司远程由于输错了密码一直无法提交代码。<br>解决方法：<br>进入控制面板\所有控制面板项\凭据管理器中  将windows凭据中找到公司远程库，删除信息</p></blockquote><h1 id="二-hexo命令"><a href="#二-hexo命令" class="headerlink" title="二.hexo命令"></a>二.hexo命令</h1><blockquote><p>hexo init  –初始化hexo环境,这时会在目录下自动生成hexo的文件<br>hexo generate –生成静态页面<br>hexo server –生成本地服务(hexo s –debug 调试模式)<br>hexo deploy –部署我们的个人博客<br>hexo clean –清除缓存  </p></blockquote><p>#####每次部署步骤：<br>    hexo new “hello word”<br>    hexo clean<br>    hexo g<br>    hexo d</p><h1 id="三-连接本地和GitHub"><a href="#三-连接本地和GitHub" class="headerlink" title="三.连接本地和GitHub"></a>三.连接本地和GitHub</h1><blockquote><p>打开_config.yml进行编辑,翻到文件最下方，将deploy的选项改成以下的形式，并将yournmae修改为你自己的名称：</p></blockquote><pre><code>deploy:type: gitrepo: git@github.com:yourname/yourname.github.io.gitbranch: master </code></pre><blockquote><p>然后在GitBash中执行</p></blockquote><pre><code>npm install hexo-deployer-git --save</code></pre><blockquote><p>最后执行 hexo deploy</p></blockquote>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h1 id=&quot;一-环境搭建问题&quot;&gt;&lt;a href=&quot;#一-环境搭建问题&quot; class=&quot;headerlink&quot; title=&quot;一.环境搭建问题&quot;&gt;&lt;/a&gt;一.环境搭建问题&lt;/h1&gt;&lt;p&gt;###1.安装node.js&lt;/p&gt;
+&lt;p&gt;###2.安装git&lt;br&gt;    配置账户&lt;b
+      
+    
+    </summary>
+    
+    
+  </entry>
   
   <entry>
     <title>Markdown示例</title>
