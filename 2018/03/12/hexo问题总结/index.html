@@ -1,0 +1,40 @@
+<!DOCTYPE html><html lang="cn"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><title> hexo问题总结 · nutter</title><meta name="description" content="hexo问题总结 - nutter"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="icon" href="/favicon.png"><link rel="stylesheet" href="/css/apollo.css"><link rel="search" type="application/opensearchdescription+xml" href="http://yoursite.com/atom.xml" title="nutter"></head><body><div class="wrap"><header><a href="/" class="logo-link"><img src="/favicon.png" alt="logo"></a><ul class="nav nav-list"><li class="nav-list-item"><a href="/" target="_self" class="nav-list-link">BLOG</a></li><li class="nav-list-item"><a href="/archives/" target="_self" class="nav-list-link">ARCHIVE</a></li><li class="nav-list-item"><a href="https://github.com/nutter123" target="_blank" class="nav-list-link">GITHUB</a></li><li class="nav-list-item"><a href="/atom.xml" target="_self" class="nav-list-link">RSS</a></li></ul></header><main class="container"><div class="post"><article class="post-block"><h1 class="post-title">hexo问题总结</h1><div class="post-info">Mar 12, 2018</div><div class="post-content"><h1 id="一-环境搭建问题"><a href="#一-环境搭建问题" class="headerlink" title="一.环境搭建问题"></a>一.环境搭建问题</h1><h2 id="1-安装node-js"><a href="#1-安装node-js" class="headerlink" title="1.安装node.js"></a>1.安装node.js</h2><h2 id="2-安装git"><a href="#2-安装git" class="headerlink" title="2.安装git"></a>2.安装git</h2><pre><code>配置账户
+$ git config --global user.name “your_username” #设置用户名
+$ git config --global user.email “your_registered_github_Email” #设置邮箱地址(建议用注册giuhub的邮箱)  
+
+关联远程库
+$ git remote add origin git@github.com:nutter123/nutter123.github.io.git
+</code></pre><h2 id="3-创建github新远程库"><a href="#3-创建github新远程库" class="headerlink" title="3.创建github新远程库"></a>3.创建github新远程库</h2><blockquote>
+<p>在添加远程库时，由于本地之前已经添加了公司的远程库，在重新注册了账户之后，公司远程由于输错了密码一直无法提交代码。<br>解决方法：<br>进入控制面板\所有控制面板项\凭据管理器中  将windows凭据中找到公司远程库，删除信息</p>
+</blockquote>
+<h1 id="二-hexo命令"><a href="#二-hexo命令" class="headerlink" title="二.hexo命令"></a>二.hexo命令</h1><blockquote>
+<p>hexo init  –初始化hexo环境,这时会在目录下自动生成hexo的文件<br>hexo generate –生成静态页面<br>hexo server –生成本地服务(hexo s –debug 调试模式)<br>hexo deploy –部署我们的个人博客<br>hexo clean –清除缓存  </p>
+</blockquote>
+<pre><code>每次部署步骤：
+hexo new &quot;hello word&quot;
+hexo clean 
+hexo g 
+hexo d
+</code></pre><h1 id="三-连接本地和GitHub"><a href="#三-连接本地和GitHub" class="headerlink" title="三.连接本地和GitHub"></a>三.连接本地和GitHub</h1><blockquote>
+<p>打开_config.yml进行编辑,翻到文件最下方，将deploy的选项改成以下的形式，并将yournmae修改为你自己的名称:</p>
+</blockquote>
+<pre><code>deploy:
+type: git
+repo: git@github.com:yourname/yourname.github.io.git
+branch: master 
+</code></pre><blockquote>
+<p>然后在GitBash中执行</p>
+</blockquote>
+<pre><code>npm install hexo-deployer-git --save
+</code></pre><blockquote>
+<p>最后执行 hexo deploy</p>
+</blockquote>
+</div></article></div></main><footer><div class="paginator"><a href="/2018/03/12/heyapass项目总结/" class="prev">PREV</a><a href="/2018/03/12/Markdown示例/" class="next">NEXT</a></div><div id="disqus_thread"></div><script>var disqus_shortname = 'seansun';
+var disqus_identifier = '2018/03/12/hexo问题总结/';
+var disqus_title = 'hexo问题总结';
+var disqus_url = 'http://yoursite.com/2018/03/12/hexo问题总结/';
+(function() {
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+})();</script><script id="dsq-count-scr" src="//seansun.disqus.com/count.js" async></script><div class="copyright"><p>© 2018 <a href="http://yoursite.com">nutter</a>, powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/pinggod/hexo-theme-apollo" target="_blank">hexo-theme-apollo</a>.</p></div></footer></div><script async src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML" integrity="sha384-crwIf/BuaWM9rM65iM+dWFldgQ1Un8jWZMuh3puxb8TOY9+linwLoI7ZHZT+aekW" crossorigin="anonymous"></script><script>(function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;e=o.createElement(i);r=o.getElementsByTagName(i)[0];e.src='//www.google-analytics.com/analytics.js';r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));ga('create',"UA-65933410-1",'auto');ga('send','pageview');</script></body></html>
