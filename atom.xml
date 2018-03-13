@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2018-03-12T08:20:58.495Z</updated>
+  <updated>2018-03-13T03:47:56.128Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -17,17 +17,41 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>laravel 环境搭建</title>
+    <link href="http://yoursite.com/2018/03/13/laravel-%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/"/>
+    <id>http://yoursite.com/2018/03/13/laravel-环境搭建/</id>
+    <published>2018-03-13T01:40:39.000Z</published>
+    <updated>2018-03-13T03:47:56.128Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="php环境搭建"><a href="#php环境搭建" class="headerlink" title="php环境搭建"></a>php环境搭建</h2><p>1.安装phpStudy集成环境<br>2.打开需要安装vc运行库,下载安装<br>3.项目代码路径在 <strong>C:\phpStudy\PHPTutorial\WWW</strong><br>4.将php添加到系统环境变量- <strong>C:\phpStudy\PHPTutorial\php\php-7.2.1-nts\</strong></p><h2 id="laravel环境搭建"><a href="#laravel环境搭建" class="headerlink" title="laravel环境搭建"></a>laravel环境搭建</h2><p>1.安装 Composer  </p><blockquote><p>将<a href="https://getcomposer.org/download/" target="_blank" rel="noopener">composer.phar</a>下载到本地,粘贴到php.exe同级目录下<br>创建composer.bat文件，写入 <strong>@ECHO OFF php “%~dp0composer.phar” %*</strong><br>输入命令 composer -v 查看安装结果  </p></blockquote><p>2.安装laravel</p><blockquote><p>打开phpStudy-&gt;PHP扩展及设置-&gt;PHP扩展-&gt;php_openssl<br>输入命令 <strong>composer global require “laravel/installer=~1.1”</strong><br>在用户环境变量中将composer放入 <strong>C:\Users\viziner\AppData\Roaming\Composer\vendor\bin</strong><br>在 <strong>C:\phpStudy\PHPTutorial\WWW</strong> 目录中，运行命令行 <strong>laravel new blog</strong> 创建工程</p></blockquote>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h2 id=&quot;php环境搭建&quot;&gt;&lt;a href=&quot;#php环境搭建&quot; class=&quot;headerlink&quot; title=&quot;php环境搭建&quot;&gt;&lt;/a&gt;php环境搭建&lt;/h2&gt;&lt;p&gt;1.安装phpStudy集成环境&lt;br&gt;2.打开需要安装vc运行库,下载安装&lt;br&gt;3.项目代码路径
+      
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
     <title>heyapass项目总结</title>
     <link href="http://yoursite.com/2018/03/12/heyapass%E9%A1%B9%E7%9B%AE%E6%80%BB%E7%BB%93/"/>
     <id>http://yoursite.com/2018/03/12/heyapass项目总结/</id>
     <published>2018-03-12T07:48:32.000Z</published>
-    <updated>2018-03-12T08:20:58.495Z</updated>
+    <updated>2018-03-13T03:50:23.156Z</updated>
     
-    <content type="html"><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>去年十二月份开始实习到三月，从一个在学校里的菜鸡变成了菜鸟，经过一个项目的编写了解了前端的许多东西，结合vue文档充分理解了框架的一些基本用法。在此做个总结。<br><a id="more"></a></p>]]></content>
+    <content type="html"><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>去年十二月份开始实习到三月，从一个在学校里的菜鸡变成了菜鸟，经过一个项目的编写了解了前端的许多东西，结合vue文档充分理解了框架的一些基本用法。在此做个总结。</p>]]></content>
     
     <summary type="html">
     
-      &lt;h2 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h2&gt;&lt;p&gt;去年十二月份开始实习到三月，从一个在学校里的菜鸡变成了菜鸟，经过一个项目的编写了解了前端的许多东西，结合vue文档充分理解了框架的一些基本用法。在此做个总结。&lt;br&gt;
+      
+      
+        &lt;h2 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h2&gt;&lt;p&gt;去年十二月份开始实习到三月，从一个在学校里的菜鸡变成了菜鸟，经过一个项目的编写了解了前端的许多东西，结合vue文档充分理解了框架的一些基本用
+      
     
     </summary>
     
