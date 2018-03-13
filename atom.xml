@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2018-03-13T03:47:56.128Z</updated>
+  <updated>2018-03-13T06:24:46.555Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -17,20 +17,39 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>laravel 环境搭建</title>
-    <link href="http://yoursite.com/2018/03/13/laravel-%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/"/>
-    <id>http://yoursite.com/2018/03/13/laravel-环境搭建/</id>
-    <published>2018-03-13T01:40:39.000Z</published>
-    <updated>2018-03-13T03:47:56.128Z</updated>
+    <title>JS基础知识点</title>
+    <link href="http://yoursite.com/2018/03/13/JS%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86%E7%82%B9/"/>
+    <id>http://yoursite.com/2018/03/13/JS基础知识点/</id>
+    <published>2018-03-13T06:22:07.000Z</published>
+    <updated>2018-03-13T06:24:46.555Z</updated>
     
-    <content type="html"><![CDATA[<h2 id="php环境搭建"><a href="#php环境搭建" class="headerlink" title="php环境搭建"></a>php环境搭建</h2><p>1.安装phpStudy集成环境<br>2.打开需要安装vc运行库,下载安装<br>3.项目代码路径在 <strong>C:\phpStudy\PHPTutorial\WWW</strong><br>4.将php添加到系统环境变量- <strong>C:\phpStudy\PHPTutorial\php\php-7.2.1-nts\</strong></p><h2 id="laravel环境搭建"><a href="#laravel环境搭建" class="headerlink" title="laravel环境搭建"></a>laravel环境搭建</h2><p>1.安装 Composer  </p><blockquote><p>将<a href="https://getcomposer.org/download/" target="_blank" rel="noopener">composer.phar</a>下载到本地,粘贴到php.exe同级目录下<br>创建composer.bat文件，写入 <strong>@ECHO OFF php “%~dp0composer.phar” %*</strong><br>输入命令 composer -v 查看安装结果  </p></blockquote><p>2.安装laravel</p><blockquote><p>打开phpStudy-&gt;PHP扩展及设置-&gt;PHP扩展-&gt;php_openssl<br>输入命令 <strong>composer global require “laravel/installer=~1.1”</strong><br>在用户环境变量中将composer放入 <strong>C:\Users\viziner\AppData\Roaming\Composer\vendor\bin</strong><br>在 <strong>C:\phpStudy\PHPTutorial\WWW</strong> 目录中，运行命令行 <strong>laravel new blog</strong> 创建工程</p></blockquote>]]></content>
+    <content type="html"><![CDATA[<p><img src="http://github.com/unicorn.png" alt="github" title="github"></p>]]></content>
     
     <summary type="html">
     
       
       
-        &lt;h2 id=&quot;php环境搭建&quot;&gt;&lt;a href=&quot;#php环境搭建&quot; class=&quot;headerlink&quot; title=&quot;php环境搭建&quot;&gt;&lt;/a&gt;php环境搭建&lt;/h2&gt;&lt;p&gt;1.安装phpStudy集成环境&lt;br&gt;2.打开需要安装vc运行库,下载安装&lt;br&gt;3.项目代码路径
+        &lt;p&gt;&lt;img src=&quot;http://github.com/unicorn.png&quot; alt=&quot;github&quot; title=&quot;github&quot;&gt;&lt;/p&gt;
+
       
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>laravel 环境搭建</title>
+    <link href="http://yoursite.com/2018/03/13/laravel-%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/"/>
+    <id>http://yoursite.com/2018/03/13/laravel-环境搭建/</id>
+    <published>2018-03-13T01:40:39.000Z</published>
+    <updated>2018-03-13T05:43:57.708Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="php环境搭建"><a href="#php环境搭建" class="headerlink" title="php环境搭建"></a>php环境搭建</h2><p>1.安装phpStudy集成环境<br>2.打开需要安装vc运行库,下载安装<br>3.项目代码路径在 <strong>C:\phpStudy\PHPTutorial\WWW</strong><br>4.将php添加到系统环境变量- <strong>C:\phpStudy\PHPTutorial\php\php-7.2.1-nts\</strong></p><a id="more"></a><h2 id="laravel环境搭建"><a href="#laravel环境搭建" class="headerlink" title="laravel环境搭建"></a>laravel环境搭建</h2><p>1.安装 Composer  </p><blockquote><p>将<a href="https://getcomposer.org/download/" target="_blank" rel="noopener">composer.phar</a>下载到本地,粘贴到php.exe同级目录下<br>创建composer.bat文件，写入 <strong>@ECHO OFF php “%~dp0composer.phar” %*</strong><br>输入命令 composer -v 查看安装结果  </p></blockquote><p>2.安装laravel</p><blockquote><p>打开phpStudy-&gt;PHP扩展及设置-&gt;PHP扩展-&gt;php_openssl<br>输入命令 <strong>composer global require “laravel/installer=~1.1”</strong><br>在用户环境变量中将composer放入 <strong>C:\Users\viziner\AppData\Roaming\Composer\vendor\bin</strong><br>在 <strong>C:\phpStudy\PHPTutorial\WWW</strong> 目录中，运行命令行 <strong>laravel new blog</strong> 创建工程</p></blockquote>]]></content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;php环境搭建&quot;&gt;&lt;a href=&quot;#php环境搭建&quot; class=&quot;headerlink&quot; title=&quot;php环境搭建&quot;&gt;&lt;/a&gt;php环境搭建&lt;/h2&gt;&lt;p&gt;1.安装phpStudy集成环境&lt;br&gt;2.打开需要安装vc运行库,下载安装&lt;br&gt;3.项目代码路径在 &lt;strong&gt;C:\phpStudy\PHPTutorial\WWW&lt;/strong&gt;&lt;br&gt;4.将php添加到系统环境变量- &lt;strong&gt;C:\phpStudy\PHPTutorial\php\php-7.2.1-nts\&lt;/strong&gt;&lt;/p&gt;
     
     </summary>
     
@@ -63,16 +82,19 @@
     <link href="http://yoursite.com/2018/03/12/hexo%E9%97%AE%E9%A2%98%E6%80%BB%E7%BB%93/"/>
     <id>http://yoursite.com/2018/03/12/hexo问题总结/</id>
     <published>2018-03-12T06:38:12.000Z</published>
-    <updated>2018-03-12T08:07:20.401Z</updated>
+    <updated>2018-03-13T06:25:49.563Z</updated>
     
-    <content type="html"><![CDATA[<h1 id="一-环境搭建问题"><a href="#一-环境搭建问题" class="headerlink" title="一.环境搭建问题"></a>一.环境搭建问题</h1><h2 id="1-安装node-js"><a href="#1-安装node-js" class="headerlink" title="1.安装node.js"></a>1.安装node.js</h2><h2 id="2-安装git"><a href="#2-安装git" class="headerlink" title="2.安装git"></a>2.安装git</h2><pre><code>配置账户$ git config --global user.name “your_username” #设置用户名$ git config --global user.email “your_registered_github_Email” #设置邮箱地址(建议用注册giuhub的邮箱)  关联远程库$ git remote add origin git@github.com:nutter123/nutter123.github.io.git</code></pre><h2 id="3-创建github新远程库"><a href="#3-创建github新远程库" class="headerlink" title="3.创建github新远程库"></a>3.创建github新远程库</h2><blockquote><p>在添加远程库时，由于本地之前已经添加了公司的远程库，在重新注册了账户之后，公司远程由于输错了密码一直无法提交代码。<br>解决方法：<br>进入控制面板\所有控制面板项\凭据管理器中  将windows凭据中找到公司远程库，删除信息</p></blockquote><h1 id="二-hexo命令"><a href="#二-hexo命令" class="headerlink" title="二.hexo命令"></a>二.hexo命令</h1><blockquote><p>hexo init  –初始化hexo环境,这时会在目录下自动生成hexo的文件<br>hexo generate –生成静态页面<br>hexo server –生成本地服务(hexo s –debug 调试模式)<br>hexo deploy –部署我们的个人博客<br>hexo clean –清除缓存  </p></blockquote><pre><code>每次部署步骤：hexo new &quot;hello word&quot;hexo clean hexo g hexo d</code></pre><h1 id="三-连接本地和GitHub"><a href="#三-连接本地和GitHub" class="headerlink" title="三.连接本地和GitHub"></a>三.连接本地和GitHub</h1><blockquote><p>打开_config.yml进行编辑,翻到文件最下方，将deploy的选项改成以下的形式，并将yournmae修改为你自己的名称:</p></blockquote><pre><code>deploy:type: gitrepo: git@github.com:yourname/yourname.github.io.gitbranch: master </code></pre><blockquote><p>然后在GitBash中执行</p></blockquote><pre><code>npm install hexo-deployer-git --save</code></pre><blockquote><p>最后执行 hexo deploy</p></blockquote>]]></content>
+    <content type="html"><![CDATA[<h1 id="一-环境搭建问题"><a href="#一-环境搭建问题" class="headerlink" title="一.环境搭建问题"></a>一.环境搭建问题</h1><h2 id="1-安装node-js"><a href="#1-安装node-js" class="headerlink" title="1.安装node.js"></a>1.安装node.js</h2><h2 id="2-安装git"><a href="#2-安装git" class="headerlink" title="2.安装git"></a>2.安装git</h2><pre><code>配置账户$ git config --global user.name “your_username” #设置用户名$ git config --global user.email “your_registered_github_Email” #设置邮箱地址(建议用注册giuhub的邮箱)  关联远程库$ git remote add origin git@github.com:nutter123/nutter123.github.io.git</code></pre><a id="more"></a><h2 id="3-创建github新远程库"><a href="#3-创建github新远程库" class="headerlink" title="3.创建github新远程库"></a>3.创建github新远程库</h2><blockquote><p>在添加远程库时，由于本地之前已经添加了公司的远程库，在重新注册了账户之后，公司远程由于输错了密码一直无法提交代码。<br>解决方法：<br>进入控制面板\所有控制面板项\凭据管理器中  将windows凭据中找到公司远程库，删除信息</p></blockquote><h1 id="二-hexo命令"><a href="#二-hexo命令" class="headerlink" title="二.hexo命令"></a>二.hexo命令</h1><blockquote><p>hexo init  –初始化hexo环境,这时会在目录下自动生成hexo的文件<br>hexo generate –生成静态页面<br>hexo server –生成本地服务(hexo s –debug 调试模式)<br>hexo deploy –部署我们的个人博客<br>hexo clean –清除缓存  </p></blockquote><pre><code>每次部署步骤：hexo new &quot;hello word&quot;hexo clean hexo g hexo d</code></pre><h1 id="三-连接本地和GitHub"><a href="#三-连接本地和GitHub" class="headerlink" title="三.连接本地和GitHub"></a>三.连接本地和GitHub</h1><blockquote><p>打开_config.yml进行编辑,翻到文件最下方，将deploy的选项改成以下的形式，并将yournmae修改为你自己的名称:</p></blockquote><pre><code>deploy:type: gitrepo: git@github.com:yourname/yourname.github.io.gitbranch: master </code></pre><blockquote><p>然后在GitBash中执行</p></blockquote><pre><code>npm install hexo-deployer-git --save</code></pre><blockquote><p>最后执行 hexo deploy</p></blockquote>]]></content>
     
     <summary type="html">
     
-      
-      
-        &lt;h1 id=&quot;一-环境搭建问题&quot;&gt;&lt;a href=&quot;#一-环境搭建问题&quot; class=&quot;headerlink&quot; title=&quot;一.环境搭建问题&quot;&gt;&lt;/a&gt;一.环境搭建问题&lt;/h1&gt;&lt;h2 id=&quot;1-安装node-js&quot;&gt;&lt;a href=&quot;#1-安装node-js&quot; class
-      
+      &lt;h1 id=&quot;一-环境搭建问题&quot;&gt;&lt;a href=&quot;#一-环境搭建问题&quot; class=&quot;headerlink&quot; title=&quot;一.环境搭建问题&quot;&gt;&lt;/a&gt;一.环境搭建问题&lt;/h1&gt;&lt;h2 id=&quot;1-安装node-js&quot;&gt;&lt;a href=&quot;#1-安装node-js&quot; class=&quot;headerlink&quot; title=&quot;1.安装node.js&quot;&gt;&lt;/a&gt;1.安装node.js&lt;/h2&gt;&lt;h2 id=&quot;2-安装git&quot;&gt;&lt;a href=&quot;#2-安装git&quot; class=&quot;headerlink&quot; title=&quot;2.安装git&quot;&gt;&lt;/a&gt;2.安装git&lt;/h2&gt;&lt;pre&gt;&lt;code&gt;配置账户
+$ git config --global user.name “your_username” #设置用户名
+$ git config --global user.email “your_registered_github_Email” #设置邮箱地址(建议用注册giuhub的邮箱)  
+
+关联远程库
+$ git remote add origin git@github.com:nutter123/nutter123.github.io.git
+&lt;/code&gt;&lt;/pre&gt;
     
     </summary>
     
@@ -86,17 +108,28 @@
     <link href="http://yoursite.com/2018/03/12/Markdown%E7%A4%BA%E4%BE%8B/"/>
     <id>http://yoursite.com/2018/03/12/Markdown示例/</id>
     <published>2018-03-12T06:02:46.000Z</published>
-    <updated>2018-03-12T08:11:45.491Z</updated>
+    <updated>2018-03-13T06:26:36.169Z</updated>
     
-    <content type="html"><![CDATA[<h1 id="1-标题"><a href="#1-标题" class="headerlink" title="1.标题"></a>1.标题</h1><pre><code>大标题一般显示工程名,类似html的\&lt;h1\&gt;&lt;br /&gt;   你只要在标题下面跟上=====即可 </code></pre><hr><pre><code>中标题一般显示重点项,类似html的\&lt;h2\&gt;&lt;br /&gt;    你只要在标题下面输入------即可   </code></pre><hr><pre><code>小标题类似html的\&lt;h3\&gt;&lt;br /&gt;   小标题的格式如下 ### 小标题&lt;br /&gt;   注意#和标题字符中间要有空格#一级标题##二级标题###三级标题####四级标题#####五级标题######六级标题   </code></pre><h1 id="2-文本框"><a href="#2-文本框" class="headerlink" title="2.文本框"></a>2.文本框</h1><pre><code>单行文本框   这是一个单行的文本框,只要两个Tab再输入文字即可   </code></pre><hr><pre><code>多行文本框     这是一个有多行的文本框   你可以写入代码等,每行文字只要输入两个Tab再输入文字即可   这里你可以输入一段代码   </code></pre><h3 id="比如我们可以在多行文本框里输入一段代码"><a href="#比如我们可以在多行文本框里输入一段代码" class="headerlink" title="比如我们可以在多行文本框里输入一段代码"></a>比如我们可以在多行文本框里输入一段代码</h3><pre><code>function main(){    console.log(&apos;helloword&apos;);};</code></pre><h1 id="3-文字"><a href="#3-文字" class="headerlink" title="3.文字"></a>3.文字</h1><pre><code>*斜体文本*    _斜体文本_**粗体文本**    __粗体文本__***粗斜体文本***    ___粗斜体文本___</code></pre><p><em>斜体文本</em>    <em>斜体文本</em><br><strong>粗体文本</strong>    <strong>粗体文本</strong><br><strong><em>粗斜体文本</em></strong>    <strong><em>粗斜体文本</em></strong></p><h1 id="4-链接"><a href="#4-链接" class="headerlink" title="4.链接"></a>4.链接</h1><pre><code>链接   [点击这里你可以链接到www.baidu.com](http://www.baidu.com)&lt;br /&gt;     </code></pre><hr><pre><code>只是显示图片   ![github](http://github.com/unicorn.png &quot;github&quot;)   </code></pre><hr><pre><code>想点击某个图片进入一个网页,比如我想点击github的icorn然后再进入www.github.com   [![image]](http://www.github.com/)   [image]: http://github.com/github.png &quot;github&quot;  </code></pre><h1 id="5-字符包围"><a href="#5-字符包围" class="headerlink" title="5.字符包围"></a>5.字符包围</h1><h3 id="文字被些字符包围-多重包围"><a href="#文字被些字符包围-多重包围" class="headerlink" title="文字被些字符包围,多重包围"></a>文字被些字符包围,多重包围</h3><pre><code>&gt; 文字被些字符包围开始   &gt;   &gt; &gt; 只要再文字前面加上&gt;空格即可   &gt;   &gt;  &gt; &gt; 如果你要换行的话,新起一行,输入&gt;空格即可,后面不接文字   &gt;   &gt; &gt; &gt; &gt; 但&gt; 只能放在行首才有效   </code></pre><blockquote><p>文字被些字符包围开始   </p><blockquote><p>只要再文字前面加上&gt;空格即可   </p><blockquote><p>如果你要换行的话,新起一行,输入&gt;空格即可,后面不接文字   </p><blockquote><p>但&gt; 只能放在行首才有效   </p></blockquote></blockquote></blockquote></blockquote><h1 id="6-特殊字符处理"><a href="#6-特殊字符处理" class="headerlink" title="6.特殊字符处理"></a>6.特殊字符处理</h1><p>有一些特殊字符如&lt;,#等,只要在特殊字符前面加上转义字符\即可<br><br>你想换行的话其实可以直接用html标签\<br \=""></p><h1 id="7-换行"><a href="#7-换行" class="headerlink" title="7.换行"></a>7.换行</h1><pre><code>在当前行的结尾加 2 个空格  这行就会新起一行如果是要起一个新段落，只需要空出一行即可。</code></pre><h1 id="8-列表"><a href="#8-列表" class="headerlink" title="8.列表"></a>8.列表</h1><pre><code>1. 列出所有元素：    - 无序列表元素 A        1. 元素 A 的有序子列表    - 前面加四个空格2. 列表里的多段换行：    前面必须加四个空格，    这样换行，整体的格式不会乱3. 列表里引用：    &gt; 前面空一行    &gt; 仍然需要在 &gt;  前面加四个空格</code></pre><ol><li>列出所有元素：<ul><li>无序列表元素 A<ol><li>元素 A 的有序子列表</li></ol></li><li>前面加四个空格</li></ul></li><li>列表里的多段换行：<br> 前面必须加四个空格，<br> 这样换行，整体的格式不会乱</li><li><p>列表里引用：</p><blockquote><p>前面空一行<br>仍然需要在 &gt;  前面加四个空格</p></blockquote></li></ol><h1 id="9-主题自带标签"><a href="#9-主题自带标签" class="headerlink" title="9.主题自带标签"></a>9.主题自带标签</h1><blockquote><p>警告框</p></blockquote><pre><code>&lt;div class=&quot;tip&quot;&gt;    预处理器很强大，但它只是编写 CSS 的辅助工具。出于对扩展和维护等方面的考虑，在大型项目中有必要使用预处理器构建 CSS；但是对于小型项目，原生的 CSS 可能是一种更好的选择。不要肆意使用预处理器！&lt;/div&gt;</code></pre><div class="tip"><br>    预处理器很强大，但它只是编写 CSS 的辅助工具。出于对扩展和维护等方面的考虑，在大型项目中有必要使用预处理器构建 CSS；但是对于小型项目，原生的 CSS 可能是一种更好的选择。不要肆意使用预处理器！<br></div><hr><blockquote><p>展示文章的核心内容，文章摘要之后其他内容之前添加。</p></blockquote><pre><code>&lt;!-- more --&gt;</code></pre>]]></content>
+    <content type="html"><![CDATA[<h1 id="1-标题"><a href="#1-标题" class="headerlink" title="1.标题"></a>1.标题</h1><pre><code>大标题一般显示工程名,类似html的\&lt;h1\&gt;&lt;br /&gt;   你只要在标题下面跟上=====即可 </code></pre><hr><pre><code>中标题一般显示重点项,类似html的\&lt;h2\&gt;&lt;br /&gt;    你只要在标题下面输入------即可   </code></pre><hr><pre><code>小标题类似html的\&lt;h3\&gt;&lt;br /&gt;   小标题的格式如下 ### 小标题&lt;br /&gt;   注意#和标题字符中间要有空格#一级标题##二级标题###三级标题####四级标题#####五级标题######六级标题   </code></pre><a id="more"></a><h1 id="2-文本框"><a href="#2-文本框" class="headerlink" title="2.文本框"></a>2.文本框</h1><pre><code>单行文本框   这是一个单行的文本框,只要两个Tab再输入文字即可   </code></pre><hr><pre><code>多行文本框     这是一个有多行的文本框   你可以写入代码等,每行文字只要输入两个Tab再输入文字即可   这里你可以输入一段代码   </code></pre><h3 id="比如我们可以在多行文本框里输入一段代码"><a href="#比如我们可以在多行文本框里输入一段代码" class="headerlink" title="比如我们可以在多行文本框里输入一段代码"></a>比如我们可以在多行文本框里输入一段代码</h3><pre><code>function main(){    console.log(&apos;helloword&apos;);};</code></pre><h1 id="3-文字"><a href="#3-文字" class="headerlink" title="3.文字"></a>3.文字</h1><pre><code>*斜体文本*    _斜体文本_**粗体文本**    __粗体文本__***粗斜体文本***    ___粗斜体文本___</code></pre><p><em>斜体文本</em>    <em>斜体文本</em><br><strong>粗体文本</strong>    <strong>粗体文本</strong><br><strong><em>粗斜体文本</em></strong>    <strong><em>粗斜体文本</em></strong></p><h1 id="4-链接"><a href="#4-链接" class="headerlink" title="4.链接"></a>4.链接</h1><pre><code>链接   [点击这里你可以链接到www.baidu.com](http://www.baidu.com)&lt;br /&gt;     </code></pre><hr><pre><code>只是显示图片   ![github](http://github.com/unicorn.png &quot;github&quot;)   </code></pre><hr><pre><code>想点击某个图片进入一个网页,比如我想点击github的icorn然后再进入www.github.com   [![image]](http://www.github.com/)   [image]: http://github.com/github.png &quot;github&quot;  </code></pre><h1 id="5-字符包围"><a href="#5-字符包围" class="headerlink" title="5.字符包围"></a>5.字符包围</h1><h3 id="文字被些字符包围-多重包围"><a href="#文字被些字符包围-多重包围" class="headerlink" title="文字被些字符包围,多重包围"></a>文字被些字符包围,多重包围</h3><pre><code>&gt; 文字被些字符包围开始   &gt;   &gt; &gt; 只要再文字前面加上&gt;空格即可   &gt;   &gt;  &gt; &gt; 如果你要换行的话,新起一行,输入&gt;空格即可,后面不接文字   &gt;   &gt; &gt; &gt; &gt; 但&gt; 只能放在行首才有效   </code></pre><blockquote><p>文字被些字符包围开始   </p><blockquote><p>只要再文字前面加上&gt;空格即可   </p><blockquote><p>如果你要换行的话,新起一行,输入&gt;空格即可,后面不接文字   </p><blockquote><p>但&gt; 只能放在行首才有效   </p></blockquote></blockquote></blockquote></blockquote><h1 id="6-特殊字符处理"><a href="#6-特殊字符处理" class="headerlink" title="6.特殊字符处理"></a>6.特殊字符处理</h1><p>有一些特殊字符如&lt;,#等,只要在特殊字符前面加上转义字符\即可<br><br>你想换行的话其实可以直接用html标签\<br \=""></p><h1 id="7-换行"><a href="#7-换行" class="headerlink" title="7.换行"></a>7.换行</h1><pre><code>在当前行的结尾加 2 个空格  这行就会新起一行如果是要起一个新段落，只需要空出一行即可。</code></pre><h1 id="8-列表"><a href="#8-列表" class="headerlink" title="8.列表"></a>8.列表</h1><pre><code>1. 列出所有元素：    - 无序列表元素 A        1. 元素 A 的有序子列表    - 前面加四个空格2. 列表里的多段换行：    前面必须加四个空格，    这样换行，整体的格式不会乱3. 列表里引用：    &gt; 前面空一行    &gt; 仍然需要在 &gt;  前面加四个空格</code></pre><ol><li>列出所有元素：<ul><li>无序列表元素 A<ol><li>元素 A 的有序子列表</li></ol></li><li>前面加四个空格</li></ul></li><li>列表里的多段换行：<br> 前面必须加四个空格，<br> 这样换行，整体的格式不会乱</li><li><p>列表里引用：</p><blockquote><p>前面空一行<br>仍然需要在 &gt;  前面加四个空格</p></blockquote></li></ol><h1 id="9-主题自带标签"><a href="#9-主题自带标签" class="headerlink" title="9.主题自带标签"></a>9.主题自带标签</h1><blockquote><p>警告框</p></blockquote><pre><code>&lt;div class=&quot;tip&quot;&gt;    预处理器很强大，但它只是编写 CSS 的辅助工具。出于对扩展和维护等方面的考虑，在大型项目中有必要使用预处理器构建 CSS；但是对于小型项目，原生的 CSS 可能是一种更好的选择。不要肆意使用预处理器！&lt;/div&gt;</code></pre><div class="tip"><br>    预处理器很强大，但它只是编写 CSS 的辅助工具。出于对扩展和维护等方面的考虑，在大型项目中有必要使用预处理器构建 CSS；但是对于小型项目，原生的 CSS 可能是一种更好的选择。不要肆意使用预处理器！<br></div><hr><blockquote><p>展示文章的核心内容，文章摘要之后其他内容之前添加。</p></blockquote><pre><code>&lt;!-- more --&gt;</code></pre>]]></content>
     
     <summary type="html">
     
-      
-      
-        &lt;h1 id=&quot;1-标题&quot;&gt;&lt;a href=&quot;#1-标题&quot; class=&quot;headerlink&quot; title=&quot;1.标题&quot;&gt;&lt;/a&gt;1.标题&lt;/h1&gt;&lt;pre&gt;&lt;code&gt;大标题一般显示工程名,类似html的\&amp;lt;h1\&amp;gt;&amp;lt;br /&amp;gt;   
-你只要在标题下面
-      
+      &lt;h1 id=&quot;1-标题&quot;&gt;&lt;a href=&quot;#1-标题&quot; class=&quot;headerlink&quot; title=&quot;1.标题&quot;&gt;&lt;/a&gt;1.标题&lt;/h1&gt;&lt;pre&gt;&lt;code&gt;大标题一般显示工程名,类似html的\&amp;lt;h1\&amp;gt;&amp;lt;br /&amp;gt;   
+你只要在标题下面跟上=====即可 
+&lt;/code&gt;&lt;/pre&gt;&lt;hr&gt;
+&lt;pre&gt;&lt;code&gt;中标题一般显示重点项,类似html的\&amp;lt;h2\&amp;gt;&amp;lt;br /&amp;gt;   
+ 你只要在标题下面输入------即可   
+&lt;/code&gt;&lt;/pre&gt;&lt;hr&gt;
+&lt;pre&gt;&lt;code&gt;小标题类似html的\&amp;lt;h3\&amp;gt;&amp;lt;br /&amp;gt;   
+小标题的格式如下 ### 小标题&amp;lt;br /&amp;gt;   
+注意#和标题字符中间要有空格
+#一级标题
+##二级标题
+###三级标题
+####四级标题
+#####五级标题
+######六级标题   
+&lt;/code&gt;&lt;/pre&gt;
     
     </summary>
     
