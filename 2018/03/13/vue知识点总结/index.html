@@ -1,0 +1,19 @@
+<!DOCTYPE html><html lang="cn"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><title> vue知识点总结 · nutter</title><meta name="description" content="vue知识点总结 - nutter"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="icon" href="/favicon.gif"><link rel="stylesheet" href="/css/apollo.css"><link rel="search" type="application/opensearchdescription+xml" href="http://yoursite.com/atom.xml" title="nutter"></head><body><div class="wrap"><header><a href="/" class="logo-link"><img src="/favicon.gif" alt="logo"></a><ul class="nav nav-list"><li class="nav-list-item"><a href="/" target="_self" class="nav-list-link">BLOG</a></li><li class="nav-list-item"><a href="/archives/" target="_self" class="nav-list-link">ARCHIVE</a></li><li class="nav-list-item"><a href="https://github.com/nutter123" target="_blank" class="nav-list-link">GITHUB</a></li><li class="nav-list-item"><a href="/atom.xml" target="_self" class="nav-list-link">RSS</a></li></ul></header><main class="container"><div class="post"><article class="post-block"><h1 class="post-title">vue知识点总结</h1><div class="post-info">Mar 13, 2018</div><div class="post-content"><h2 id="计算属性和方法"><a href="#计算属性和方法" class="headerlink" title="计算属性和方法"></a>计算属性和方法</h2><blockquote>
+<p>computed,watch 不应该使用箭头函数定义。</p>
+</blockquote>
+<h2 id="修饰符"><a href="#修饰符" class="headerlink" title="修饰符"></a>修饰符</h2><blockquote>
+<p>v-model.lazy  在“change”时更新而非“input”</p>
+<p>v-on:submit.prevent  提交事件不再重载页面</p>
+<p>v-on:click.stop  阻止单击事件继续传播</p>
+</blockquote>
+<h2 id="生命周期总结"><a href="#生命周期总结" class="headerlink" title="生命周期总结"></a>生命周期总结</h2><blockquote>
+<p>beforcreate: 可以加个loading事件</p>
+<p>created:  结束loading，做些初始化，实现函数自执行</p>
+<p>beforeDestroy:  你确定删除XX吗</p>
+<p>destroyed:  当前组件已删除，清空相关内容</p>
+</blockquote>
+<h2 id="v-if和v-show的用法"><a href="#v-if和v-show的用法" class="headerlink" title="v-if和v-show的用法"></a>v-if和v-show的用法</h2><blockquote>
+<p>v-if有更高的切换开销</p>
+<p>v-show有更高的初始渲染开销</p>
+</blockquote>
+</div></article></div></main><footer><div class="paginator"><a href="/2018/03/13/JS基础知识点_函数/" class="next">下一篇</a></div><div class="copyright"><p>© 2018 <a href="http://yoursite.com">nutter</a>, powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/pinggod/hexo-theme-apollo" target="_blank">hexo-theme-apollo</a>.</p></div></footer></div><script async src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML" integrity="sha384-crwIf/BuaWM9rM65iM+dWFldgQ1Un8jWZMuh3puxb8TOY9+linwLoI7ZHZT+aekW" crossorigin="anonymous"></script><script>(function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;e=o.createElement(i);r=o.getElementsByTagName(i)[0];e.src='//www.google-analytics.com/analytics.js';r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));ga('create',"UA-65933410-1",'auto');ga('send','pageview');</script></body></html>
