@@ -1,0 +1,109 @@
+<!DOCTYPE html><html lang="cn"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><title> JS基础知识点-函数 · nutter</title><meta name="description" content="JS基础知识点-函数 - nutter"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="icon" href="/favicon.gif"><link rel="stylesheet" href="/css/apollo.css"><link rel="search" type="application/opensearchdescription+xml" href="http://yoursite.com/atom.xml" title="nutter"></head><body><div class="wrap"><header><a href="/" class="logo-link"><img src="/favicon.gif" alt="logo"></a><ul class="nav nav-list"><li class="nav-list-item"><a href="/" target="_self" class="nav-list-link">BLOG</a></li><li class="nav-list-item"><a href="/archives/" target="_self" class="nav-list-link">ARCHIVE</a></li><li class="nav-list-item"><a href="https://github.com/nutter123" target="_blank" class="nav-list-link">GITHUB</a></li><li class="nav-list-item"><a href="/atom.xml" target="_self" class="nav-list-link">RSS</a></li></ul></header><main class="container"><div class="post"><article class="post-block"><h1 class="post-title">JS基础知识点-函数</h1><div class="post-info">Mar 13, 2018</div><div class="post-content"><h2 id="闭包"><a href="#闭包" class="headerlink" title="闭包"></a>闭包</h2><p>闭包是 JavaScript 中最强大的特性之一。JavaScript 允许函数嵌套，并且内部函数可以访问定义在外部函数中的所有变量和函数，以及外部函数能访问的所有变量和函数。但是，外部函数却不能够访问定义在内部函数中的变量和函数。这给内部函数的变量提供了一定的安全性。此外，由于内部函数可以访问外部函数的作用域，因此当内部函数生存周期大于外部函数时，外部函数中定义的变量和函数的生存周期比内部函数执行时间长。当内部函数以某一种方式被任何一个外部函数作用域访问时，一个闭包就产生了。</p>
+<pre><code>var pet = function(name) {          //外部函数定义了一个变量&quot;name&quot;
+  var getName = function() {            
+    //内部函数可以访问 外部函数定义的&quot;name&quot;
+    return name; 
+  }
+  //返回这个内部函数，从而将其暴露在外部函数作用域
+  return getName;               
+};
+myPet = pet(&quot;Vivie&quot;);
+
+myPet();                            // 返回结果 &quot;Vivie&quot;
+</code></pre><p>如果一个闭包的函数用外部函数的变量名定义了同样的变量，那在外部函数域将再也无法指向该变量。</p>
+<pre><code>var createPet = function(name) {  // Outer function defines a variable called &quot;name&quot;
+  return {
+    setName: function(name) {    // Enclosed function also defines a variable called &quot;name&quot;
+      name = name;               // ??? How do we access the &quot;name&quot; defined by the outer function ???
+    }
+  }
+}
+</code></pre><h2 id="arguments-对象"><a href="#arguments-对象" class="headerlink" title="arguments 对象"></a>arguments 对象</h2><p>函数的实际参数会被保存在一个类似数组的arguments对象中。在函数内，你可以按如下方式找出传入的参数：</p>
+<pre><code>arguments[i]
+</code></pre><p>例如，设想有一个用来连接字符串的函数。唯一事先确定的参数是在连接后的字符串中用来分隔各个连接部分的字符（译注：比如例子里的分号“；”）。该函数定义如下：</p>
+<pre><code>function myConcat(separator) {
+   var result = &apos;&apos;; // 把值初始化成一个字符串，这样就可以用来保存字符串了！！
+   var i;
+   // iterate through arguments
+   for (i = 1; i &lt; arguments.length; i++) {
+      result += arguments[i] + separator;
+   }
+   return result;
+}
+</code></pre><p>你可以给这个函数传递任意数量的参数，它会将各个参数连接成一个字符串“列表”：</p>
+<pre><code>// returns &quot;red, orange, blue, &quot;
+myConcat(&quot;, &quot;, &quot;red&quot;, &quot;orange&quot;, &quot;blue&quot;);
+
+// returns &quot;elephant; giraffe; lion; cheetah; &quot;
+myConcat(&quot;; &quot;, &quot;elephant&quot;, &quot;giraffe&quot;, &quot;lion&quot;, &quot;cheetah&quot;);
+
+// returns &quot;sage. basil. oregano. pepper. parsley. &quot;
+myConcat(&quot;. &quot;, &quot;sage&quot;, &quot;basil&quot;, &quot;oregano&quot;, &quot;pepper&quot;, &quot;parsley&quot;);
+</code></pre><div class="tip"><br>提示：arguments变量只是 ”类数组对象“，并不是一个数组。称其为类数组对象是说它有一个索引编号和length属性。尽管如此，它并不拥有全部的Array对象的操作方法。<br></div>
+
+<h2 id="函数参数"><a href="#函数参数" class="headerlink" title="函数参数"></a>函数参数</h2><blockquote>
+<p>默认参数</p>
+</blockquote>
+<p>在JavaScript中，函数参数的默认值是undefined。然而，在某些情况下设置不同的默认值是有用的。这时默认参数可以提供帮助。</p>
+<pre><code>function multiply(a, b = 1) {
+  return a*b;
+}
+
+multiply(5); // 5
+</code></pre><blockquote>
+<p>剩余参数</p>
+</blockquote>
+<p>剩余参数语法允许将不确定数量的参数表示为数组。在下面的例子中，使用剩余参数收集从第二个到最后参数。然后，我们将这个数组的每一个数与第一个参数相乘。</p>
+<pre><code>function multiply(multiplier, ...theArgs) {
+  return theArgs.map(x =&gt; multiplier * x);
+}
+
+var arr = multiply(2, 1, 2, 3);
+console.log(arr); // [2, 4, 6]
+</code></pre><h2 id="箭头函数"><a href="#箭头函数" class="headerlink" title="箭头函数"></a>箭头函数</h2><blockquote>
+<p>this 的词法</p>
+</blockquote>
+<p>在箭头函数出现之前，每一个新函数都重新定义了自己的 this 值（在严格模式下，一个新的对象在构造函数里是未定义的，以“对象方法”的方式调用的函数是上下文对象等）。以面向对象的编程风格，这样着实有点恼人。</p>
+<pre><code>function Person() {
+  // The Person() constructor defines `this` as itself.
+  this.age = 0;
+
+  setInterval(function growUp() {
+    // In nonstrict mode, the growUp() function defines `this` 
+    // as the global object, which is different from the `this`
+    // defined by the Person() constructor.
+    this.age++;
+  }, 1000);
+}
+
+var p = new Person();
+</code></pre><p>在ECMAScript 3/5里，通过把this的值赋值给一个变量可以修复这个问题。</p>
+<pre><code>function Person() {
+  var self = this; // Some choose `that` instead of `self`. 
+                   // Choose one and be consistent.
+  self.age = 0;
+
+  setInterval(function growUp() {
+    // The callback refers to the `self` variable of which
+    // the value is the expected object.
+    self.age++;
+  }, 1000);
+}
+</code></pre><p>另外，创建一个约束函数可以使得 this值被正确传递给 growUp() 函数。</p>
+<p>箭头功能捕捉闭包上下文的this值，所以下面的代码工作正常。</p>
+<pre><code>function Person(){
+  this.age = 0;
+
+  setInterval(() =&gt; {
+    this.age++; // |this| properly refers to the person object
+  }, 1000);
+}
+
+var p = new Person();
+</code></pre><h2 id="函数方法"><a href="#函数方法" class="headerlink" title="函数方法"></a>函数方法</h2><p><strong>apply</strong>(thisArg[, argsArray]) </p>
+<p><strong>call</strong>(thisArg[,[param1,param2])</p>
+<blockquote>
+<p>该方法的作用和 apply() 方法类似，只有一个区别，就是call()方法接受的是若干个参数的列表，而apply()方法接受的是一个包含多个参数的数组。</p>
+</blockquote>
+<h2 id="结构图"><a href="#结构图" class="headerlink" title="结构图"></a>结构图</h2><p><img src="/2018/03/13/JS基础知识点_函数/函数.gif" alt="数据类型"></p>
+</div></article></div></main><footer><div class="paginator"><a href="/2018/03/13/JS基础知识点_字符串/" class="next">NEXT</a></div><div class="copyright"><p>© 2018 <a href="http://yoursite.com">nutter</a>, powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/pinggod/hexo-theme-apollo" target="_blank">hexo-theme-apollo</a>.</p></div></footer></div><script async src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML" integrity="sha384-crwIf/BuaWM9rM65iM+dWFldgQ1Un8jWZMuh3puxb8TOY9+linwLoI7ZHZT+aekW" crossorigin="anonymous"></script><script>(function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;e=o.createElement(i);r=o.getElementsByTagName(i)[0];e.src='//www.google-analytics.com/analytics.js';r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));ga('create',"UA-65933410-1",'auto');ga('send','pageview');</script></body></html>

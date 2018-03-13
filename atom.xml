@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2018-03-13T06:24:46.555Z</updated>
+  <updated>2018-03-13T08:59:44.148Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -17,20 +17,84 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>JS基础知识点</title>
-    <link href="http://yoursite.com/2018/03/13/JS%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86%E7%82%B9/"/>
-    <id>http://yoursite.com/2018/03/13/JS基础知识点/</id>
+    <title>JS基础知识点-函数</title>
+    <link href="http://yoursite.com/2018/03/13/JS%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86%E7%82%B9_%E5%87%BD%E6%95%B0/"/>
+    <id>http://yoursite.com/2018/03/13/JS基础知识点_函数/</id>
     <published>2018-03-13T06:22:07.000Z</published>
-    <updated>2018-03-13T06:24:46.555Z</updated>
+    <updated>2018-03-13T08:59:44.148Z</updated>
     
-    <content type="html"><![CDATA[<p><img src="http://github.com/unicorn.png" alt="github" title="github"></p>]]></content>
+    <content type="html"><![CDATA[<h2 id="闭包"><a href="#闭包" class="headerlink" title="闭包"></a>闭包</h2><p>闭包是 JavaScript 中最强大的特性之一。JavaScript 允许函数嵌套，并且内部函数可以访问定义在外部函数中的所有变量和函数，以及外部函数能访问的所有变量和函数。但是，外部函数却不能够访问定义在内部函数中的变量和函数。这给内部函数的变量提供了一定的安全性。此外，由于内部函数可以访问外部函数的作用域，因此当内部函数生存周期大于外部函数时，外部函数中定义的变量和函数的生存周期比内部函数执行时间长。当内部函数以某一种方式被任何一个外部函数作用域访问时，一个闭包就产生了。</p><pre><code>var pet = function(name) {          //外部函数定义了一个变量&quot;name&quot;  var getName = function() {                //内部函数可以访问 外部函数定义的&quot;name&quot;    return name;   }  //返回这个内部函数，从而将其暴露在外部函数作用域  return getName;               };myPet = pet(&quot;Vivie&quot;);myPet();                            // 返回结果 &quot;Vivie&quot;</code></pre><p>如果一个闭包的函数用外部函数的变量名定义了同样的变量，那在外部函数域将再也无法指向该变量。</p><pre><code>var createPet = function(name) {  // Outer function defines a variable called &quot;name&quot;  return {    setName: function(name) {    // Enclosed function also defines a variable called &quot;name&quot;      name = name;               // ??? How do we access the &quot;name&quot; defined by the outer function ???    }  }}</code></pre><h2 id="arguments-对象"><a href="#arguments-对象" class="headerlink" title="arguments 对象"></a>arguments 对象</h2><p>函数的实际参数会被保存在一个类似数组的arguments对象中。在函数内，你可以按如下方式找出传入的参数：</p><pre><code>arguments[i]</code></pre><p>例如，设想有一个用来连接字符串的函数。唯一事先确定的参数是在连接后的字符串中用来分隔各个连接部分的字符（译注：比如例子里的分号“；”）。该函数定义如下：</p><pre><code>function myConcat(separator) {   var result = &apos;&apos;; // 把值初始化成一个字符串，这样就可以用来保存字符串了！！   var i;   // iterate through arguments   for (i = 1; i &lt; arguments.length; i++) {      result += arguments[i] + separator;   }   return result;}</code></pre><p>你可以给这个函数传递任意数量的参数，它会将各个参数连接成一个字符串“列表”：</p><pre><code>// returns &quot;red, orange, blue, &quot;myConcat(&quot;, &quot;, &quot;red&quot;, &quot;orange&quot;, &quot;blue&quot;);// returns &quot;elephant; giraffe; lion; cheetah; &quot;myConcat(&quot;; &quot;, &quot;elephant&quot;, &quot;giraffe&quot;, &quot;lion&quot;, &quot;cheetah&quot;);// returns &quot;sage. basil. oregano. pepper. parsley. &quot;myConcat(&quot;. &quot;, &quot;sage&quot;, &quot;basil&quot;, &quot;oregano&quot;, &quot;pepper&quot;, &quot;parsley&quot;);</code></pre><div class="tip"><br>提示：arguments变量只是 ”类数组对象“，并不是一个数组。称其为类数组对象是说它有一个索引编号和length属性。尽管如此，它并不拥有全部的Array对象的操作方法。<br></div><h2 id="函数参数"><a href="#函数参数" class="headerlink" title="函数参数"></a>函数参数</h2><blockquote><p>默认参数</p></blockquote><p>在JavaScript中，函数参数的默认值是undefined。然而，在某些情况下设置不同的默认值是有用的。这时默认参数可以提供帮助。</p><pre><code>function multiply(a, b = 1) {  return a*b;}multiply(5); // 5</code></pre><blockquote><p>剩余参数</p></blockquote><p>剩余参数语法允许将不确定数量的参数表示为数组。在下面的例子中，使用剩余参数收集从第二个到最后参数。然后，我们将这个数组的每一个数与第一个参数相乘。</p><pre><code>function multiply(multiplier, ...theArgs) {  return theArgs.map(x =&gt; multiplier * x);}var arr = multiply(2, 1, 2, 3);console.log(arr); // [2, 4, 6]</code></pre><h2 id="箭头函数"><a href="#箭头函数" class="headerlink" title="箭头函数"></a>箭头函数</h2><blockquote><p>this 的词法</p></blockquote><p>在箭头函数出现之前，每一个新函数都重新定义了自己的 this 值（在严格模式下，一个新的对象在构造函数里是未定义的，以“对象方法”的方式调用的函数是上下文对象等）。以面向对象的编程风格，这样着实有点恼人。</p><pre><code>function Person() {  // The Person() constructor defines `this` as itself.  this.age = 0;  setInterval(function growUp() {    // In nonstrict mode, the growUp() function defines `this`     // as the global object, which is different from the `this`    // defined by the Person() constructor.    this.age++;  }, 1000);}var p = new Person();</code></pre><p>在ECMAScript 3/5里，通过把this的值赋值给一个变量可以修复这个问题。</p><pre><code>function Person() {  var self = this; // Some choose `that` instead of `self`.                    // Choose one and be consistent.  self.age = 0;  setInterval(function growUp() {    // The callback refers to the `self` variable of which    // the value is the expected object.    self.age++;  }, 1000);}</code></pre><p>另外，创建一个约束函数可以使得 this值被正确传递给 growUp() 函数。</p><p>箭头功能捕捉闭包上下文的this值，所以下面的代码工作正常。</p><pre><code>function Person(){  this.age = 0;  setInterval(() =&gt; {    this.age++; // |this| properly refers to the person object  }, 1000);}var p = new Person();</code></pre><h2 id="函数方法"><a href="#函数方法" class="headerlink" title="函数方法"></a>函数方法</h2><p><strong>apply</strong>(thisArg[, argsArray]) </p><p><strong>call</strong>(thisArg[,[param1,param2])</p><blockquote><p>该方法的作用和 apply() 方法类似，只有一个区别，就是call()方法接受的是若干个参数的列表，而apply()方法接受的是一个包含多个参数的数组。</p></blockquote><h2 id="结构图"><a href="#结构图" class="headerlink" title="结构图"></a>结构图</h2><p><img src="/2018/03/13/JS基础知识点_函数/函数.gif" alt="数据类型"></p>]]></content>
     
     <summary type="html">
     
       
       
-        &lt;p&gt;&lt;img src=&quot;http://github.com/unicorn.png&quot; alt=&quot;github&quot; title=&quot;github&quot;&gt;&lt;/p&gt;
-
+        &lt;h2 id=&quot;闭包&quot;&gt;&lt;a href=&quot;#闭包&quot; class=&quot;headerlink&quot; title=&quot;闭包&quot;&gt;&lt;/a&gt;闭包&lt;/h2&gt;&lt;p&gt;闭包是 JavaScript 中最强大的特性之一。JavaScript 允许函数嵌套，并且内部函数可以访问定义在外部函数中的所有变量和函数，
+      
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>JS基础知识点-字符串</title>
+    <link href="http://yoursite.com/2018/03/13/JS%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86%E7%82%B9_%E5%AD%97%E7%AC%A6%E4%B8%B2/"/>
+    <id>http://yoursite.com/2018/03/13/JS基础知识点_字符串/</id>
+    <published>2018-03-13T06:22:07.000Z</published>
+    <updated>2018-03-13T09:13:01.097Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="描述"><a href="#描述" class="headerlink" title="描述"></a>描述</h2><p>字符串对于保存可以以文本形式表示的数据非常有用。 一些常用的字符串操作有：查询字符串长度，使用 + 和 += 运算符来构建和连接字符串，使用 indexOf 方法检查某一子字符串在父字符串中的位置，又或是使用 substring 方法提取从父字符串中提取子字符串。</p><h2 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h2><p><strong>charAt</strong>() 返回特定位置的字符。<br><strong>concat</strong>() 连接两个字符串文本，并返回一个新的字符串。<br><strong>includes</strong>() 判断一个字符串里是否包含其他字符串。<br><strong>indexOf</strong>() 从字符串对象中返回首个被发现的给定值的索引值，如果没有找到则返回-1。<br><strong>lastIndexOf</strong>() 从字符串对象中返回最后一个被发现的给定值的索引值，如果没有找到则返回-1。<br><strong>match</strong>() 使用正则表达式与字符串相比较。<br><strong>replace</strong>() 被用来在正则表达式和字符串直接比较，然后用新的子串来替换被匹配的子串。<br><strong>search</strong>() 对正则表达式和指定字符串进行匹配搜索，返回第一个出现的匹配项的下标。<br><strong>slice</strong>() 摘取一个字符串区域，返回一个新的字符串。<br><strong>split</strong>() 通过分离字符串成字串，将字符串对象分割成字符串数组.<br><strong>substr</strong>() 通过指定字符数返回在指定位置开始的字符串中的字符。<br><strong>trim</strong>() 从字符串的开始和结尾去除空格。<br><strong>toLocaleUpperCase</strong>() 根据当前区域设置，将字符串中的字符转换成大写。</p><h2 id="结构图"><a href="#结构图" class="headerlink" title="结构图"></a>结构图</h2><p><img src="/2018/03/13/JS基础知识点_字符串/字符串.gif" alt="数据类型"></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h2 id=&quot;描述&quot;&gt;&lt;a href=&quot;#描述&quot; class=&quot;headerlink&quot; title=&quot;描述&quot;&gt;&lt;/a&gt;描述&lt;/h2&gt;&lt;p&gt;字符串对于保存可以以文本形式表示的数据非常有用。 一些常用的字符串操作有：查询字符串长度，使用 + 和 += 运算符来构建和连接字符串，使用
+      
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>JS基础知识点-数组</title>
+    <link href="http://yoursite.com/2018/03/13/JS%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86%E7%82%B9_%E6%95%B0%E7%BB%84/"/>
+    <id>http://yoursite.com/2018/03/13/JS基础知识点_数组/</id>
+    <published>2018-03-13T06:22:07.000Z</published>
+    <updated>2018-03-13T08:23:02.172Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="数组对象"><a href="#数组对象" class="headerlink" title="数组对象"></a>数组对象</h2><p>JavaScript中没有明确的数组数据类型。但是，我们可以通过使用内置Array对象和它的方法对数组进行操作。Array对象有很多操作数组的方法，比如合并、反转、排序等。数组对象有一个决定数组长度和使用正则表达式操作其他属性的属性。  </p><h2 id="数组方法"><a href="#数组方法" class="headerlink" title="数组方法"></a>数组方法</h2><blockquote><p>添加删除  </p></blockquote><p><strong>unshift</strong>() 在数组开头添加一个或多个元素，并返回数组的新长度。</p><pre><code>var myArray = new Array (&quot;1&quot;, &quot;2&quot;, &quot;3&quot;);myArray.unshift(&quot;4&quot;, &quot;5&quot;); // myArray becomes [&quot;4&quot;, &quot;5&quot;, &quot;1&quot;, &quot;2&quot;, &quot;3&quot;]</code></pre><p><strong>push</strong>() 在数组末尾添加一个或多个元素，并返回数组操作后的长度。</p><pre><code>var myArray = new Array(&quot;1&quot;, &quot;2&quot;);myArray.push(&quot;3&quot;); // myArray is now [&quot;1&quot;, &quot;2&quot;, &quot;3&quot;]</code></pre><p><strong>shift</strong>() 从数组移出第一个元素，并返回该元素。</p><pre><code>var myArray = new Array (&quot;1&quot;, &quot;2&quot;, &quot;3&quot;);var first = myArray.shift(); // myArray is now [&quot;2&quot;, &quot;3&quot;], first is &quot;1&quot;</code></pre><p><strong>pop</strong>() 从数组移出最后一个元素，并返回该元素。</p><pre><code>var myArray = new Array(&quot;1&quot;, &quot;2&quot;, &quot;3&quot;);var last = myArray.pop(); // myArray is now [&quot;1&quot;, &quot;2&quot;], last = &quot;3&quot;</code></pre><blockquote><p>合并数组</p></blockquote><p><strong>concat</strong>() 连接两个数组并返回一个新的数组。</p><pre><code>var myArray = new Array(&quot;1&quot;, &quot;2&quot;, &quot;3&quot;);myArray = myArray.concat(&quot;a&quot;, &quot;b&quot;, &quot;c&quot;); // myArray is now [&quot;1&quot;, &quot;2&quot;, &quot;3&quot;, &quot;a&quot;, &quot;b&quot;, &quot;c&quot;]</code></pre><blockquote><p>数组转换类型</p></blockquote><p><strong>join</strong>(deliminator = ‘,’) 将数组的所有元素连接成一个字符串,用指定分隔符分割。</p><pre><code>var myArray = new Array(&quot;Wind&quot;, &quot;Rain&quot;, &quot;Fire&quot;);var list = myArray.join(&quot; - &quot;); // list is &quot;Wind - Rain - Fire&quot;</code></pre><p><strong>toString</strong>() 转换成成一个字符串。</p><pre><code>var myArray = new Array(&quot;Wind&quot;, &quot;Rain&quot;, &quot;Fire&quot;);var list = myArray.toString(); // list is &quot;&apos;Wind,Rain,Fire&quot;</code></pre><p><strong>toLocaleString</strong>() 转换成本地格式字符串。</p><pre><code>var myArray = new Array(&quot;Wind&quot;, &quot;Rain&quot;, &quot;Fire&quot;);var list = myArray.toLocaleString(); // list is &quot;&apos;Wind,Rain,Fire&quot;</code></pre><blockquote><p>提取子数组</p></blockquote><p><strong>slice</strong>(start_index, upto_index) 从数组提取一个片段，并作为一个新数组返回。</p><pre><code>var myArray = new Array (&quot;a&quot;, &quot;b&quot;, &quot;c&quot;, &quot;d&quot;, &quot;e&quot;);myArray = myArray.slice(1, 4); // starts at index 1 and extracts all elements                               // until index 3, returning [ &quot;b&quot;, &quot;c&quot;, &quot;d&quot;]   </code></pre><blockquote><p>增删改</p></blockquote><p><strong>splice</strong>(index, count_to_remove, addElement1, addElement2, …)从数组移出一些元素，（可选）并替换它们。</p><pre><code>var myArray = new Array (&quot;1&quot;, &quot;2&quot;, &quot;3&quot;, &quot;4&quot;, &quot;5&quot;);myArray.splice(1, 3, &quot;a&quot;, &quot;b&quot;, &quot;c&quot;, &quot;d&quot;); // myArray is now [&quot;1&quot;, &quot;a&quot;, &quot;b&quot;, &quot;c&quot;, &quot;d&quot;, &quot;5&quot;]// This code started at index one (or where the &quot;2&quot; was), // removed 3 elements there, and then inserted all consecutive// elements in its place.</code></pre><blockquote><p>排序</p></blockquote><p><strong>reverse</strong>() 颠倒数组元素的顺序：第一个变成最后一个，最后一个变成第一个。</p><pre><code>var myArray = new Array (&quot;1&quot;, &quot;2&quot;, &quot;3&quot;);myArray.reverse(); // transposes the array so that myArray = [ &quot;3&quot;, &quot;2&quot;, &quot;1&quot; ]  </code></pre><p><strong>sort</strong>() 给数组元素排序。</p><pre><code>var sortFn = function(a, b){  if (a[a.length - 1] &lt; b[b.length - 1]) return -1;  if (a[a.length - 1] &gt; b[b.length - 1]) return 1;  if (a[a.length - 1] == b[b.length - 1]) return 0;}myArray.sort(sortFn); // sorts the array so that myArray = [&quot;Wind&quot;,&quot;Fire&quot;,&quot;Rain&quot;]</code></pre><blockquote><p>位置查找</p></blockquote><p><strong>indexOf</strong>(searchElement[, fromIndex]) 在数组中搜索searchElement 并返回第一个匹配的索引。</p><pre><code>var a = [&apos;a&apos;, &apos;b&apos;, &apos;a&apos;, &apos;b&apos;, &apos;a&apos;];console.log(a.indexOf(&apos;b&apos;)); // logs 1// Now try again, starting from after the last matchconsole.log(a.indexOf(&apos;b&apos;, 2)); // logs 3console.log(a.indexOf(&apos;z&apos;)); // logs -1, because &apos;z&apos; was not found</code></pre><p><strong>lastIndexOf</strong>(searchElement[, fromIndex]) 和 indexOf 差不多，但这是从结尾开始，并且是反向搜索。</p><pre><code>var a = [&apos;a&apos;, &apos;b&apos;, &apos;c&apos;, &apos;d&apos;, &apos;a&apos;, &apos;b&apos;];console.log(a.lastIndexOf(&apos;b&apos;)); // logs 5// Now try again, starting from before the last matchconsole.log(a.lastIndexOf(&apos;b&apos;, 4)); // logs 1console.log(a.lastIndexOf(&apos;z&apos;)); // logs -1</code></pre><blockquote><p>迭代方法</p></blockquote><p><strong>forEach</strong>(callback[, thisObject]) 在数组每个元素项上执行callback。</p><pre><code>var a = [&apos;a&apos;, &apos;b&apos;, &apos;c&apos;];a.forEach(function(element) { console.log(element);} ); // logs each item in turn</code></pre><p><strong>map</strong>(callback[, thisObject]) 在数组的每个单元项上执行callback函数，并返回包含回调函数返回值的新数组。</p><pre><code>var a1 = [&apos;a&apos;, &apos;b&apos;, &apos;c&apos;];var a2 = a1.map(function(item) { return item.toUpperCase(); });console.log(a2); // logs A,B,C</code></pre><p><strong>filter</strong>(callback[, thisObject]) 返回一个包含所有在回调函数上返回为true的元素的新数组。</p><pre><code>var a1 = [&apos;a&apos;, 10, &apos;b&apos;, 20, &apos;c&apos;, 30];var a2 = a1.filter(function(item) { return typeof item == &apos;number&apos;; });console.log(a2); // logs 10,20,30</code></pre><p><strong>every</strong>(callback[, thisObject]) 当数组中每一个元素在callback上被返回true时就返回true。</p><pre><code>function isNumber(value){  return typeof value == &apos;number&apos;;}var a1 = [1, 2, 3];console.log(a1.every(isNumber)); // logs truevar a2 = [1, &apos;2&apos;, 3];console.log(a2.every(isNumber)); // logs false</code></pre><p><strong>some</strong>(callback[, thisObject]) 只要数组中有一项在callback上被返回true，就返回true。</p><pre><code>function isNumber(value){  return typeof value == &apos;number&apos;;}var a1 = [1, 2, 3];console.log(a1.some(isNumber)); // logs truevar a2 = [1, &apos;2&apos;, 3];console.log(a2.some(isNumber)); // logs truevar a3 = [&apos;1&apos;, &apos;2&apos;, &apos;3&apos;];console.log(a3.some(isNumber)); // logs false</code></pre><blockquote><p>缩小方法</p></blockquote><p><strong>reduce</strong>(callback[, initialValue]) 使用回调函数 callback(firstValue, secondValue) 把数组列表计算成一个单一值（译者注：他数组元素两两递归处理的方式把数组计算成一个值）</p><pre><code>var a = [10, 20, 30];var total = a.reduce(function(first, second) { return first + second; }, 0);console.log(total) // Prints 60</code></pre><p><strong>reduceRight</strong>(callback[, initalvalue]) 和 reduce()相似，但这从最后一个元素开始的。</p><h2 id="结构图"><a href="#结构图" class="headerlink" title="结构图"></a>结构图</h2><p><img src="/2018/03/13/JS基础知识点_数组/数组.gif" alt="数据类型"></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h2 id=&quot;数组对象&quot;&gt;&lt;a href=&quot;#数组对象&quot; class=&quot;headerlink&quot; title=&quot;数组对象&quot;&gt;&lt;/a&gt;数组对象&lt;/h2&gt;&lt;p&gt;JavaScript中没有明确的数组数据类型。但是，我们可以通过使用内置Array对象和它的方法对数组进行操作。Array对
+      
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>JS基础知识点-数据类型</title>
+    <link href="http://yoursite.com/2018/03/13/JS%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86%E7%82%B9_%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/"/>
+    <id>http://yoursite.com/2018/03/13/JS基础知识点_数据类型/</id>
+    <published>2018-03-13T06:21:07.000Z</published>
+    <updated>2018-03-13T07:47:09.122Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="数据结构和类型"><a href="#数据结构和类型" class="headerlink" title="数据结构和类型"></a>数据结构和类型</h2><p>JavaScript语言可以识别下面 7 种不同类型的值：  </p><blockquote><p>六种 原型 数据类型:  </p><blockquote><p><strong>Boolean</strong>.  布尔值，true 和 false.  </p><p><strong>null</strong>. 一个表明 null 值的特殊关键字。 JavaScript 是大小写敏感的，因此 null 与 Null、NULL或其他变量完全不同。</p><p><strong>undefined</strong>.  变量未定义时的属性。</p><p><strong>Number</strong>.  表示数字，例如： 42 或者 3.14159。</p><p><strong>String</strong>.  表示字符串，例如：”Howdy”</p><p><strong>Symbol</strong> ( 在 ECMAScript 6 中新添加的类型).。一种数据类型，它的实例是唯一且不可改变的。  </p></blockquote><p>-<strong>Object</strong> 对象</p></blockquote><h2 id="结构图"><a href="#结构图" class="headerlink" title="结构图"></a>结构图</h2><p><img src="/2018/03/13/JS基础知识点_数据类型/数据类型.gif" alt="数据类型"></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h2 id=&quot;数据结构和类型&quot;&gt;&lt;a href=&quot;#数据结构和类型&quot; class=&quot;headerlink&quot; title=&quot;数据结构和类型&quot;&gt;&lt;/a&gt;数据结构和类型&lt;/h2&gt;&lt;p&gt;JavaScript语言可以识别下面 7 种不同类型的值：  &lt;/p&gt;
+&lt;blockquote&gt;
+&lt;
       
     
     </summary>
@@ -43,13 +107,16 @@
     <link href="http://yoursite.com/2018/03/13/laravel-%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/"/>
     <id>http://yoursite.com/2018/03/13/laravel-环境搭建/</id>
     <published>2018-03-13T01:40:39.000Z</published>
-    <updated>2018-03-13T05:43:57.708Z</updated>
+    <updated>2018-03-13T07:03:49.473Z</updated>
     
-    <content type="html"><![CDATA[<h2 id="php环境搭建"><a href="#php环境搭建" class="headerlink" title="php环境搭建"></a>php环境搭建</h2><p>1.安装phpStudy集成环境<br>2.打开需要安装vc运行库,下载安装<br>3.项目代码路径在 <strong>C:\phpStudy\PHPTutorial\WWW</strong><br>4.将php添加到系统环境变量- <strong>C:\phpStudy\PHPTutorial\php\php-7.2.1-nts\</strong></p><a id="more"></a><h2 id="laravel环境搭建"><a href="#laravel环境搭建" class="headerlink" title="laravel环境搭建"></a>laravel环境搭建</h2><p>1.安装 Composer  </p><blockquote><p>将<a href="https://getcomposer.org/download/" target="_blank" rel="noopener">composer.phar</a>下载到本地,粘贴到php.exe同级目录下<br>创建composer.bat文件，写入 <strong>@ECHO OFF php “%~dp0composer.phar” %*</strong><br>输入命令 composer -v 查看安装结果  </p></blockquote><p>2.安装laravel</p><blockquote><p>打开phpStudy-&gt;PHP扩展及设置-&gt;PHP扩展-&gt;php_openssl<br>输入命令 <strong>composer global require “laravel/installer=~1.1”</strong><br>在用户环境变量中将composer放入 <strong>C:\Users\viziner\AppData\Roaming\Composer\vendor\bin</strong><br>在 <strong>C:\phpStudy\PHPTutorial\WWW</strong> 目录中，运行命令行 <strong>laravel new blog</strong> 创建工程</p></blockquote>]]></content>
+    <content type="html"><![CDATA[<h2 id="php环境搭建"><a href="#php环境搭建" class="headerlink" title="php环境搭建"></a>php环境搭建</h2><p>1.安装phpStudy集成环境<br>2.打开需要安装vc运行库,下载安装<br>3.项目代码路径在 <strong>C:\phpStudy\PHPTutorial\WWW</strong><br>4.将php添加到系统环境变量- <strong>C:\phpStudy\PHPTutorial\php\php-7.2.1-nts\</strong></p><h2 id="laravel环境搭建"><a href="#laravel环境搭建" class="headerlink" title="laravel环境搭建"></a>laravel环境搭建</h2><p>1.安装 Composer  </p><blockquote><p>将<a href="https://getcomposer.org/download/" target="_blank" rel="noopener">composer.phar</a>下载到本地,粘贴到php.exe同级目录下<br>创建composer.bat文件，写入 <strong>@ECHO OFF php “%~dp0composer.phar” %*</strong><br>输入命令 composer -v 查看安装结果  </p></blockquote><p>2.安装laravel</p><blockquote><p>打开phpStudy-&gt;PHP扩展及设置-&gt;PHP扩展-&gt;php_openssl<br>输入命令 <strong>composer global require “laravel/installer=~1.1”</strong><br>在用户环境变量中将composer放入 <strong>C:\Users\viziner\AppData\Roaming\Composer\vendor\bin</strong><br>在 <strong>C:\phpStudy\PHPTutorial\WWW</strong> 目录中，运行命令行 <strong>laravel new blog</strong> 创建工程</p></blockquote>]]></content>
     
     <summary type="html">
     
-      &lt;h2 id=&quot;php环境搭建&quot;&gt;&lt;a href=&quot;#php环境搭建&quot; class=&quot;headerlink&quot; title=&quot;php环境搭建&quot;&gt;&lt;/a&gt;php环境搭建&lt;/h2&gt;&lt;p&gt;1.安装phpStudy集成环境&lt;br&gt;2.打开需要安装vc运行库,下载安装&lt;br&gt;3.项目代码路径在 &lt;strong&gt;C:\phpStudy\PHPTutorial\WWW&lt;/strong&gt;&lt;br&gt;4.将php添加到系统环境变量- &lt;strong&gt;C:\phpStudy\PHPTutorial\php\php-7.2.1-nts\&lt;/strong&gt;&lt;/p&gt;
+      
+      
+        &lt;h2 id=&quot;php环境搭建&quot;&gt;&lt;a href=&quot;#php环境搭建&quot; class=&quot;headerlink&quot; title=&quot;php环境搭建&quot;&gt;&lt;/a&gt;php环境搭建&lt;/h2&gt;&lt;p&gt;1.安装phpStudy集成环境&lt;br&gt;2.打开需要安装vc运行库,下载安装&lt;br&gt;3.项目代码路径
+      
     
     </summary>
     
@@ -61,15 +128,38 @@
     <link href="http://yoursite.com/2018/03/12/heyapass%E9%A1%B9%E7%9B%AE%E6%80%BB%E7%BB%93/"/>
     <id>http://yoursite.com/2018/03/12/heyapass项目总结/</id>
     <published>2018-03-12T07:48:32.000Z</published>
-    <updated>2018-03-13T03:50:23.156Z</updated>
+    <updated>2018-03-13T08:29:11.734Z</updated>
     
-    <content type="html"><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>去年十二月份开始实习到三月，从一个在学校里的菜鸡变成了菜鸟，经过一个项目的编写了解了前端的许多东西，结合vue文档充分理解了框架的一些基本用法。在此做个总结。</p>]]></content>
+    <content type="html"><![CDATA[<p><img src="/2018/03/12/heyapass项目总结/1.png" alt="图片">  </p><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>去年十二月份开始实习到三月，从一个在学校里的菜鸡变成了菜鸟，经过一个项目的编写了解了前端的许多东西，结合vue文档充分理解了框架的一些基本用法。在此做个总结。</p>]]></content>
     
     <summary type="html">
     
       
       
-        &lt;h2 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h2&gt;&lt;p&gt;去年十二月份开始实习到三月，从一个在学校里的菜鸡变成了菜鸟，经过一个项目的编写了解了前端的许多东西，结合vue文档充分理解了框架的一些基本用
+        &lt;p&gt;&lt;img src=&quot;/2018/03/12/heyapass项目总结/1.png&quot; alt=&quot;图片&quot;&gt;  &lt;/p&gt;
+&lt;h2 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h2&gt;&lt;p&gt;去年十二月份开始实
+      
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>hexo加载图片</title>
+    <link href="http://yoursite.com/2018/03/12/hexo%E5%8A%A0%E8%BD%BD%E5%9B%BE%E7%89%87/"/>
+    <id>http://yoursite.com/2018/03/12/hexo加载图片/</id>
+    <published>2018-03-12T07:09:59.000Z</published>
+    <updated>2018-03-13T07:28:59.703Z</updated>
+    
+    <content type="html"><![CDATA[<blockquote><p>使用命令 <strong>npm install <a href="https://github.com/CodeFalling/hexo-asset-image" target="_blank" rel="noopener">https://github.com/CodeFalling/hexo-asset-image</a> –save</strong> 下载插件</p><p>确认_config.yml 中有 post_asset_folder:true(<em>当设置post_asset_folder为true参数后，在建立文件时，Hexo会自动建立一个与文章同名的文件夹，您可以把与该文章相关的所有资源都放到那个文件夹，如此一来，您便可以更方便的使用资源</em>)    </p></blockquote><pre><code>![图片](hexo加载图片/logo.png) </code></pre><p><img src="/2018/03/12/hexo加载图片/logo.png" alt="图片"></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;blockquote&gt;
+&lt;p&gt;使用命令 &lt;strong&gt;npm install &lt;a href=&quot;https://github.com/CodeFalling/hexo-asset-image&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;https://gi
       
     
     </summary>
@@ -82,19 +172,16 @@
     <link href="http://yoursite.com/2018/03/12/hexo%E9%97%AE%E9%A2%98%E6%80%BB%E7%BB%93/"/>
     <id>http://yoursite.com/2018/03/12/hexo问题总结/</id>
     <published>2018-03-12T06:38:12.000Z</published>
-    <updated>2018-03-13T06:25:49.563Z</updated>
+    <updated>2018-03-13T07:03:59.358Z</updated>
     
-    <content type="html"><![CDATA[<h1 id="一-环境搭建问题"><a href="#一-环境搭建问题" class="headerlink" title="一.环境搭建问题"></a>一.环境搭建问题</h1><h2 id="1-安装node-js"><a href="#1-安装node-js" class="headerlink" title="1.安装node.js"></a>1.安装node.js</h2><h2 id="2-安装git"><a href="#2-安装git" class="headerlink" title="2.安装git"></a>2.安装git</h2><pre><code>配置账户$ git config --global user.name “your_username” #设置用户名$ git config --global user.email “your_registered_github_Email” #设置邮箱地址(建议用注册giuhub的邮箱)  关联远程库$ git remote add origin git@github.com:nutter123/nutter123.github.io.git</code></pre><a id="more"></a><h2 id="3-创建github新远程库"><a href="#3-创建github新远程库" class="headerlink" title="3.创建github新远程库"></a>3.创建github新远程库</h2><blockquote><p>在添加远程库时，由于本地之前已经添加了公司的远程库，在重新注册了账户之后，公司远程由于输错了密码一直无法提交代码。<br>解决方法：<br>进入控制面板\所有控制面板项\凭据管理器中  将windows凭据中找到公司远程库，删除信息</p></blockquote><h1 id="二-hexo命令"><a href="#二-hexo命令" class="headerlink" title="二.hexo命令"></a>二.hexo命令</h1><blockquote><p>hexo init  –初始化hexo环境,这时会在目录下自动生成hexo的文件<br>hexo generate –生成静态页面<br>hexo server –生成本地服务(hexo s –debug 调试模式)<br>hexo deploy –部署我们的个人博客<br>hexo clean –清除缓存  </p></blockquote><pre><code>每次部署步骤：hexo new &quot;hello word&quot;hexo clean hexo g hexo d</code></pre><h1 id="三-连接本地和GitHub"><a href="#三-连接本地和GitHub" class="headerlink" title="三.连接本地和GitHub"></a>三.连接本地和GitHub</h1><blockquote><p>打开_config.yml进行编辑,翻到文件最下方，将deploy的选项改成以下的形式，并将yournmae修改为你自己的名称:</p></blockquote><pre><code>deploy:type: gitrepo: git@github.com:yourname/yourname.github.io.gitbranch: master </code></pre><blockquote><p>然后在GitBash中执行</p></blockquote><pre><code>npm install hexo-deployer-git --save</code></pre><blockquote><p>最后执行 hexo deploy</p></blockquote>]]></content>
+    <content type="html"><![CDATA[<h1 id="一-环境搭建问题"><a href="#一-环境搭建问题" class="headerlink" title="一.环境搭建问题"></a>一.环境搭建问题</h1><h2 id="1-安装node-js"><a href="#1-安装node-js" class="headerlink" title="1.安装node.js"></a>1.安装node.js</h2><h2 id="2-安装git"><a href="#2-安装git" class="headerlink" title="2.安装git"></a>2.安装git</h2><pre><code>配置账户$ git config --global user.name “your_username” #设置用户名$ git config --global user.email “your_registered_github_Email” #设置邮箱地址(建议用注册giuhub的邮箱)  关联远程库$ git remote add origin git@github.com:nutter123/nutter123.github.io.git</code></pre><h2 id="3-创建github新远程库"><a href="#3-创建github新远程库" class="headerlink" title="3.创建github新远程库"></a>3.创建github新远程库</h2><blockquote><p>在添加远程库时，由于本地之前已经添加了公司的远程库，在重新注册了账户之后，公司远程由于输错了密码一直无法提交代码。<br>解决方法：<br>进入控制面板\所有控制面板项\凭据管理器中  将windows凭据中找到公司远程库，删除信息</p></blockquote><h1 id="二-hexo命令"><a href="#二-hexo命令" class="headerlink" title="二.hexo命令"></a>二.hexo命令</h1><blockquote><p>hexo init  –初始化hexo环境,这时会在目录下自动生成hexo的文件<br>hexo generate –生成静态页面<br>hexo server –生成本地服务(hexo s –debug 调试模式)<br>hexo deploy –部署我们的个人博客<br>hexo clean –清除缓存  </p></blockquote><pre><code>每次部署步骤：hexo new &quot;hello word&quot;hexo clean hexo g hexo d</code></pre><h1 id="三-连接本地和GitHub"><a href="#三-连接本地和GitHub" class="headerlink" title="三.连接本地和GitHub"></a>三.连接本地和GitHub</h1><blockquote><p>打开_config.yml进行编辑,翻到文件最下方，将deploy的选项改成以下的形式，并将yournmae修改为你自己的名称:</p></blockquote><pre><code>deploy:type: gitrepo: git@github.com:yourname/yourname.github.io.gitbranch: master </code></pre><blockquote><p>然后在GitBash中执行</p></blockquote><pre><code>npm install hexo-deployer-git --save</code></pre><blockquote><p>最后执行 hexo deploy</p></blockquote>]]></content>
     
     <summary type="html">
     
-      &lt;h1 id=&quot;一-环境搭建问题&quot;&gt;&lt;a href=&quot;#一-环境搭建问题&quot; class=&quot;headerlink&quot; title=&quot;一.环境搭建问题&quot;&gt;&lt;/a&gt;一.环境搭建问题&lt;/h1&gt;&lt;h2 id=&quot;1-安装node-js&quot;&gt;&lt;a href=&quot;#1-安装node-js&quot; class=&quot;headerlink&quot; title=&quot;1.安装node.js&quot;&gt;&lt;/a&gt;1.安装node.js&lt;/h2&gt;&lt;h2 id=&quot;2-安装git&quot;&gt;&lt;a href=&quot;#2-安装git&quot; class=&quot;headerlink&quot; title=&quot;2.安装git&quot;&gt;&lt;/a&gt;2.安装git&lt;/h2&gt;&lt;pre&gt;&lt;code&gt;配置账户
-$ git config --global user.name “your_username” #设置用户名
-$ git config --global user.email “your_registered_github_Email” #设置邮箱地址(建议用注册giuhub的邮箱)  
-
-关联远程库
-$ git remote add origin git@github.com:nutter123/nutter123.github.io.git
-&lt;/code&gt;&lt;/pre&gt;
+      
+      
+        &lt;h1 id=&quot;一-环境搭建问题&quot;&gt;&lt;a href=&quot;#一-环境搭建问题&quot; class=&quot;headerlink&quot; title=&quot;一.环境搭建问题&quot;&gt;&lt;/a&gt;一.环境搭建问题&lt;/h1&gt;&lt;h2 id=&quot;1-安装node-js&quot;&gt;&lt;a href=&quot;#1-安装node-js&quot; class
+      
     
     </summary>
     
@@ -108,28 +195,17 @@ $ git remote add origin git@github.com:nutter123/nutter123.github.io.git
     <link href="http://yoursite.com/2018/03/12/Markdown%E7%A4%BA%E4%BE%8B/"/>
     <id>http://yoursite.com/2018/03/12/Markdown示例/</id>
     <published>2018-03-12T06:02:46.000Z</published>
-    <updated>2018-03-13T06:26:36.169Z</updated>
+    <updated>2018-03-13T07:03:44.393Z</updated>
     
-    <content type="html"><![CDATA[<h1 id="1-标题"><a href="#1-标题" class="headerlink" title="1.标题"></a>1.标题</h1><pre><code>大标题一般显示工程名,类似html的\&lt;h1\&gt;&lt;br /&gt;   你只要在标题下面跟上=====即可 </code></pre><hr><pre><code>中标题一般显示重点项,类似html的\&lt;h2\&gt;&lt;br /&gt;    你只要在标题下面输入------即可   </code></pre><hr><pre><code>小标题类似html的\&lt;h3\&gt;&lt;br /&gt;   小标题的格式如下 ### 小标题&lt;br /&gt;   注意#和标题字符中间要有空格#一级标题##二级标题###三级标题####四级标题#####五级标题######六级标题   </code></pre><a id="more"></a><h1 id="2-文本框"><a href="#2-文本框" class="headerlink" title="2.文本框"></a>2.文本框</h1><pre><code>单行文本框   这是一个单行的文本框,只要两个Tab再输入文字即可   </code></pre><hr><pre><code>多行文本框     这是一个有多行的文本框   你可以写入代码等,每行文字只要输入两个Tab再输入文字即可   这里你可以输入一段代码   </code></pre><h3 id="比如我们可以在多行文本框里输入一段代码"><a href="#比如我们可以在多行文本框里输入一段代码" class="headerlink" title="比如我们可以在多行文本框里输入一段代码"></a>比如我们可以在多行文本框里输入一段代码</h3><pre><code>function main(){    console.log(&apos;helloword&apos;);};</code></pre><h1 id="3-文字"><a href="#3-文字" class="headerlink" title="3.文字"></a>3.文字</h1><pre><code>*斜体文本*    _斜体文本_**粗体文本**    __粗体文本__***粗斜体文本***    ___粗斜体文本___</code></pre><p><em>斜体文本</em>    <em>斜体文本</em><br><strong>粗体文本</strong>    <strong>粗体文本</strong><br><strong><em>粗斜体文本</em></strong>    <strong><em>粗斜体文本</em></strong></p><h1 id="4-链接"><a href="#4-链接" class="headerlink" title="4.链接"></a>4.链接</h1><pre><code>链接   [点击这里你可以链接到www.baidu.com](http://www.baidu.com)&lt;br /&gt;     </code></pre><hr><pre><code>只是显示图片   ![github](http://github.com/unicorn.png &quot;github&quot;)   </code></pre><hr><pre><code>想点击某个图片进入一个网页,比如我想点击github的icorn然后再进入www.github.com   [![image]](http://www.github.com/)   [image]: http://github.com/github.png &quot;github&quot;  </code></pre><h1 id="5-字符包围"><a href="#5-字符包围" class="headerlink" title="5.字符包围"></a>5.字符包围</h1><h3 id="文字被些字符包围-多重包围"><a href="#文字被些字符包围-多重包围" class="headerlink" title="文字被些字符包围,多重包围"></a>文字被些字符包围,多重包围</h3><pre><code>&gt; 文字被些字符包围开始   &gt;   &gt; &gt; 只要再文字前面加上&gt;空格即可   &gt;   &gt;  &gt; &gt; 如果你要换行的话,新起一行,输入&gt;空格即可,后面不接文字   &gt;   &gt; &gt; &gt; &gt; 但&gt; 只能放在行首才有效   </code></pre><blockquote><p>文字被些字符包围开始   </p><blockquote><p>只要再文字前面加上&gt;空格即可   </p><blockquote><p>如果你要换行的话,新起一行,输入&gt;空格即可,后面不接文字   </p><blockquote><p>但&gt; 只能放在行首才有效   </p></blockquote></blockquote></blockquote></blockquote><h1 id="6-特殊字符处理"><a href="#6-特殊字符处理" class="headerlink" title="6.特殊字符处理"></a>6.特殊字符处理</h1><p>有一些特殊字符如&lt;,#等,只要在特殊字符前面加上转义字符\即可<br><br>你想换行的话其实可以直接用html标签\<br \=""></p><h1 id="7-换行"><a href="#7-换行" class="headerlink" title="7.换行"></a>7.换行</h1><pre><code>在当前行的结尾加 2 个空格  这行就会新起一行如果是要起一个新段落，只需要空出一行即可。</code></pre><h1 id="8-列表"><a href="#8-列表" class="headerlink" title="8.列表"></a>8.列表</h1><pre><code>1. 列出所有元素：    - 无序列表元素 A        1. 元素 A 的有序子列表    - 前面加四个空格2. 列表里的多段换行：    前面必须加四个空格，    这样换行，整体的格式不会乱3. 列表里引用：    &gt; 前面空一行    &gt; 仍然需要在 &gt;  前面加四个空格</code></pre><ol><li>列出所有元素：<ul><li>无序列表元素 A<ol><li>元素 A 的有序子列表</li></ol></li><li>前面加四个空格</li></ul></li><li>列表里的多段换行：<br> 前面必须加四个空格，<br> 这样换行，整体的格式不会乱</li><li><p>列表里引用：</p><blockquote><p>前面空一行<br>仍然需要在 &gt;  前面加四个空格</p></blockquote></li></ol><h1 id="9-主题自带标签"><a href="#9-主题自带标签" class="headerlink" title="9.主题自带标签"></a>9.主题自带标签</h1><blockquote><p>警告框</p></blockquote><pre><code>&lt;div class=&quot;tip&quot;&gt;    预处理器很强大，但它只是编写 CSS 的辅助工具。出于对扩展和维护等方面的考虑，在大型项目中有必要使用预处理器构建 CSS；但是对于小型项目，原生的 CSS 可能是一种更好的选择。不要肆意使用预处理器！&lt;/div&gt;</code></pre><div class="tip"><br>    预处理器很强大，但它只是编写 CSS 的辅助工具。出于对扩展和维护等方面的考虑，在大型项目中有必要使用预处理器构建 CSS；但是对于小型项目，原生的 CSS 可能是一种更好的选择。不要肆意使用预处理器！<br></div><hr><blockquote><p>展示文章的核心内容，文章摘要之后其他内容之前添加。</p></blockquote><pre><code>&lt;!-- more --&gt;</code></pre>]]></content>
+    <content type="html"><![CDATA[<h2 id="1-标题"><a href="#1-标题" class="headerlink" title="1.标题"></a>1.标题</h2><pre><code>大标题一般显示工程名,类似html的\&lt;h1\&gt;&lt;br /&gt;   你只要在标题下面跟上=====即可 </code></pre><hr><pre><code>中标题一般显示重点项,类似html的\&lt;h2\&gt;&lt;br /&gt;    你只要在标题下面输入------即可   </code></pre><hr><pre><code>小标题类似html的\&lt;h3\&gt;&lt;br /&gt;   小标题的格式如下 ### 小标题&lt;br /&gt;   注意#和标题字符中间要有空格#一级标题##二级标题###三级标题####四级标题#####五级标题######六级标题   </code></pre><h2 id="2-文本框"><a href="#2-文本框" class="headerlink" title="2.文本框"></a>2.文本框</h2><pre><code>单行文本框   这是一个单行的文本框,只要两个Tab再输入文字即可   </code></pre><hr><pre><code>多行文本框     这是一个有多行的文本框   你可以写入代码等,每行文字只要输入两个Tab再输入文字即可   这里你可以输入一段代码   </code></pre><h3 id="比如我们可以在多行文本框里输入一段代码"><a href="#比如我们可以在多行文本框里输入一段代码" class="headerlink" title="比如我们可以在多行文本框里输入一段代码"></a>比如我们可以在多行文本框里输入一段代码</h3><pre><code>function main(){    console.log(&apos;helloword&apos;);};</code></pre><h2 id="3-文字"><a href="#3-文字" class="headerlink" title="3.文字"></a>3.文字</h2><pre><code>*斜体文本*    _斜体文本_**粗体文本**    __粗体文本__***粗斜体文本***    ___粗斜体文本___</code></pre><p><em>斜体文本</em>    <em>斜体文本</em><br><strong>粗体文本</strong>    <strong>粗体文本</strong><br><strong><em>粗斜体文本</em></strong>    <strong><em>粗斜体文本</em></strong></p><h2 id="4-链接"><a href="#4-链接" class="headerlink" title="4.链接"></a>4.链接</h2><pre><code>链接   [点击这里你可以链接到www.baidu.com](http://www.baidu.com)&lt;br /&gt;     </code></pre><hr><pre><code>只是显示图片   ![github](http://github.com/unicorn.png &quot;github&quot;)   </code></pre><hr><pre><code>想点击某个图片进入一个网页,比如我想点击github的icorn然后再进入www.github.com   [![image]](http://www.github.com/)   [image]: http://github.com/github.png &quot;github&quot;  </code></pre><h2 id="5-字符包围"><a href="#5-字符包围" class="headerlink" title="5.字符包围"></a>5.字符包围</h2><h3 id="文字被些字符包围-多重包围"><a href="#文字被些字符包围-多重包围" class="headerlink" title="文字被些字符包围,多重包围"></a>文字被些字符包围,多重包围</h3><pre><code>&gt; 文字被些字符包围开始   &gt;   &gt; &gt; 只要再文字前面加上&gt;空格即可   &gt;   &gt;  &gt; &gt; 如果你要换行的话,新起一行,输入&gt;空格即可,后面不接文字   &gt;   &gt; &gt; &gt; &gt; 但&gt; 只能放在行首才有效   </code></pre><blockquote><p>文字被些字符包围开始   </p><blockquote><p>只要再文字前面加上&gt;空格即可   </p><blockquote><p>如果你要换行的话,新起一行,输入&gt;空格即可,后面不接文字   </p><blockquote><p>但&gt; 只能放在行首才有效   </p></blockquote></blockquote></blockquote></blockquote><h2 id="6-特殊字符处理"><a href="#6-特殊字符处理" class="headerlink" title="6.特殊字符处理"></a>6.特殊字符处理</h2><p>有一些特殊字符如&lt;,#等,只要在特殊字符前面加上转义字符\即可<br><br>你想换行的话其实可以直接用html标签\<br \=""></p><h2 id="7-换行"><a href="#7-换行" class="headerlink" title="7.换行"></a>7.换行</h2><pre><code>在当前行的结尾加 2 个空格  这行就会新起一行如果是要起一个新段落，只需要空出一行即可。</code></pre><h2 id="8-列表"><a href="#8-列表" class="headerlink" title="8.列表"></a>8.列表</h2><pre><code>1. 列出所有元素：    - 无序列表元素 A        1. 元素 A 的有序子列表    - 前面加四个空格2. 列表里的多段换行：    前面必须加四个空格，    这样换行，整体的格式不会乱3. 列表里引用：    &gt; 前面空一行    &gt; 仍然需要在 &gt;  前面加四个空格</code></pre><ol><li>列出所有元素：<ul><li>无序列表元素 A<ol><li>元素 A 的有序子列表</li></ol></li><li>前面加四个空格</li></ul></li><li>列表里的多段换行：<br> 前面必须加四个空格，<br> 这样换行，整体的格式不会乱</li><li><p>列表里引用：</p><blockquote><p>前面空一行<br>仍然需要在 &gt;  前面加四个空格</p></blockquote></li></ol><h2 id="9-主题自带标签"><a href="#9-主题自带标签" class="headerlink" title="9.主题自带标签"></a>9.主题自带标签</h2><blockquote><p>警告框</p></blockquote><pre><code>&lt;div class=&quot;tip&quot;&gt;    预处理器很强大，但它只是编写 CSS 的辅助工具。出于对扩展和维护等方面的考虑，在大型项目中有必要使用预处理器构建 CSS；但是对于小型项目，原生的 CSS 可能是一种更好的选择。不要肆意使用预处理器！&lt;/div&gt;</code></pre><div class="tip"><br>    预处理器很强大，但它只是编写 CSS 的辅助工具。出于对扩展和维护等方面的考虑，在大型项目中有必要使用预处理器构建 CSS；但是对于小型项目，原生的 CSS 可能是一种更好的选择。不要肆意使用预处理器！<br></div><hr><blockquote><p>展示文章的核心内容，文章摘要之后其他内容之前添加。</p></blockquote><pre><code>&lt;!-- more --&gt;</code></pre>]]></content>
     
     <summary type="html">
     
-      &lt;h1 id=&quot;1-标题&quot;&gt;&lt;a href=&quot;#1-标题&quot; class=&quot;headerlink&quot; title=&quot;1.标题&quot;&gt;&lt;/a&gt;1.标题&lt;/h1&gt;&lt;pre&gt;&lt;code&gt;大标题一般显示工程名,类似html的\&amp;lt;h1\&amp;gt;&amp;lt;br /&amp;gt;   
-你只要在标题下面跟上=====即可 
-&lt;/code&gt;&lt;/pre&gt;&lt;hr&gt;
-&lt;pre&gt;&lt;code&gt;中标题一般显示重点项,类似html的\&amp;lt;h2\&amp;gt;&amp;lt;br /&amp;gt;   
- 你只要在标题下面输入------即可   
-&lt;/code&gt;&lt;/pre&gt;&lt;hr&gt;
-&lt;pre&gt;&lt;code&gt;小标题类似html的\&amp;lt;h3\&amp;gt;&amp;lt;br /&amp;gt;   
-小标题的格式如下 ### 小标题&amp;lt;br /&amp;gt;   
-注意#和标题字符中间要有空格
-#一级标题
-##二级标题
-###三级标题
-####四级标题
-#####五级标题
-######六级标题   
-&lt;/code&gt;&lt;/pre&gt;
+      
+      
+        &lt;h2 id=&quot;1-标题&quot;&gt;&lt;a href=&quot;#1-标题&quot; class=&quot;headerlink&quot; title=&quot;1.标题&quot;&gt;&lt;/a&gt;1.标题&lt;/h2&gt;&lt;pre&gt;&lt;code&gt;大标题一般显示工程名,类似html的\&amp;lt;h1\&amp;gt;&amp;lt;br /&amp;gt;   
+你只要在标题下面
+      
     
     </summary>
     
