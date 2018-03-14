@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2018-03-13T09:49:15.746Z</updated>
+  <updated>2018-03-14T03:32:49.311Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -17,13 +17,36 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>Vue-router知识点总结</title>
+    <link href="http://yoursite.com/2018/03/14/Vue-router%E7%9F%A5%E8%AF%86%E7%82%B9%E6%80%BB%E7%BB%93/"/>
+    <id>http://yoursite.com/2018/03/14/Vue-router知识点总结/</id>
+    <published>2018-03-14T02:03:54.000Z</published>
+    <updated>2018-03-14T03:32:49.311Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="返回方法"><a href="#返回方法" class="headerlink" title="返回方法"></a>返回方法</h2><pre><code>goBack () {      window.history.length &gt; 1        ? this.$router.go(-1)        : this.$router.push(&apos;/&apos;)    }</code></pre><h2 id="编程式导航"><a href="#编程式导航" class="headerlink" title="编程式导航"></a>编程式导航</h2><blockquote><p>router.push(location, onComplete?, onAbort?)</p></blockquote><ul><li><p>字符串<br>router.push(‘home’)</p></li><li><p>对象<br>router.push({ path: ‘home’ })</p></li><li><p>命名的路由<br>router.push({ name: ‘user’, params: { userId: 123 }})</p></li><li><p>带查询参数，变成 /register?plan=private<br>router.push({ path: ‘register’, query: { plan: ‘private’ }})</p></li></ul><blockquote><p>router.replace(location, onComplete?, onAbort?)</p></blockquote><p>跟 router.push 很像，唯一的不同就是，它不会向 history 添加新记录，而是跟它的方法名一样 —— 替换掉当前的 history 记录。</p><blockquote><p>router.go(n)</p></blockquote><h2 id="重定向和别名"><a href="#重定向和别名" class="headerlink" title="重定向和别名"></a>重定向和别名</h2><blockquote><p>重定向</p></blockquote><pre><code>const router = new VueRouter({  routes: [    { path: &apos;/a&apos;, redirect: { name: &apos;foo&apos; }}  ]})</code></pre><blockquote><p>别名</p></blockquote><pre><code>const router = new VueRouter({  routes: [    { path: &apos;/a&apos;, component: A, alias: &apos;/b&apos; }  ]})</code></pre><p>『别名』的功能让你可以自由地将 UI 结构映射到任意的 URL，而不是受限于配置的嵌套路由结构。</p><h2 id="路由组件传参"><a href="#路由组件传参" class="headerlink" title="路由组件传参"></a>路由组件传参</h2><pre><code>const User = {  template: &apos;&lt;div&gt;User {{ $route.params.id }}&lt;/div&gt;&apos;}const router = new VueRouter({  routes: [    { path: &apos;/user/:id&apos;, component: User }  ]})</code></pre><p>使用 props 将组件和路由解耦：</p><pre><code>const User = {  props: [&apos;id&apos;],  template: &apos;&lt;div&gt;User {{ id }}&lt;/div&gt;&apos;}const router = new VueRouter({  routes: [    { path: &apos;/user/:id&apos;, component: User, props: true },    // 对于包含命名视图的路由，你必须分别为每个命名视图添加 `props` 选项：    {      path: &apos;/user/:id&apos;,      components: { default: User, sidebar: Sidebar },      props: { default: true, sidebar: false }    }  ]})</code></pre><h2 id="导航守卫"><a href="#导航守卫" class="headerlink" title="导航守卫"></a>导航守卫</h2><blockquote><p>heyapass限制登录权限例子</p></blockquote><pre><code>router.beforeEach((to, from, next) =&gt; {  if (cookie.getToken()) { // determine if there has token    /* has token*/    if (to.path === &apos;/login&apos;) {      next()    } else {      next()    }  } else {    /* has no token*/    if (whiteList.indexOf(to.path) !== -1) {      next(&apos;/login&apos;)      Message({        message: &apos;HEYAPASSのアカウントにログインしてください。&apos;,        type: &apos;error&apos;,        showClose:true      });    } else {      next() // 否则全部重定向到登录页    }  }})</code></pre><blockquote><p><strong>完整的导航解析流程</strong></p></blockquote><p>导航被触发。<br>在失活的组件里调用离开守卫。<br>调用全局的 beforeEach 守卫。<br>在重用的组件里调用 beforeRouteUpdate 守卫 (2.2+)。<br>在路由配置里调用 beforeEnter。<br>解析异步路由组件。<br>在被激活的组件里调用 beforeRouteEnter。<br>调用全局的 beforeResolve 守卫 (2.5+)。<br>导航被确认。<br>调用全局的 afterEach 钩子。<br>触发 DOM 更新。<br>用创建好的实例调用 beforeRouteEnter 守卫中传给 next 的回调函数。</p><h2 id="路由元信息-滚动行为"><a href="#路由元信息-滚动行为" class="headerlink" title="路由元信息/滚动行为"></a>路由元信息/滚动行为</h2><blockquote><p>heyapass采用路由元判断滚动行为</p></blockquote><pre><code>const scrollBehavior = (to, from, savedPosition) =&gt; {//vue-router滚动行为  if (savedPosition) {    // savedPosition is only available for popstate navigations.    return savedPosition  } else {    const position = {}    // new navigation.    // scroll to anchor by returning the selector    if (to.hash) {      position.selector = to.hash    }    // check if any matched route config has meta that requires scrolling to top    if (to.matched.some(m =&gt; m.meta.scrollToTop)) {      // cords will be used if no selector is provided,      // or if the selector didn&apos;t match any element.      position.x = 0      position.y = 0    }    // if the returned position is falsy or an empty object,    // will retain current scroll position.    return position  }}</code></pre><h2 id="过渡特效"><a href="#过渡特效" class="headerlink" title="过渡特效"></a>过渡特效</h2><pre><code>&lt;transition&gt;  &lt;router-view&gt;&lt;/router-view&gt;&lt;/transition&gt;</code></pre><h2 id="懒加载"><a href="#懒加载" class="headerlink" title="懒加载"></a>懒加载</h2><p>当打包构建应用时，Javascript 包会变得非常大，影响页面加载。如果我们能把不同路由对应的组件分割成不同的代码块，然后当路由被访问的时候才加载对应组件，这样就更加高效了。</p><pre><code>import Index from &apos;../page/index&apos;-&gt;const Index = () =&gt; import (&apos;../page/index&apos;);</code></pre>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h2 id=&quot;返回方法&quot;&gt;&lt;a href=&quot;#返回方法&quot; class=&quot;headerlink&quot; title=&quot;返回方法&quot;&gt;&lt;/a&gt;返回方法&lt;/h2&gt;&lt;pre&gt;&lt;code&gt;goBack () {
+      window.history.length &amp;gt; 1
+       
+      
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
     <title>vue知识点总结</title>
     <link href="http://yoursite.com/2018/03/13/vue%E7%9F%A5%E8%AF%86%E7%82%B9%E6%80%BB%E7%BB%93/"/>
     <id>http://yoursite.com/2018/03/13/vue知识点总结/</id>
     <published>2018-03-13T09:27:05.000Z</published>
-    <updated>2018-03-13T09:49:15.746Z</updated>
+    <updated>2018-03-14T06:18:23.477Z</updated>
     
-    <content type="html"><![CDATA[<h2 id="计算属性和方法"><a href="#计算属性和方法" class="headerlink" title="计算属性和方法"></a>计算属性和方法</h2><blockquote><p>computed,watch 不应该使用箭头函数定义。</p></blockquote><h2 id="修饰符"><a href="#修饰符" class="headerlink" title="修饰符"></a>修饰符</h2><blockquote><p>v-model.lazy  在“change”时更新而非“input”</p><p>v-on:submit.prevent  提交事件不再重载页面</p><p>v-on:click.stop  阻止单击事件继续传播</p></blockquote><h2 id="生命周期总结"><a href="#生命周期总结" class="headerlink" title="生命周期总结"></a>生命周期总结</h2><blockquote><p>beforcreate: 可以加个loading事件</p><p>created:  结束loading，做些初始化，实现函数自执行</p><p>beforeDestroy:  你确定删除XX吗</p><p>destroyed:  当前组件已删除，清空相关内容</p></blockquote><h2 id="v-if和v-show的用法"><a href="#v-if和v-show的用法" class="headerlink" title="v-if和v-show的用法"></a>v-if和v-show的用法</h2><blockquote><p>v-if有更高的切换开销</p><p>v-show有更高的初始渲染开销</p></blockquote>]]></content>
+    <content type="html"><![CDATA[<h2 id="计算属性和方法"><a href="#计算属性和方法" class="headerlink" title="计算属性和方法"></a>计算属性和方法</h2><blockquote><p>computed,watch 不应该使用箭头函数定义。</p></blockquote><h2 id="修饰符"><a href="#修饰符" class="headerlink" title="修饰符"></a>修饰符</h2><blockquote><p>v-model.lazy  在“change”时更新而非“input”</p><p>v-on:submit.prevent  提交事件不再重载页面</p><p>v-on:click.stop  阻止单击事件继续传播</p><p>v-on:keyup.enter  只在按下回车键时触发事件</p></blockquote><h2 id="生命周期总结"><a href="#生命周期总结" class="headerlink" title="生命周期总结"></a>生命周期总结</h2><blockquote><p>beforcreate: 可以加个loading事件</p><p>created:  结束loading，做些初始化，实现函数自执行</p><p>beforeDestroy:  你确定删除XX吗</p><p>destroyed:  当前组件已删除，清空相关内容</p></blockquote><h2 id="v-if和v-show的用法"><a href="#v-if和v-show的用法" class="headerlink" title="v-if和v-show的用法"></a>v-if和v-show的用法</h2><blockquote><p>v-if有更高的切换开销  </p></blockquote><p>使用v-if减少不必要的组件加载：v-if指令其实很有用处，它可以让我们项目中暂时不需要的组件不进行渲染，等需要用到的时候在渲染，比如某个弹窗组件等。这样我们可以减少页面首次加载的时间和文件量。</p><blockquote><p>v-show有更高的初始渲染开销</p></blockquote><p>如果需要非常频繁的切换则使用v-show,如果运行时条件是很少改变则使用v-if.</p><h2 id="插件使用"><a href="#插件使用" class="headerlink" title="插件使用"></a>插件使用</h2><p><img src="/2018/03/13/vue知识点总结/vue1.jpg" alt="图片"> </p><p>（一）全局使用</p><p>（1）在index.html引入：这样的方式不推荐使用，因为存在先后加载顺序的问题，有些插件不支持这一方式。 </p><p>（2）通过webpack配置文件引入：主要通过plugin配置项的webpack.ProvidePlugin()方法实现，不过只适合支持CommonJs规范并提供一个全局变量的插件，如jQuery中的$。</p><p>（3）通过import + Vue.use()引入：这种方式需要在全局.vue文件中import需要加载的插件，然后通过Vue.use(‘插件变量名’)来实现，不过此方法只支持遵循Vue.js插件编写规范的插件使用，如vue-resource。</p><p>（二）单文件使用  </p><p>（1）通过import直接引入：这种方式可以在需要调用插件的.vue文件中使用，不过需要注意和实例的创建顺序问题，或者也可以通过require引入。</p><p>（2）import + components注册：此方式为Vue组件的使用方式，可以在一个组件中注册并使用一个子组件。  </p>]]></content>
     
     <summary type="html">
     
@@ -40,127 +63,20 @@
   </entry>
   
   <entry>
-    <title>JS基础知识点-函数</title>
-    <link href="http://yoursite.com/2018/03/13/JS%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86%E7%82%B9_%E5%87%BD%E6%95%B0/"/>
-    <id>http://yoursite.com/2018/03/13/JS基础知识点_函数/</id>
-    <published>2018-03-13T06:22:07.000Z</published>
-    <updated>2018-03-13T08:59:44.148Z</updated>
+    <title>ES6知识点总结</title>
+    <link href="http://yoursite.com/2018/03/13/ES6%E7%9F%A5%E8%AF%86%E7%82%B9%E6%80%BB%E7%BB%93/"/>
+    <id>http://yoursite.com/2018/03/13/ES6知识点总结/</id>
+    <published>2018-03-13T02:03:01.000Z</published>
+    <updated>2018-03-14T03:46:01.556Z</updated>
     
-    <content type="html"><![CDATA[<h2 id="闭包"><a href="#闭包" class="headerlink" title="闭包"></a>闭包</h2><p>闭包是 JavaScript 中最强大的特性之一。JavaScript 允许函数嵌套，并且内部函数可以访问定义在外部函数中的所有变量和函数，以及外部函数能访问的所有变量和函数。但是，外部函数却不能够访问定义在内部函数中的变量和函数。这给内部函数的变量提供了一定的安全性。此外，由于内部函数可以访问外部函数的作用域，因此当内部函数生存周期大于外部函数时，外部函数中定义的变量和函数的生存周期比内部函数执行时间长。当内部函数以某一种方式被任何一个外部函数作用域访问时，一个闭包就产生了。</p><pre><code>var pet = function(name) {          //外部函数定义了一个变量&quot;name&quot;  var getName = function() {                //内部函数可以访问 外部函数定义的&quot;name&quot;    return name;   }  //返回这个内部函数，从而将其暴露在外部函数作用域  return getName;               };myPet = pet(&quot;Vivie&quot;);myPet();                            // 返回结果 &quot;Vivie&quot;</code></pre><p>如果一个闭包的函数用外部函数的变量名定义了同样的变量，那在外部函数域将再也无法指向该变量。</p><pre><code>var createPet = function(name) {  // Outer function defines a variable called &quot;name&quot;  return {    setName: function(name) {    // Enclosed function also defines a variable called &quot;name&quot;      name = name;               // ??? How do we access the &quot;name&quot; defined by the outer function ???    }  }}</code></pre><h2 id="arguments-对象"><a href="#arguments-对象" class="headerlink" title="arguments 对象"></a>arguments 对象</h2><p>函数的实际参数会被保存在一个类似数组的arguments对象中。在函数内，你可以按如下方式找出传入的参数：</p><pre><code>arguments[i]</code></pre><p>例如，设想有一个用来连接字符串的函数。唯一事先确定的参数是在连接后的字符串中用来分隔各个连接部分的字符（译注：比如例子里的分号“；”）。该函数定义如下：</p><pre><code>function myConcat(separator) {   var result = &apos;&apos;; // 把值初始化成一个字符串，这样就可以用来保存字符串了！！   var i;   // iterate through arguments   for (i = 1; i &lt; arguments.length; i++) {      result += arguments[i] + separator;   }   return result;}</code></pre><p>你可以给这个函数传递任意数量的参数，它会将各个参数连接成一个字符串“列表”：</p><pre><code>// returns &quot;red, orange, blue, &quot;myConcat(&quot;, &quot;, &quot;red&quot;, &quot;orange&quot;, &quot;blue&quot;);// returns &quot;elephant; giraffe; lion; cheetah; &quot;myConcat(&quot;; &quot;, &quot;elephant&quot;, &quot;giraffe&quot;, &quot;lion&quot;, &quot;cheetah&quot;);// returns &quot;sage. basil. oregano. pepper. parsley. &quot;myConcat(&quot;. &quot;, &quot;sage&quot;, &quot;basil&quot;, &quot;oregano&quot;, &quot;pepper&quot;, &quot;parsley&quot;);</code></pre><div class="tip"><br>提示：arguments变量只是 ”类数组对象“，并不是一个数组。称其为类数组对象是说它有一个索引编号和length属性。尽管如此，它并不拥有全部的Array对象的操作方法。<br></div><h2 id="函数参数"><a href="#函数参数" class="headerlink" title="函数参数"></a>函数参数</h2><blockquote><p>默认参数</p></blockquote><p>在JavaScript中，函数参数的默认值是undefined。然而，在某些情况下设置不同的默认值是有用的。这时默认参数可以提供帮助。</p><pre><code>function multiply(a, b = 1) {  return a*b;}multiply(5); // 5</code></pre><blockquote><p>剩余参数</p></blockquote><p>剩余参数语法允许将不确定数量的参数表示为数组。在下面的例子中，使用剩余参数收集从第二个到最后参数。然后，我们将这个数组的每一个数与第一个参数相乘。</p><pre><code>function multiply(multiplier, ...theArgs) {  return theArgs.map(x =&gt; multiplier * x);}var arr = multiply(2, 1, 2, 3);console.log(arr); // [2, 4, 6]</code></pre><h2 id="箭头函数"><a href="#箭头函数" class="headerlink" title="箭头函数"></a>箭头函数</h2><blockquote><p>this 的词法</p></blockquote><p>在箭头函数出现之前，每一个新函数都重新定义了自己的 this 值（在严格模式下，一个新的对象在构造函数里是未定义的，以“对象方法”的方式调用的函数是上下文对象等）。以面向对象的编程风格，这样着实有点恼人。</p><pre><code>function Person() {  // The Person() constructor defines `this` as itself.  this.age = 0;  setInterval(function growUp() {    // In nonstrict mode, the growUp() function defines `this`     // as the global object, which is different from the `this`    // defined by the Person() constructor.    this.age++;  }, 1000);}var p = new Person();</code></pre><p>在ECMAScript 3/5里，通过把this的值赋值给一个变量可以修复这个问题。</p><pre><code>function Person() {  var self = this; // Some choose `that` instead of `self`.                    // Choose one and be consistent.  self.age = 0;  setInterval(function growUp() {    // The callback refers to the `self` variable of which    // the value is the expected object.    self.age++;  }, 1000);}</code></pre><p>另外，创建一个约束函数可以使得 this值被正确传递给 growUp() 函数。</p><p>箭头功能捕捉闭包上下文的this值，所以下面的代码工作正常。</p><pre><code>function Person(){  this.age = 0;  setInterval(() =&gt; {    this.age++; // |this| properly refers to the person object  }, 1000);}var p = new Person();</code></pre><h2 id="函数方法"><a href="#函数方法" class="headerlink" title="函数方法"></a>函数方法</h2><p><strong>apply</strong>(thisArg[, argsArray]) </p><p><strong>call</strong>(thisArg[,[param1,param2])</p><blockquote><p>该方法的作用和 apply() 方法类似，只有一个区别，就是call()方法接受的是若干个参数的列表，而apply()方法接受的是一个包含多个参数的数组。</p></blockquote><h2 id="结构图"><a href="#结构图" class="headerlink" title="结构图"></a>结构图</h2><p><img src="/2018/03/13/JS基础知识点_函数/函数.gif" alt="数据类型"></p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;h2 id=&quot;闭包&quot;&gt;&lt;a href=&quot;#闭包&quot; class=&quot;headerlink&quot; title=&quot;闭包&quot;&gt;&lt;/a&gt;闭包&lt;/h2&gt;&lt;p&gt;闭包是 JavaScript 中最强大的特性之一。JavaScript 允许函数嵌套，并且内部函数可以访问定义在外部函数中的所有变量和函数，
-      
-    
-    </summary>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>JS基础知识点-数组</title>
-    <link href="http://yoursite.com/2018/03/13/JS%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86%E7%82%B9_%E6%95%B0%E7%BB%84/"/>
-    <id>http://yoursite.com/2018/03/13/JS基础知识点_数组/</id>
-    <published>2018-03-13T06:22:07.000Z</published>
-    <updated>2018-03-13T08:23:02.172Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="数组对象"><a href="#数组对象" class="headerlink" title="数组对象"></a>数组对象</h2><p>JavaScript中没有明确的数组数据类型。但是，我们可以通过使用内置Array对象和它的方法对数组进行操作。Array对象有很多操作数组的方法，比如合并、反转、排序等。数组对象有一个决定数组长度和使用正则表达式操作其他属性的属性。  </p><h2 id="数组方法"><a href="#数组方法" class="headerlink" title="数组方法"></a>数组方法</h2><blockquote><p>添加删除  </p></blockquote><p><strong>unshift</strong>() 在数组开头添加一个或多个元素，并返回数组的新长度。</p><pre><code>var myArray = new Array (&quot;1&quot;, &quot;2&quot;, &quot;3&quot;);myArray.unshift(&quot;4&quot;, &quot;5&quot;); // myArray becomes [&quot;4&quot;, &quot;5&quot;, &quot;1&quot;, &quot;2&quot;, &quot;3&quot;]</code></pre><p><strong>push</strong>() 在数组末尾添加一个或多个元素，并返回数组操作后的长度。</p><pre><code>var myArray = new Array(&quot;1&quot;, &quot;2&quot;);myArray.push(&quot;3&quot;); // myArray is now [&quot;1&quot;, &quot;2&quot;, &quot;3&quot;]</code></pre><p><strong>shift</strong>() 从数组移出第一个元素，并返回该元素。</p><pre><code>var myArray = new Array (&quot;1&quot;, &quot;2&quot;, &quot;3&quot;);var first = myArray.shift(); // myArray is now [&quot;2&quot;, &quot;3&quot;], first is &quot;1&quot;</code></pre><p><strong>pop</strong>() 从数组移出最后一个元素，并返回该元素。</p><pre><code>var myArray = new Array(&quot;1&quot;, &quot;2&quot;, &quot;3&quot;);var last = myArray.pop(); // myArray is now [&quot;1&quot;, &quot;2&quot;], last = &quot;3&quot;</code></pre><blockquote><p>合并数组</p></blockquote><p><strong>concat</strong>() 连接两个数组并返回一个新的数组。</p><pre><code>var myArray = new Array(&quot;1&quot;, &quot;2&quot;, &quot;3&quot;);myArray = myArray.concat(&quot;a&quot;, &quot;b&quot;, &quot;c&quot;); // myArray is now [&quot;1&quot;, &quot;2&quot;, &quot;3&quot;, &quot;a&quot;, &quot;b&quot;, &quot;c&quot;]</code></pre><blockquote><p>数组转换类型</p></blockquote><p><strong>join</strong>(deliminator = ‘,’) 将数组的所有元素连接成一个字符串,用指定分隔符分割。</p><pre><code>var myArray = new Array(&quot;Wind&quot;, &quot;Rain&quot;, &quot;Fire&quot;);var list = myArray.join(&quot; - &quot;); // list is &quot;Wind - Rain - Fire&quot;</code></pre><p><strong>toString</strong>() 转换成成一个字符串。</p><pre><code>var myArray = new Array(&quot;Wind&quot;, &quot;Rain&quot;, &quot;Fire&quot;);var list = myArray.toString(); // list is &quot;&apos;Wind,Rain,Fire&quot;</code></pre><p><strong>toLocaleString</strong>() 转换成本地格式字符串。</p><pre><code>var myArray = new Array(&quot;Wind&quot;, &quot;Rain&quot;, &quot;Fire&quot;);var list = myArray.toLocaleString(); // list is &quot;&apos;Wind,Rain,Fire&quot;</code></pre><blockquote><p>提取子数组</p></blockquote><p><strong>slice</strong>(start_index, upto_index) 从数组提取一个片段，并作为一个新数组返回。</p><pre><code>var myArray = new Array (&quot;a&quot;, &quot;b&quot;, &quot;c&quot;, &quot;d&quot;, &quot;e&quot;);myArray = myArray.slice(1, 4); // starts at index 1 and extracts all elements                               // until index 3, returning [ &quot;b&quot;, &quot;c&quot;, &quot;d&quot;]   </code></pre><blockquote><p>增删改</p></blockquote><p><strong>splice</strong>(index, count_to_remove, addElement1, addElement2, …)从数组移出一些元素，（可选）并替换它们。</p><pre><code>var myArray = new Array (&quot;1&quot;, &quot;2&quot;, &quot;3&quot;, &quot;4&quot;, &quot;5&quot;);myArray.splice(1, 3, &quot;a&quot;, &quot;b&quot;, &quot;c&quot;, &quot;d&quot;); // myArray is now [&quot;1&quot;, &quot;a&quot;, &quot;b&quot;, &quot;c&quot;, &quot;d&quot;, &quot;5&quot;]// This code started at index one (or where the &quot;2&quot; was), // removed 3 elements there, and then inserted all consecutive// elements in its place.</code></pre><blockquote><p>排序</p></blockquote><p><strong>reverse</strong>() 颠倒数组元素的顺序：第一个变成最后一个，最后一个变成第一个。</p><pre><code>var myArray = new Array (&quot;1&quot;, &quot;2&quot;, &quot;3&quot;);myArray.reverse(); // transposes the array so that myArray = [ &quot;3&quot;, &quot;2&quot;, &quot;1&quot; ]  </code></pre><p><strong>sort</strong>() 给数组元素排序。</p><pre><code>var sortFn = function(a, b){  if (a[a.length - 1] &lt; b[b.length - 1]) return -1;  if (a[a.length - 1] &gt; b[b.length - 1]) return 1;  if (a[a.length - 1] == b[b.length - 1]) return 0;}myArray.sort(sortFn); // sorts the array so that myArray = [&quot;Wind&quot;,&quot;Fire&quot;,&quot;Rain&quot;]</code></pre><blockquote><p>位置查找</p></blockquote><p><strong>indexOf</strong>(searchElement[, fromIndex]) 在数组中搜索searchElement 并返回第一个匹配的索引。</p><pre><code>var a = [&apos;a&apos;, &apos;b&apos;, &apos;a&apos;, &apos;b&apos;, &apos;a&apos;];console.log(a.indexOf(&apos;b&apos;)); // logs 1// Now try again, starting from after the last matchconsole.log(a.indexOf(&apos;b&apos;, 2)); // logs 3console.log(a.indexOf(&apos;z&apos;)); // logs -1, because &apos;z&apos; was not found</code></pre><p><strong>lastIndexOf</strong>(searchElement[, fromIndex]) 和 indexOf 差不多，但这是从结尾开始，并且是反向搜索。</p><pre><code>var a = [&apos;a&apos;, &apos;b&apos;, &apos;c&apos;, &apos;d&apos;, &apos;a&apos;, &apos;b&apos;];console.log(a.lastIndexOf(&apos;b&apos;)); // logs 5// Now try again, starting from before the last matchconsole.log(a.lastIndexOf(&apos;b&apos;, 4)); // logs 1console.log(a.lastIndexOf(&apos;z&apos;)); // logs -1</code></pre><blockquote><p>迭代方法</p></blockquote><p><strong>forEach</strong>(callback[, thisObject]) 在数组每个元素项上执行callback。</p><pre><code>var a = [&apos;a&apos;, &apos;b&apos;, &apos;c&apos;];a.forEach(function(element) { console.log(element);} ); // logs each item in turn</code></pre><p><strong>map</strong>(callback[, thisObject]) 在数组的每个单元项上执行callback函数，并返回包含回调函数返回值的新数组。</p><pre><code>var a1 = [&apos;a&apos;, &apos;b&apos;, &apos;c&apos;];var a2 = a1.map(function(item) { return item.toUpperCase(); });console.log(a2); // logs A,B,C</code></pre><p><strong>filter</strong>(callback[, thisObject]) 返回一个包含所有在回调函数上返回为true的元素的新数组。</p><pre><code>var a1 = [&apos;a&apos;, 10, &apos;b&apos;, 20, &apos;c&apos;, 30];var a2 = a1.filter(function(item) { return typeof item == &apos;number&apos;; });console.log(a2); // logs 10,20,30</code></pre><p><strong>every</strong>(callback[, thisObject]) 当数组中每一个元素在callback上被返回true时就返回true。</p><pre><code>function isNumber(value){  return typeof value == &apos;number&apos;;}var a1 = [1, 2, 3];console.log(a1.every(isNumber)); // logs truevar a2 = [1, &apos;2&apos;, 3];console.log(a2.every(isNumber)); // logs false</code></pre><p><strong>some</strong>(callback[, thisObject]) 只要数组中有一项在callback上被返回true，就返回true。</p><pre><code>function isNumber(value){  return typeof value == &apos;number&apos;;}var a1 = [1, 2, 3];console.log(a1.some(isNumber)); // logs truevar a2 = [1, &apos;2&apos;, 3];console.log(a2.some(isNumber)); // logs truevar a3 = [&apos;1&apos;, &apos;2&apos;, &apos;3&apos;];console.log(a3.some(isNumber)); // logs false</code></pre><blockquote><p>缩小方法</p></blockquote><p><strong>reduce</strong>(callback[, initialValue]) 使用回调函数 callback(firstValue, secondValue) 把数组列表计算成一个单一值（译者注：他数组元素两两递归处理的方式把数组计算成一个值）</p><pre><code>var a = [10, 20, 30];var total = a.reduce(function(first, second) { return first + second; }, 0);console.log(total) // Prints 60</code></pre><p><strong>reduceRight</strong>(callback[, initalvalue]) 和 reduce()相似，但这从最后一个元素开始的。</p><h2 id="结构图"><a href="#结构图" class="headerlink" title="结构图"></a>结构图</h2><p><img src="/2018/03/13/JS基础知识点_数组/数组.gif" alt="数据类型"></p>]]></content>
+    <content type="html"><![CDATA[<h2 id="for…of和for…in"><a href="#for…of和for…in" class="headerlink" title="for…of和for…in"></a>for…of和for…in</h2><blockquote><p>for…of 语句遍历可迭代对象定义要迭代的数据。<br>for…in 语句以原始插入顺序迭代对象的可枚举属性。</p></blockquote><pre><code>Object.prototype.objCustom = function() {}; Array.prototype.arrCustom = function() {};let iterable = [3, 5, 7];iterable.foo = &apos;hello&apos;;for (let i in iterable) {  console.log(i); // logs 0, 1, 2, &quot;foo&quot;, &quot;arrCustom&quot;, &quot;objCustom&quot;}for (let i in iterable) {  if (iterable.hasOwnProperty(i)) {    console.log(i); // logs 0, 1, 2, &quot;foo&quot;  }}for (let i of iterable) {  console.log(i); // logs 3, 5, 7}</code></pre><h2 id="箭头函数"><a href="#箭头函数" class="headerlink" title="箭头函数"></a>箭头函数</h2><p>箭头函数表达式的语法比函数表达式更短，并且<strong>不绑定自己的this，arguments，super或 new.target。</strong>这些函数表达式最适合用于<strong>非方法函数</strong>，并且它们不能用作构造函数。  </p><p>在箭头函数出现之前，每个新定义的函数都有它自己的 this值（在构造函数的情况下是一个新对象，在严格模式的函数调用中为 undefined，如果该函数被称为“对象方法”则为基础对象等）。This被证明是令人厌烦的面向对象风格的编程。</p><pre><code>function Person() {  // Person() 构造函数定义 `this`作为它自己的实例.  this.age = 0;  setInterval(function growUp() {    // 在非严格模式, growUp()函数定义 `this`作为全局对象,     // 与在 Person()构造函数中定义的 `this`并不相同.    this.age++;  }, 1000);}var p = new Person();</code></pre><p>在ECMAScript 3/5中，通过将this值分配给封闭的变量，可以解决this问题。</p><pre><code>function Person() {  var that = this;  that.age = 0;  setInterval(function growUp() {    //  回调引用的是`that`变量, 其值是预期的对象.     that.age++;  }, 1000);}</code></pre><p>或者，可以创建绑定函数，以便将预先分配的this值传递到绑定的目标函数（上述示例中的growUp()函数）。</p><p>箭头函数不会创建自己的this；它使用封闭执行上下文的this值。因此，在下面的代码中，传递给setInterval的函数内的this与封闭函数中的this值相同：</p><pre><code>function Person(){  this.age = 0;  setInterval(() =&gt; {    this.age++; // |this| 正确地指向person 对象  }, 1000);}var p = new Person();</code></pre><h2 id="技巧"><a href="#技巧" class="headerlink" title="技巧 "></a>技巧 </h2><blockquote><p>最快捷的数组求最大值 <strong>Math.max(…arr)</strong></p><p>最短的数组去重写法 <strong>[…new Set([2,”12”,2,12,1,2,5])]</strong></p></blockquote>]]></content>
     
     <summary type="html">
     
       
       
-        &lt;h2 id=&quot;数组对象&quot;&gt;&lt;a href=&quot;#数组对象&quot; class=&quot;headerlink&quot; title=&quot;数组对象&quot;&gt;&lt;/a&gt;数组对象&lt;/h2&gt;&lt;p&gt;JavaScript中没有明确的数组数据类型。但是，我们可以通过使用内置Array对象和它的方法对数组进行操作。Array对
-      
-    
-    </summary>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>JS基础知识点-字符串</title>
-    <link href="http://yoursite.com/2018/03/13/JS%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86%E7%82%B9_%E5%AD%97%E7%AC%A6%E4%B8%B2/"/>
-    <id>http://yoursite.com/2018/03/13/JS基础知识点_字符串/</id>
-    <published>2018-03-13T06:22:07.000Z</published>
-    <updated>2018-03-13T09:13:01.097Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="描述"><a href="#描述" class="headerlink" title="描述"></a>描述</h2><p>字符串对于保存可以以文本形式表示的数据非常有用。 一些常用的字符串操作有：查询字符串长度，使用 + 和 += 运算符来构建和连接字符串，使用 indexOf 方法检查某一子字符串在父字符串中的位置，又或是使用 substring 方法提取从父字符串中提取子字符串。</p><h2 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h2><p><strong>charAt</strong>() 返回特定位置的字符。<br><strong>concat</strong>() 连接两个字符串文本，并返回一个新的字符串。<br><strong>includes</strong>() 判断一个字符串里是否包含其他字符串。<br><strong>indexOf</strong>() 从字符串对象中返回首个被发现的给定值的索引值，如果没有找到则返回-1。<br><strong>lastIndexOf</strong>() 从字符串对象中返回最后一个被发现的给定值的索引值，如果没有找到则返回-1。<br><strong>match</strong>() 使用正则表达式与字符串相比较。<br><strong>replace</strong>() 被用来在正则表达式和字符串直接比较，然后用新的子串来替换被匹配的子串。<br><strong>search</strong>() 对正则表达式和指定字符串进行匹配搜索，返回第一个出现的匹配项的下标。<br><strong>slice</strong>() 摘取一个字符串区域，返回一个新的字符串。<br><strong>split</strong>() 通过分离字符串成字串，将字符串对象分割成字符串数组.<br><strong>substr</strong>() 通过指定字符数返回在指定位置开始的字符串中的字符。<br><strong>trim</strong>() 从字符串的开始和结尾去除空格。<br><strong>toLocaleUpperCase</strong>() 根据当前区域设置，将字符串中的字符转换成大写。</p><h2 id="结构图"><a href="#结构图" class="headerlink" title="结构图"></a>结构图</h2><p><img src="/2018/03/13/JS基础知识点_字符串/字符串.gif" alt="数据类型"></p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;h2 id=&quot;描述&quot;&gt;&lt;a href=&quot;#描述&quot; class=&quot;headerlink&quot; title=&quot;描述&quot;&gt;&lt;/a&gt;描述&lt;/h2&gt;&lt;p&gt;字符串对于保存可以以文本形式表示的数据非常有用。 一些常用的字符串操作有：查询字符串长度，使用 + 和 += 运算符来构建和连接字符串，使用
-      
-    
-    </summary>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>JS基础知识点-数据类型</title>
-    <link href="http://yoursite.com/2018/03/13/JS%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86%E7%82%B9_%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/"/>
-    <id>http://yoursite.com/2018/03/13/JS基础知识点_数据类型/</id>
-    <published>2018-03-13T06:21:07.000Z</published>
-    <updated>2018-03-13T07:47:09.122Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="数据结构和类型"><a href="#数据结构和类型" class="headerlink" title="数据结构和类型"></a>数据结构和类型</h2><p>JavaScript语言可以识别下面 7 种不同类型的值：  </p><blockquote><p>六种 原型 数据类型:  </p><blockquote><p><strong>Boolean</strong>.  布尔值，true 和 false.  </p><p><strong>null</strong>. 一个表明 null 值的特殊关键字。 JavaScript 是大小写敏感的，因此 null 与 Null、NULL或其他变量完全不同。</p><p><strong>undefined</strong>.  变量未定义时的属性。</p><p><strong>Number</strong>.  表示数字，例如： 42 或者 3.14159。</p><p><strong>String</strong>.  表示字符串，例如：”Howdy”</p><p><strong>Symbol</strong> ( 在 ECMAScript 6 中新添加的类型).。一种数据类型，它的实例是唯一且不可改变的。  </p></blockquote><p>-<strong>Object</strong> 对象</p></blockquote><h2 id="结构图"><a href="#结构图" class="headerlink" title="结构图"></a>结构图</h2><p><img src="/2018/03/13/JS基础知识点_数据类型/数据类型.gif" alt="数据类型"></p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;h2 id=&quot;数据结构和类型&quot;&gt;&lt;a href=&quot;#数据结构和类型&quot; class=&quot;headerlink&quot; title=&quot;数据结构和类型&quot;&gt;&lt;/a&gt;数据结构和类型&lt;/h2&gt;&lt;p&gt;JavaScript语言可以识别下面 7 种不同类型的值：  &lt;/p&gt;
-&lt;blockquote&gt;
-&lt;
-      
-    
-    </summary>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>laravel 环境搭建</title>
-    <link href="http://yoursite.com/2018/03/13/laravel-%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/"/>
-    <id>http://yoursite.com/2018/03/13/laravel-环境搭建/</id>
-    <published>2018-03-13T01:40:39.000Z</published>
-    <updated>2018-03-13T07:03:49.473Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="php环境搭建"><a href="#php环境搭建" class="headerlink" title="php环境搭建"></a>php环境搭建</h2><p>1.安装phpStudy集成环境<br>2.打开需要安装vc运行库,下载安装<br>3.项目代码路径在 <strong>C:\phpStudy\PHPTutorial\WWW</strong><br>4.将php添加到系统环境变量- <strong>C:\phpStudy\PHPTutorial\php\php-7.2.1-nts\</strong></p><h2 id="laravel环境搭建"><a href="#laravel环境搭建" class="headerlink" title="laravel环境搭建"></a>laravel环境搭建</h2><p>1.安装 Composer  </p><blockquote><p>将<a href="https://getcomposer.org/download/" target="_blank" rel="noopener">composer.phar</a>下载到本地,粘贴到php.exe同级目录下<br>创建composer.bat文件，写入 <strong>@ECHO OFF php “%~dp0composer.phar” %*</strong><br>输入命令 composer -v 查看安装结果  </p></blockquote><p>2.安装laravel</p><blockquote><p>打开phpStudy-&gt;PHP扩展及设置-&gt;PHP扩展-&gt;php_openssl<br>输入命令 <strong>composer global require “laravel/installer=~1.1”</strong><br>在用户环境变量中将composer放入 <strong>C:\Users\viziner\AppData\Roaming\Composer\vendor\bin</strong><br>在 <strong>C:\phpStudy\PHPTutorial\WWW</strong> 目录中，运行命令行 <strong>laravel new blog</strong> 创建工程</p></blockquote>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;h2 id=&quot;php环境搭建&quot;&gt;&lt;a href=&quot;#php环境搭建&quot; class=&quot;headerlink&quot; title=&quot;php环境搭建&quot;&gt;&lt;/a&gt;php环境搭建&lt;/h2&gt;&lt;p&gt;1.安装phpStudy集成环境&lt;br&gt;2.打开需要安装vc运行库,下载安装&lt;br&gt;3.项目代码路径
-      
-    
-    </summary>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>heyapass项目总结</title>
-    <link href="http://yoursite.com/2018/03/12/heyapass%E9%A1%B9%E7%9B%AE%E6%80%BB%E7%BB%93/"/>
-    <id>http://yoursite.com/2018/03/12/heyapass项目总结/</id>
-    <published>2018-03-12T07:48:32.000Z</published>
-    <updated>2018-03-13T08:29:11.734Z</updated>
-    
-    <content type="html"><![CDATA[<p><img src="/2018/03/12/heyapass项目总结/1.png" alt="图片">  </p><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>去年十二月份开始实习到三月，从一个在学校里的菜鸡变成了菜鸟，经过一个项目的编写了解了前端的许多东西，结合vue文档充分理解了框架的一些基本用法。在此做个总结。</p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;p&gt;&lt;img src=&quot;/2018/03/12/heyapass项目总结/1.png&quot; alt=&quot;图片&quot;&gt;  &lt;/p&gt;
-&lt;h2 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h2&gt;&lt;p&gt;去年十二月份开始实
+        &lt;h2 id=&quot;for…of和for…in&quot;&gt;&lt;a href=&quot;#for…of和for…in&quot; class=&quot;headerlink&quot; title=&quot;for…of和for…in&quot;&gt;&lt;/a&gt;for…of和for…in&lt;/h2&gt;&lt;blockquote&gt;
+&lt;p&gt;for…of 语句遍历可迭
       
     
     </summary>
@@ -214,11 +130,139 @@
   </entry>
   
   <entry>
+    <title>JS基础知识点-函数</title>
+    <link href="http://yoursite.com/2018/03/12/JS%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86%E7%82%B9_%E5%87%BD%E6%95%B0/"/>
+    <id>http://yoursite.com/2018/03/12/JS基础知识点_函数/</id>
+    <published>2018-03-12T06:22:07.000Z</published>
+    <updated>2018-03-14T03:46:42.821Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="闭包"><a href="#闭包" class="headerlink" title="闭包"></a>闭包</h2><p>闭包是 JavaScript 中最强大的特性之一。JavaScript 允许函数嵌套，并且内部函数可以访问定义在外部函数中的所有变量和函数，以及外部函数能访问的所有变量和函数。但是，外部函数却不能够访问定义在内部函数中的变量和函数。这给内部函数的变量提供了一定的安全性。此外，由于内部函数可以访问外部函数的作用域，因此当内部函数生存周期大于外部函数时，外部函数中定义的变量和函数的生存周期比内部函数执行时间长。当内部函数以某一种方式被任何一个外部函数作用域访问时，一个闭包就产生了。</p><pre><code>var pet = function(name) {          //外部函数定义了一个变量&quot;name&quot;  var getName = function() {                //内部函数可以访问 外部函数定义的&quot;name&quot;    return name;   }  //返回这个内部函数，从而将其暴露在外部函数作用域  return getName;               };myPet = pet(&quot;Vivie&quot;);myPet();                            // 返回结果 &quot;Vivie&quot;</code></pre><p>如果一个闭包的函数用外部函数的变量名定义了同样的变量，那在外部函数域将再也无法指向该变量。</p><pre><code>var createPet = function(name) {  // Outer function defines a variable called &quot;name&quot;  return {    setName: function(name) {    // Enclosed function also defines a variable called &quot;name&quot;      name = name;               // ??? How do we access the &quot;name&quot; defined by the outer function ???    }  }}</code></pre><h2 id="arguments-对象"><a href="#arguments-对象" class="headerlink" title="arguments 对象"></a>arguments 对象</h2><p>函数的实际参数会被保存在一个类似数组的arguments对象中。在函数内，你可以按如下方式找出传入的参数：</p><pre><code>arguments[i]</code></pre><p>例如，设想有一个用来连接字符串的函数。唯一事先确定的参数是在连接后的字符串中用来分隔各个连接部分的字符（译注：比如例子里的分号“；”）。该函数定义如下：</p><pre><code>function myConcat(separator) {   var result = &apos;&apos;; // 把值初始化成一个字符串，这样就可以用来保存字符串了！！   var i;   // iterate through arguments   for (i = 1; i &lt; arguments.length; i++) {      result += arguments[i] + separator;   }   return result;}</code></pre><p>你可以给这个函数传递任意数量的参数，它会将各个参数连接成一个字符串“列表”：</p><pre><code>// returns &quot;red, orange, blue, &quot;myConcat(&quot;, &quot;, &quot;red&quot;, &quot;orange&quot;, &quot;blue&quot;);// returns &quot;elephant; giraffe; lion; cheetah; &quot;myConcat(&quot;; &quot;, &quot;elephant&quot;, &quot;giraffe&quot;, &quot;lion&quot;, &quot;cheetah&quot;);// returns &quot;sage. basil. oregano. pepper. parsley. &quot;myConcat(&quot;. &quot;, &quot;sage&quot;, &quot;basil&quot;, &quot;oregano&quot;, &quot;pepper&quot;, &quot;parsley&quot;);</code></pre><div class="tip"><br>提示：arguments变量只是 ”类数组对象“，并不是一个数组。称其为类数组对象是说它有一个索引编号和length属性。尽管如此，它并不拥有全部的Array对象的操作方法。<br></div><h2 id="函数参数"><a href="#函数参数" class="headerlink" title="函数参数"></a>函数参数</h2><blockquote><p>默认参数</p></blockquote><p>在JavaScript中，函数参数的默认值是undefined。然而，在某些情况下设置不同的默认值是有用的。这时默认参数可以提供帮助。</p><pre><code>function multiply(a, b = 1) {  return a*b;}multiply(5); // 5</code></pre><blockquote><p>剩余参数</p></blockquote><p>剩余参数语法允许将不确定数量的参数表示为数组。在下面的例子中，使用剩余参数收集从第二个到最后参数。然后，我们将这个数组的每一个数与第一个参数相乘。</p><pre><code>function multiply(multiplier, ...theArgs) {  return theArgs.map(x =&gt; multiplier * x);}var arr = multiply(2, 1, 2, 3);console.log(arr); // [2, 4, 6]</code></pre><h2 id="箭头函数"><a href="#箭头函数" class="headerlink" title="箭头函数"></a>箭头函数</h2><blockquote><p>this 的词法</p></blockquote><p>在箭头函数出现之前，每一个新函数都重新定义了自己的 this 值（在严格模式下，一个新的对象在构造函数里是未定义的，以“对象方法”的方式调用的函数是上下文对象等）。以面向对象的编程风格，这样着实有点恼人。</p><pre><code>function Person() {  // The Person() constructor defines `this` as itself.  this.age = 0;  setInterval(function growUp() {    // In nonstrict mode, the growUp() function defines `this`     // as the global object, which is different from the `this`    // defined by the Person() constructor.    this.age++;  }, 1000);}var p = new Person();</code></pre><p>在ECMAScript 3/5里，通过把this的值赋值给一个变量可以修复这个问题。</p><pre><code>function Person() {  var self = this; // Some choose `that` instead of `self`.                    // Choose one and be consistent.  self.age = 0;  setInterval(function growUp() {    // The callback refers to the `self` variable of which    // the value is the expected object.    self.age++;  }, 1000);}</code></pre><p>另外，创建一个约束函数可以使得 this值被正确传递给 growUp() 函数。</p><p>箭头功能捕捉闭包上下文的this值，所以下面的代码工作正常。</p><pre><code>function Person(){  this.age = 0;  setInterval(() =&gt; {    this.age++; // |this| properly refers to the person object  }, 1000);}var p = new Person();</code></pre><h2 id="函数方法"><a href="#函数方法" class="headerlink" title="函数方法"></a>函数方法</h2><p><strong>apply</strong>(thisArg[, argsArray]) </p><p><strong>call</strong>(thisArg[,[param1,param2])</p><blockquote><p>该方法的作用和 apply() 方法类似，只有一个区别，就是call()方法接受的是若干个参数的列表，而apply()方法接受的是一个包含多个参数的数组。</p></blockquote><h2 id="结构图"><a href="#结构图" class="headerlink" title="结构图"></a>结构图</h2><p><img src="/2018/03/12/JS基础知识点_函数/函数.gif" alt="数据类型"></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h2 id=&quot;闭包&quot;&gt;&lt;a href=&quot;#闭包&quot; class=&quot;headerlink&quot; title=&quot;闭包&quot;&gt;&lt;/a&gt;闭包&lt;/h2&gt;&lt;p&gt;闭包是 JavaScript 中最强大的特性之一。JavaScript 允许函数嵌套，并且内部函数可以访问定义在外部函数中的所有变量和函数，
+      
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>JS基础知识点-字符串</title>
+    <link href="http://yoursite.com/2018/03/11/JS%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86%E7%82%B9_%E5%AD%97%E7%AC%A6%E4%B8%B2/"/>
+    <id>http://yoursite.com/2018/03/11/JS基础知识点_字符串/</id>
+    <published>2018-03-11T06:22:07.000Z</published>
+    <updated>2018-03-14T03:47:21.844Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="描述"><a href="#描述" class="headerlink" title="描述"></a>描述</h2><p>字符串对于保存可以以文本形式表示的数据非常有用。 一些常用的字符串操作有：查询字符串长度，使用 + 和 += 运算符来构建和连接字符串，使用 indexOf 方法检查某一子字符串在父字符串中的位置，又或是使用 substring 方法提取从父字符串中提取子字符串。</p><h2 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h2><p><strong>charAt</strong>() 返回特定位置的字符。<br><strong>concat</strong>() 连接两个字符串文本，并返回一个新的字符串。<br><strong>includes</strong>() 判断一个字符串里是否包含其他字符串。<br><strong>indexOf</strong>() 从字符串对象中返回首个被发现的给定值的索引值，如果没有找到则返回-1。<br><strong>lastIndexOf</strong>() 从字符串对象中返回最后一个被发现的给定值的索引值，如果没有找到则返回-1。<br><strong>match</strong>() 使用正则表达式与字符串相比较。<br><strong>replace</strong>() 被用来在正则表达式和字符串直接比较，然后用新的子串来替换被匹配的子串。<br><strong>search</strong>() 对正则表达式和指定字符串进行匹配搜索，返回第一个出现的匹配项的下标。<br><strong>slice</strong>() 摘取一个字符串区域，返回一个新的字符串。<br><strong>split</strong>() 通过分离字符串成字串，将字符串对象分割成字符串数组.<br><strong>substr</strong>() 通过指定字符数返回在指定位置开始的字符串中的字符。<br><strong>trim</strong>() 从字符串的开始和结尾去除空格。<br><strong>toLocaleUpperCase</strong>() 根据当前区域设置，将字符串中的字符转换成大写。</p><h2 id="结构图"><a href="#结构图" class="headerlink" title="结构图"></a>结构图</h2><p><img src="/2018/03/11/JS基础知识点_字符串/字符串.gif" alt="数据类型"></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h2 id=&quot;描述&quot;&gt;&lt;a href=&quot;#描述&quot; class=&quot;headerlink&quot; title=&quot;描述&quot;&gt;&lt;/a&gt;描述&lt;/h2&gt;&lt;p&gt;字符串对于保存可以以文本形式表示的数据非常有用。 一些常用的字符串操作有：查询字符串长度，使用 + 和 += 运算符来构建和连接字符串，使用
+      
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>JS基础知识点-数组</title>
+    <link href="http://yoursite.com/2018/03/10/JS%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86%E7%82%B9_%E6%95%B0%E7%BB%84/"/>
+    <id>http://yoursite.com/2018/03/10/JS基础知识点_数组/</id>
+    <published>2018-03-10T06:22:07.000Z</published>
+    <updated>2018-03-14T03:47:21.836Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="数组对象"><a href="#数组对象" class="headerlink" title="数组对象"></a>数组对象</h2><p>JavaScript中没有明确的数组数据类型。但是，我们可以通过使用内置Array对象和它的方法对数组进行操作。Array对象有很多操作数组的方法，比如合并、反转、排序等。数组对象有一个决定数组长度和使用正则表达式操作其他属性的属性。  </p><h2 id="数组方法"><a href="#数组方法" class="headerlink" title="数组方法"></a>数组方法</h2><blockquote><p>添加删除  </p></blockquote><p><strong>unshift</strong>() 在数组开头添加一个或多个元素，并返回数组的新长度。</p><pre><code>var myArray = new Array (&quot;1&quot;, &quot;2&quot;, &quot;3&quot;);myArray.unshift(&quot;4&quot;, &quot;5&quot;); // myArray becomes [&quot;4&quot;, &quot;5&quot;, &quot;1&quot;, &quot;2&quot;, &quot;3&quot;]</code></pre><p><strong>push</strong>() 在数组末尾添加一个或多个元素，并返回数组操作后的长度。</p><pre><code>var myArray = new Array(&quot;1&quot;, &quot;2&quot;);myArray.push(&quot;3&quot;); // myArray is now [&quot;1&quot;, &quot;2&quot;, &quot;3&quot;]</code></pre><p><strong>shift</strong>() 从数组移出第一个元素，并返回该元素。</p><pre><code>var myArray = new Array (&quot;1&quot;, &quot;2&quot;, &quot;3&quot;);var first = myArray.shift(); // myArray is now [&quot;2&quot;, &quot;3&quot;], first is &quot;1&quot;</code></pre><p><strong>pop</strong>() 从数组移出最后一个元素，并返回该元素。</p><pre><code>var myArray = new Array(&quot;1&quot;, &quot;2&quot;, &quot;3&quot;);var last = myArray.pop(); // myArray is now [&quot;1&quot;, &quot;2&quot;], last = &quot;3&quot;</code></pre><blockquote><p>合并数组</p></blockquote><p><strong>concat</strong>() 连接两个数组并返回一个新的数组。</p><pre><code>var myArray = new Array(&quot;1&quot;, &quot;2&quot;, &quot;3&quot;);myArray = myArray.concat(&quot;a&quot;, &quot;b&quot;, &quot;c&quot;); // myArray is now [&quot;1&quot;, &quot;2&quot;, &quot;3&quot;, &quot;a&quot;, &quot;b&quot;, &quot;c&quot;]</code></pre><blockquote><p>数组转换类型</p></blockquote><p><strong>join</strong>(deliminator = ‘,’) 将数组的所有元素连接成一个字符串,用指定分隔符分割。</p><pre><code>var myArray = new Array(&quot;Wind&quot;, &quot;Rain&quot;, &quot;Fire&quot;);var list = myArray.join(&quot; - &quot;); // list is &quot;Wind - Rain - Fire&quot;</code></pre><p><strong>toString</strong>() 转换成成一个字符串。</p><pre><code>var myArray = new Array(&quot;Wind&quot;, &quot;Rain&quot;, &quot;Fire&quot;);var list = myArray.toString(); // list is &quot;&apos;Wind,Rain,Fire&quot;</code></pre><p><strong>toLocaleString</strong>() 转换成本地格式字符串。</p><pre><code>var myArray = new Array(&quot;Wind&quot;, &quot;Rain&quot;, &quot;Fire&quot;);var list = myArray.toLocaleString(); // list is &quot;&apos;Wind,Rain,Fire&quot;</code></pre><blockquote><p>提取子数组</p></blockquote><p><strong>slice</strong>(start_index, upto_index) 从数组提取一个片段，并作为一个新数组返回。</p><pre><code>var myArray = new Array (&quot;a&quot;, &quot;b&quot;, &quot;c&quot;, &quot;d&quot;, &quot;e&quot;);myArray = myArray.slice(1, 4); // starts at index 1 and extracts all elements                               // until index 3, returning [ &quot;b&quot;, &quot;c&quot;, &quot;d&quot;]   </code></pre><blockquote><p>增删改</p></blockquote><p><strong>splice</strong>(index, count_to_remove, addElement1, addElement2, …)从数组移出一些元素，（可选）并替换它们。</p><pre><code>var myArray = new Array (&quot;1&quot;, &quot;2&quot;, &quot;3&quot;, &quot;4&quot;, &quot;5&quot;);myArray.splice(1, 3, &quot;a&quot;, &quot;b&quot;, &quot;c&quot;, &quot;d&quot;); // myArray is now [&quot;1&quot;, &quot;a&quot;, &quot;b&quot;, &quot;c&quot;, &quot;d&quot;, &quot;5&quot;]// This code started at index one (or where the &quot;2&quot; was), // removed 3 elements there, and then inserted all consecutive// elements in its place.</code></pre><blockquote><p>排序</p></blockquote><p><strong>reverse</strong>() 颠倒数组元素的顺序：第一个变成最后一个，最后一个变成第一个。</p><pre><code>var myArray = new Array (&quot;1&quot;, &quot;2&quot;, &quot;3&quot;);myArray.reverse(); // transposes the array so that myArray = [ &quot;3&quot;, &quot;2&quot;, &quot;1&quot; ]  </code></pre><p><strong>sort</strong>() 给数组元素排序。</p><pre><code>var sortFn = function(a, b){  if (a[a.length - 1] &lt; b[b.length - 1]) return -1;  if (a[a.length - 1] &gt; b[b.length - 1]) return 1;  if (a[a.length - 1] == b[b.length - 1]) return 0;}myArray.sort(sortFn); // sorts the array so that myArray = [&quot;Wind&quot;,&quot;Fire&quot;,&quot;Rain&quot;]</code></pre><blockquote><p>位置查找</p></blockquote><p><strong>indexOf</strong>(searchElement[, fromIndex]) 在数组中搜索searchElement 并返回第一个匹配的索引。</p><pre><code>var a = [&apos;a&apos;, &apos;b&apos;, &apos;a&apos;, &apos;b&apos;, &apos;a&apos;];console.log(a.indexOf(&apos;b&apos;)); // logs 1// Now try again, starting from after the last matchconsole.log(a.indexOf(&apos;b&apos;, 2)); // logs 3console.log(a.indexOf(&apos;z&apos;)); // logs -1, because &apos;z&apos; was not found</code></pre><p><strong>lastIndexOf</strong>(searchElement[, fromIndex]) 和 indexOf 差不多，但这是从结尾开始，并且是反向搜索。</p><pre><code>var a = [&apos;a&apos;, &apos;b&apos;, &apos;c&apos;, &apos;d&apos;, &apos;a&apos;, &apos;b&apos;];console.log(a.lastIndexOf(&apos;b&apos;)); // logs 5// Now try again, starting from before the last matchconsole.log(a.lastIndexOf(&apos;b&apos;, 4)); // logs 1console.log(a.lastIndexOf(&apos;z&apos;)); // logs -1</code></pre><blockquote><p>迭代方法</p></blockquote><p><strong>forEach</strong>(callback[, thisObject]) 在数组每个元素项上执行callback。</p><pre><code>var a = [&apos;a&apos;, &apos;b&apos;, &apos;c&apos;];a.forEach(function(element) { console.log(element);} ); // logs each item in turn</code></pre><p><strong>map</strong>(callback[, thisObject]) 在数组的每个单元项上执行callback函数，并返回包含回调函数返回值的新数组。</p><pre><code>var a1 = [&apos;a&apos;, &apos;b&apos;, &apos;c&apos;];var a2 = a1.map(function(item) { return item.toUpperCase(); });console.log(a2); // logs A,B,C</code></pre><p><strong>filter</strong>(callback[, thisObject]) 返回一个包含所有在回调函数上返回为true的元素的新数组。</p><pre><code>var a1 = [&apos;a&apos;, 10, &apos;b&apos;, 20, &apos;c&apos;, 30];var a2 = a1.filter(function(item) { return typeof item == &apos;number&apos;; });console.log(a2); // logs 10,20,30</code></pre><p><strong>every</strong>(callback[, thisObject]) 当数组中每一个元素在callback上被返回true时就返回true。</p><pre><code>function isNumber(value){  return typeof value == &apos;number&apos;;}var a1 = [1, 2, 3];console.log(a1.every(isNumber)); // logs truevar a2 = [1, &apos;2&apos;, 3];console.log(a2.every(isNumber)); // logs false</code></pre><p><strong>some</strong>(callback[, thisObject]) 只要数组中有一项在callback上被返回true，就返回true。</p><pre><code>function isNumber(value){  return typeof value == &apos;number&apos;;}var a1 = [1, 2, 3];console.log(a1.some(isNumber)); // logs truevar a2 = [1, &apos;2&apos;, 3];console.log(a2.some(isNumber)); // logs truevar a3 = [&apos;1&apos;, &apos;2&apos;, &apos;3&apos;];console.log(a3.some(isNumber)); // logs false</code></pre><blockquote><p>缩小方法</p></blockquote><p><strong>reduce</strong>(callback[, initialValue]) 使用回调函数 callback(firstValue, secondValue) 把数组列表计算成一个单一值（译者注：他数组元素两两递归处理的方式把数组计算成一个值）</p><pre><code>var a = [10, 20, 30];var total = a.reduce(function(first, second) { return first + second; }, 0);console.log(total) // Prints 60</code></pre><p><strong>reduceRight</strong>(callback[, initalvalue]) 和 reduce()相似，但这从最后一个元素开始的。</p><h2 id="结构图"><a href="#结构图" class="headerlink" title="结构图"></a>结构图</h2><p><img src="/2018/03/10/JS基础知识点_数组/数组.gif" alt="数据类型"></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h2 id=&quot;数组对象&quot;&gt;&lt;a href=&quot;#数组对象&quot; class=&quot;headerlink&quot; title=&quot;数组对象&quot;&gt;&lt;/a&gt;数组对象&lt;/h2&gt;&lt;p&gt;JavaScript中没有明确的数组数据类型。但是，我们可以通过使用内置Array对象和它的方法对数组进行操作。Array对
+      
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>JS基础知识点-数据类型</title>
+    <link href="http://yoursite.com/2018/03/09/JS%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86%E7%82%B9_%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/"/>
+    <id>http://yoursite.com/2018/03/09/JS基础知识点_数据类型/</id>
+    <published>2018-03-09T06:21:07.000Z</published>
+    <updated>2018-03-14T03:47:21.819Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="数据结构和类型"><a href="#数据结构和类型" class="headerlink" title="数据结构和类型"></a>数据结构和类型</h2><p>JavaScript语言可以识别下面 7 种不同类型的值：  </p><blockquote><p>六种 原型 数据类型:  </p><blockquote><p><strong>Boolean</strong>.  布尔值，true 和 false.  </p><p><strong>null</strong>. 一个表明 null 值的特殊关键字。 JavaScript 是大小写敏感的，因此 null 与 Null、NULL或其他变量完全不同。</p><p><strong>undefined</strong>.  变量未定义时的属性。</p><p><strong>Number</strong>.  表示数字，例如： 42 或者 3.14159。</p><p><strong>String</strong>.  表示字符串，例如：”Howdy”</p><p><strong>Symbol</strong> ( 在 ECMAScript 6 中新添加的类型).。一种数据类型，它的实例是唯一且不可改变的。  </p></blockquote><p>-<strong>Object</strong> 对象</p></blockquote><h2 id="结构图"><a href="#结构图" class="headerlink" title="结构图"></a>结构图</h2><p><img src="/2018/03/09/JS基础知识点_数据类型/数据类型.gif" alt="数据类型"></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h2 id=&quot;数据结构和类型&quot;&gt;&lt;a href=&quot;#数据结构和类型&quot; class=&quot;headerlink&quot; title=&quot;数据结构和类型&quot;&gt;&lt;/a&gt;数据结构和类型&lt;/h2&gt;&lt;p&gt;JavaScript语言可以识别下面 7 种不同类型的值：  &lt;/p&gt;
+&lt;blockquote&gt;
+&lt;
+      
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>SASS知识点总结</title>
+    <link href="http://yoursite.com/2018/03/06/SASS%E7%9F%A5%E8%AF%86%E7%82%B9%E6%80%BB%E7%BB%93/"/>
+    <id>http://yoursite.com/2018/03/06/SASS知识点总结/</id>
+    <published>2018-03-06T01:32:27.000Z</published>
+    <updated>2018-03-14T03:48:30.562Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="变量"><a href="#变量" class="headerlink" title="变量"></a>变量</h2><p>变量支持块级作用域，嵌套规则内定义的变量只能在嵌套规则内使用（局部变量），不在嵌套规则内定义的变量则可在任何地方使用（全局变量）。将局部变量转换为全局变量可以添加 !global 声明：</p><pre><code>#main {  $width: 5em !global;  width: $width;}#sidebar {  width: $width;}</code></pre><p>编译为</p><pre><code>#main {  width: 5em;}#sidebar {  width: 5em;}</code></pre><h2 id="继承"><a href="#继承" class="headerlink" title="继承"></a>继承</h2><p>在设计网页的时候常常遇到这种情况：一个元素使用的样式与另一个元素完全相同，但又添加了额外的样式。通常会在 HTML 中给元素定义两个 class，一个通用样式，一个特殊样式。假设现在要设计一个普通错误样式与一个严重错误样式，一般会这样写：</p><pre><code>.error {  border: 1px #f00;  background-color: #fdd;}.seriousError {  @extend .error;  border-width: 3px;}</code></pre><h2 id="Mixin"><a href="#Mixin" class="headerlink" title="Mixin"></a>Mixin</h2><p>混合指令（Mixin）用于定义可重复使用的样式，避免了使用无语意的 class，比如 .float-left。混合指令可以包含所有的 CSS 规则，绝大部分 Sass 规则，甚至通过参数功能引入变量，输出多样化的样式。</p><blockquote><p>混合指令的用法是在 @mixin 后添加名称与样式，比如名为 large-text 的混合通过下面的代码定义：</p></blockquote><pre><code>@mixin large-text {  font: {    family: Arial;    size: 20px;    weight: bold;  }  color: #ff0000;}</code></pre><blockquote><p>混合也需要包含选择器和属性，甚至可以用 &amp; 引用父选择器：</p></blockquote><pre><code>@mixin clearfix {  display: inline-block;  &amp;:after {    content: &quot;.&quot;;    display: block;    height: 0;    clear: both;    visibility: hidden;  }  * html &amp; { height: 1px }}</code></pre><blockquote><p>使用 @include 指令引用混合样式，格式是在其后添加混合名称，以及需要的参数（可选）：</p></blockquote><pre><code>.page-title {  @include large-text;  padding: 4px;  margin-top: 10px;}</code></pre><h2 id="对比extend和include"><a href="#对比extend和include" class="headerlink" title="对比extend和include"></a>对比extend和include</h2><blockquote><p>3.2版本后，选择器占位符%placeholder能解决继承中的缺点。使用(%)开始，而且编译出来的CSS代码中并不会包括%placeholder规则中的样式，除非是通过@extend对其进行调用。</p></blockquote><pre><code>%icon {  transition: background-color ease .2s;  margin: 0 .5em;}.error-icon {  @extend %icon;  /*错误图标指定的样式... */}.info-icon {  @extend %icon;  /* 信息图标指定的样式... */}</code></pre><p>编译出的CSS:</p><pre><code>.error-icon, .info-icon {  transition: background-color ease .2s;  margin: 0 .5em;}.error-icon {  /*错误图标指定的样式... */}.info-icon {  /* 信息图标指定的样式... */}</code></pre><blockquote><p>使用@mixin .icon来实现上面示例的效果：</p></blockquote><pre><code>@mixin icon {  transition: background-color ease .2s;  margin: 0 .5em;}.error-icon {  @include icon;  /*错误图标指定的样式... */}.info-icon {  @include icon;  /* 信息图标指定的样式... */}</code></pre><p> 编译出来的CSS：</p><pre><code>.error-icon {  transition: background-color ease .2s;  margin: 0 .5em;  /*错误图标指定的样式... */}.info-icon {  transition: background-color ease .2s;  margin: 0 .5em;  /* 信息图标指定的样式... */}</code></pre><blockquote><p>使用@extend调用定义好的选择器占位符%placeholder有所限制，他不能在不同的@media中运行。<br>在某些情况下,@extend可以大大的减化你的CSS输出，并且显著的提高你的CSS性能。</p></blockquote><h2 id="压缩css"><a href="#压缩css" class="headerlink" title="压缩css"></a>压缩css</h2><blockquote><p><strong>sass-loader</strong> -&gt; 编译sass文件为css文件  </p><p><strong>css-loader</strong> -&gt; 编译css文件为字符串</p><p><strong>style-loader</strong> -&gt; 把css字符串打入html文件的style标签中。</p></blockquote>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h2 id=&quot;变量&quot;&gt;&lt;a href=&quot;#变量&quot; class=&quot;headerlink&quot; title=&quot;变量&quot;&gt;&lt;/a&gt;变量&lt;/h2&gt;&lt;p&gt;变量支持块级作用域，嵌套规则内定义的变量只能在嵌套规则内使用（局部变量），不在嵌套规则内定义的变量则可在任何地方使用（全局变量）。将局部变量
+      
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>laravel 环境搭建</title>
+    <link href="http://yoursite.com/2018/03/05/laravel-%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/"/>
+    <id>http://yoursite.com/2018/03/05/laravel-环境搭建/</id>
+    <published>2018-03-05T01:40:39.000Z</published>
+    <updated>2018-03-14T03:47:21.852Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="php环境搭建"><a href="#php环境搭建" class="headerlink" title="php环境搭建"></a>php环境搭建</h2><p>1.安装phpStudy集成环境<br>2.打开需要安装vc运行库,下载安装<br>3.项目代码路径在 <strong>C:\phpStudy\PHPTutorial\WWW</strong><br>4.将php添加到系统环境变量- <strong>C:\phpStudy\PHPTutorial\php\php-7.2.1-nts\</strong></p><h2 id="laravel环境搭建"><a href="#laravel环境搭建" class="headerlink" title="laravel环境搭建"></a>laravel环境搭建</h2><p>1.安装 Composer  </p><blockquote><p>将<a href="https://getcomposer.org/download/" target="_blank" rel="noopener">composer.phar</a>下载到本地,粘贴到php.exe同级目录下<br>创建composer.bat文件，写入 <strong>@ECHO OFF php “%~dp0composer.phar” %*</strong><br>输入命令 composer -v 查看安装结果  </p></blockquote><p>2.安装laravel</p><blockquote><p>打开phpStudy-&gt;PHP扩展及设置-&gt;PHP扩展-&gt;php_openssl<br>输入命令 <strong>composer global require “laravel/installer=~1.1”</strong><br>在用户环境变量中将composer放入 <strong>C:\Users\viziner\AppData\Roaming\Composer\vendor\bin</strong><br>在 <strong>C:\phpStudy\PHPTutorial\WWW</strong> 目录中，运行命令行 <strong>laravel new blog</strong> 创建工程</p></blockquote>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h2 id=&quot;php环境搭建&quot;&gt;&lt;a href=&quot;#php环境搭建&quot; class=&quot;headerlink&quot; title=&quot;php环境搭建&quot;&gt;&lt;/a&gt;php环境搭建&lt;/h2&gt;&lt;p&gt;1.安装phpStudy集成环境&lt;br&gt;2.打开需要安装vc运行库,下载安装&lt;br&gt;3.项目代码路径
+      
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
     <title>Markdown示例</title>
-    <link href="http://yoursite.com/2018/03/12/Markdown%E7%A4%BA%E4%BE%8B/"/>
-    <id>http://yoursite.com/2018/03/12/Markdown示例/</id>
-    <published>2018-03-12T06:02:46.000Z</published>
-    <updated>2018-03-13T07:03:44.393Z</updated>
+    <link href="http://yoursite.com/2018/03/01/Markdown%E7%A4%BA%E4%BE%8B/"/>
+    <id>http://yoursite.com/2018/03/01/Markdown示例/</id>
+    <published>2018-03-01T06:02:46.000Z</published>
+    <updated>2018-03-14T03:47:21.808Z</updated>
     
     <content type="html"><![CDATA[<h2 id="1-标题"><a href="#1-标题" class="headerlink" title="1.标题"></a>1.标题</h2><pre><code>大标题一般显示工程名,类似html的\&lt;h1\&gt;&lt;br /&gt;   你只要在标题下面跟上=====即可 </code></pre><hr><pre><code>中标题一般显示重点项,类似html的\&lt;h2\&gt;&lt;br /&gt;    你只要在标题下面输入------即可   </code></pre><hr><pre><code>小标题类似html的\&lt;h3\&gt;&lt;br /&gt;   小标题的格式如下 ### 小标题&lt;br /&gt;   注意#和标题字符中间要有空格#一级标题##二级标题###三级标题####四级标题#####五级标题######六级标题   </code></pre><h2 id="2-文本框"><a href="#2-文本框" class="headerlink" title="2.文本框"></a>2.文本框</h2><pre><code>单行文本框   这是一个单行的文本框,只要两个Tab再输入文字即可   </code></pre><hr><pre><code>多行文本框     这是一个有多行的文本框   你可以写入代码等,每行文字只要输入两个Tab再输入文字即可   这里你可以输入一段代码   </code></pre><h3 id="比如我们可以在多行文本框里输入一段代码"><a href="#比如我们可以在多行文本框里输入一段代码" class="headerlink" title="比如我们可以在多行文本框里输入一段代码"></a>比如我们可以在多行文本框里输入一段代码</h3><pre><code>function main(){    console.log(&apos;helloword&apos;);};</code></pre><h2 id="3-文字"><a href="#3-文字" class="headerlink" title="3.文字"></a>3.文字</h2><pre><code>*斜体文本*    _斜体文本_**粗体文本**    __粗体文本__***粗斜体文本***    ___粗斜体文本___</code></pre><p><em>斜体文本</em>    <em>斜体文本</em><br><strong>粗体文本</strong>    <strong>粗体文本</strong><br><strong><em>粗斜体文本</em></strong>    <strong><em>粗斜体文本</em></strong></p><h2 id="4-链接"><a href="#4-链接" class="headerlink" title="4.链接"></a>4.链接</h2><pre><code>链接   [点击这里你可以链接到www.baidu.com](http://www.baidu.com)&lt;br /&gt;     </code></pre><hr><pre><code>只是显示图片   ![github](http://github.com/unicorn.png &quot;github&quot;)   </code></pre><hr><pre><code>想点击某个图片进入一个网页,比如我想点击github的icorn然后再进入www.github.com   [![image]](http://www.github.com/)   [image]: http://github.com/github.png &quot;github&quot;  </code></pre><h2 id="5-字符包围"><a href="#5-字符包围" class="headerlink" title="5.字符包围"></a>5.字符包围</h2><h3 id="文字被些字符包围-多重包围"><a href="#文字被些字符包围-多重包围" class="headerlink" title="文字被些字符包围,多重包围"></a>文字被些字符包围,多重包围</h3><pre><code>&gt; 文字被些字符包围开始   &gt;   &gt; &gt; 只要再文字前面加上&gt;空格即可   &gt;   &gt;  &gt; &gt; 如果你要换行的话,新起一行,输入&gt;空格即可,后面不接文字   &gt;   &gt; &gt; &gt; &gt; 但&gt; 只能放在行首才有效   </code></pre><blockquote><p>文字被些字符包围开始   </p><blockquote><p>只要再文字前面加上&gt;空格即可   </p><blockquote><p>如果你要换行的话,新起一行,输入&gt;空格即可,后面不接文字   </p><blockquote><p>但&gt; 只能放在行首才有效   </p></blockquote></blockquote></blockquote></blockquote><h2 id="6-特殊字符处理"><a href="#6-特殊字符处理" class="headerlink" title="6.特殊字符处理"></a>6.特殊字符处理</h2><p>有一些特殊字符如&lt;,#等,只要在特殊字符前面加上转义字符\即可<br><br>你想换行的话其实可以直接用html标签\<br \=""></p><h2 id="7-换行"><a href="#7-换行" class="headerlink" title="7.换行"></a>7.换行</h2><pre><code>在当前行的结尾加 2 个空格  这行就会新起一行如果是要起一个新段落，只需要空出一行即可。</code></pre><h2 id="8-列表"><a href="#8-列表" class="headerlink" title="8.列表"></a>8.列表</h2><pre><code>1. 列出所有元素：    - 无序列表元素 A        1. 元素 A 的有序子列表    - 前面加四个空格2. 列表里的多段换行：    前面必须加四个空格，    这样换行，整体的格式不会乱3. 列表里引用：    &gt; 前面空一行    &gt; 仍然需要在 &gt;  前面加四个空格</code></pre><ol><li>列出所有元素：<ul><li>无序列表元素 A<ol><li>元素 A 的有序子列表</li></ol></li><li>前面加四个空格</li></ul></li><li>列表里的多段换行：<br> 前面必须加四个空格，<br> 这样换行，整体的格式不会乱</li><li><p>列表里引用：</p><blockquote><p>前面空一行<br>仍然需要在 &gt;  前面加四个空格</p></blockquote></li></ol><h2 id="9-主题自带标签"><a href="#9-主题自带标签" class="headerlink" title="9.主题自带标签"></a>9.主题自带标签</h2><blockquote><p>警告框</p></blockquote><pre><code>&lt;div class=&quot;tip&quot;&gt;    预处理器很强大，但它只是编写 CSS 的辅助工具。出于对扩展和维护等方面的考虑，在大型项目中有必要使用预处理器构建 CSS；但是对于小型项目，原生的 CSS 可能是一种更好的选择。不要肆意使用预处理器！&lt;/div&gt;</code></pre><div class="tip"><br>    预处理器很强大，但它只是编写 CSS 的辅助工具。出于对扩展和维护等方面的考虑，在大型项目中有必要使用预处理器构建 CSS；但是对于小型项目，原生的 CSS 可能是一种更好的选择。不要肆意使用预处理器！<br></div><hr><blockquote><p>展示文章的核心内容，文章摘要之后其他内容之前添加。</p></blockquote><pre><code>&lt;!-- more --&gt;</code></pre>]]></content>
     
@@ -228,6 +272,28 @@
       
         &lt;h2 id=&quot;1-标题&quot;&gt;&lt;a href=&quot;#1-标题&quot; class=&quot;headerlink&quot; title=&quot;1.标题&quot;&gt;&lt;/a&gt;1.标题&lt;/h2&gt;&lt;pre&gt;&lt;code&gt;大标题一般显示工程名,类似html的\&amp;lt;h1\&amp;gt;&amp;lt;br /&amp;gt;   
 你只要在标题下面
+      
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>heyapass项目总结</title>
+    <link href="http://yoursite.com/2018/02/20/heyapass%E9%A1%B9%E7%9B%AE%E6%80%BB%E7%BB%93/"/>
+    <id>http://yoursite.com/2018/02/20/heyapass项目总结/</id>
+    <published>2018-02-20T07:48:32.000Z</published>
+    <updated>2018-03-14T05:40:19.159Z</updated>
+    
+    <content type="html"><![CDATA[<p><img src="/2018/02/20/heyapass项目总结/1.png" alt="图片">  </p><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>去年十二月份开始实习到三月，从一个在学校里的菜鸡变成了菜鸟，经过一个项目的编写了解了前端的许多东西，结合vue文档充分理解了框架的一些基本用法。在此做个总结。</p><blockquote><p>项目理解的技术:</p></blockquote><p>对于数据的存储和传递<br>vue整体技术的实现</p><blockquote><p>之后需要掌握的技术:</p></blockquote><p>代码的编写规范<br>状态管理vuex的使用技巧<br>api返回值得处理<br>sass编写条理的css<br>webpack配置详细了解<br>vue插槽<strong>slot</strong>和混入的理解与使用  </p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;&lt;img src=&quot;/2018/02/20/heyapass项目总结/1.png&quot; alt=&quot;图片&quot;&gt;  &lt;/p&gt;
+&lt;h2 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h2&gt;&lt;p&gt;去年十二月份开始实
       
     
     </summary>
