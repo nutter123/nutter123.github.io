@@ -5,9 +5,9 @@
   <subtitle>blog</subtitle>
   <link href="/atom.xml" rel="self"/>
   
-  <link href="http://yoursite.com/"/>
-  <updated>2018-03-14T03:32:49.311Z</updated>
-  <id>http://yoursite.com/</id>
+  <link href="https://nutter123.github.io/"/>
+  <updated>2018-03-14T07:11:48.974Z</updated>
+  <id>https://nutter123.github.io/</id>
   
   <author>
     <name>nutter</name>
@@ -17,11 +17,35 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>Vue-router知识点总结</title>
-    <link href="http://yoursite.com/2018/03/14/Vue-router%E7%9F%A5%E8%AF%86%E7%82%B9%E6%80%BB%E7%BB%93/"/>
-    <id>http://yoursite.com/2018/03/14/Vue-router知识点总结/</id>
+    <title>Vue-代码规范</title>
+    <link href="https://nutter123.github.io/2018/03/14/Vue-%E4%BB%A3%E7%A0%81%E8%A7%84%E8%8C%83/"/>
+    <id>https://nutter123.github.io/2018/03/14/Vue-代码规范/</id>
+    <published>2018-03-14T06:39:09.000Z</published>
+    <updated>2018-03-14T07:11:48.974Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="组件名为多个单词"><a href="#组件名为多个单词" class="headerlink" title="组件名为多个单词"></a>组件名为多个单词</h2><blockquote><p>好例子</p></blockquote><pre><code>Vue.component(&apos;todo-item&apos;, {  // ...})export default {  name: &apos;TodoItem&apos;,  // ...}</code></pre><h2 id="组件的-data-必须是一个函数。"><a href="#组件的-data-必须是一个函数。" class="headerlink" title="组件的 data 必须是一个函数。"></a>组件的 data 必须是一个函数。</h2><blockquote><p>好例子</p></blockquote><pre><code>// In a .vue fileexport default {  data () {    return {      foo: &apos;bar&apos;    }  }}</code></pre><h2 id="Prop-定义应该尽量详细。"><a href="#Prop-定义应该尽量详细。" class="headerlink" title="Prop 定义应该尽量详细。"></a>Prop 定义应该尽量详细。</h2><blockquote><p>好例子</p></blockquote><pre><code>props: {  status: String}</code></pre><p> 更好的做法！</p><pre><code>props: {  status: {    type: String,    required: true,    validator: function (value) {      return [        &apos;syncing&apos;,        &apos;synced&apos;,        &apos;version-conflict&apos;,        &apos;error&apos;      ].indexOf(value) !== -1    }  }}</code></pre><h2 id="为-v-for-设置键值"><a href="#为-v-for-设置键值" class="headerlink" title="为 v-for 设置键值"></a>为 v-for 设置键值</h2><blockquote><p>好例子</p></blockquote><pre><code>&lt;ul&gt;  &lt;li    v-for=&quot;todo in todos&quot;    :key=&quot;todo.id&quot;  &gt;    {{ todo.text }}  &lt;/li&gt;&lt;/ul&gt;</code></pre><h2 id="永远不要把-v-if-和-v-for-同时用在同一个元素上。"><a href="#永远不要把-v-if-和-v-for-同时用在同一个元素上。" class="headerlink" title="永远不要把 v-if 和 v-for 同时用在同一个元素上。"></a>永远不要把 v-if 和 v-for 同时用在同一个元素上。</h2><ul><li><p>为了过滤一个列表中的项目 (比如 v-for=”user in users” v-if=”user.isActive”)。在这种情形下，请将 users 替换为一个计算属性 (比如 activeUsers)，让其返回过滤后的列表。  </p></li><li><p>为了避免渲染本应该被隐藏的列表 (比如 v-for=”user in users” v-if=”shouldShowUsers”)。这种情形下，请将 v-if 移动至容器元素上 (比如 ul, ol)。</p></li></ul><blockquote><p>好例子</p></blockquote><pre><code>&lt;ul&gt;  &lt;li    v-for=&quot;user in activeUsers&quot;    :key=&quot;user.id&quot;  &gt;    {{ user.name }}  &lt;/li&gt;&lt;/ul&gt;&lt;ul v-if=&quot;shouldShowUsers&quot;&gt;  &lt;li    v-for=&quot;user in users&quot;    :key=&quot;user.id&quot;  &gt;    {{ user.name }}  &lt;/li&gt;&lt;/ul&gt;</code></pre><h2 id="为组件样式设置作用域"><a href="#为组件样式设置作用域" class="headerlink" title="为组件样式设置作用域"></a>为组件样式设置作用域</h2><blockquote><p>好例子</p></blockquote><pre><code>&lt;template&gt;  &lt;button class=&quot;button button-close&quot;&gt;X&lt;/button&gt;&lt;/template&gt;&lt;!-- 使用 `scoped` 特性 --&gt;&lt;style scoped&gt;.button {  border: none;  border-radius: 2px;}.button-close {  background-color: red;}&lt;/style&gt;</code></pre><hr><pre><code>&lt;template&gt;  &lt;button :class=&quot;[$style.button, $style.buttonClose]&quot;&gt;X&lt;/button&gt;&lt;/template&gt;&lt;!-- 使用 CSS Modules --&gt;&lt;style module&gt;.button {  border: none;  border-radius: 2px;}.buttonClose {  background-color: red;}&lt;/style&gt;</code></pre><hr><pre><code>&lt;template&gt;  &lt;button class=&quot;c-Button c-Button--close&quot;&gt;X&lt;/button&gt;&lt;/template&gt;&lt;!-- 使用 BEM 约定 --&gt;&lt;style&gt;.c-Button {  border: none;  border-radius: 2px;}.c-Button--close {  background-color: red;}&lt;/style&gt;</code></pre><h2 id="私有属性名"><a href="#私有属性名" class="headerlink" title="私有属性名"></a>私有属性名</h2><p>在插件、混入等扩展中始终为自定义的私有属性使用 $_ 前缀。并附带一个命名空间以回避和其它作者的冲突 (比如 $<em>yourPluginName</em>)。</p><blockquote><p>Vue 使用 _ 前缀来定义其自身的私有属性，所以使用相同的前缀 (比如 _update) 有覆写实例属性的风险。即便你检查确认 Vue 当前版本没有用到这个属性名，也不能保证和将来的版本没有冲突。  </p><p>对于 $ 前缀来说，其在 Vue 生态系统中的目的是暴露给用户的一个特殊的实例属性，所以把它用于私有属性并不合适。  </p><p>不过，我们推荐把这两个前缀结合为 $_，作为一个用户定义的私有属性的约定，以确保不会和 Vue 自身相冲突。  </p></blockquote><hr><blockquote><p>好例子</p></blockquote><pre><code>var myGreatMixin = {  // ...  methods: {    $_myGreatMixin_update: function () {      // ...    }  }}</code></pre><h2 id="组件-实例的选项的顺序"><a href="#组件-实例的选项的顺序" class="headerlink" title="组件/实例的选项的顺序"></a>组件/实例的选项的顺序</h2><p>1.副作用 (触发组件外的影响)  </p><ul><li>el</li></ul><p>2.全局感知 (要求组件以外的知识)</p><ul><li>name</li><li>parent</li></ul><p>3.组件类型 (更改组件的类型)</p><ul><li>functional</li></ul><p>4.模板修改器 (改变模板的编译方式)  </p><ul><li>delimiters</li><li>comments</li></ul><p>5.模板依赖 (模板内使用的资源)  </p><ul><li>components</li><li>directives</li><li>filters</li></ul><p>6.组合 (向选项里合并属性)  </p><ul><li>extends</li><li>mixins</li></ul><p>7.接口 (组件的接口)  </p><ul><li>inheritAttrs</li><li>model</li><li>props/propsData</li></ul><p>8.本地状态 (本地的响应式属性)  </p><ul><li>data</li><li>computed</li></ul><p>9.事件 (通过响应式事件触发的回调)  </p><ul><li>watch</li><li>生命周期钩子 (按照它们被调用的顺序)</li></ul><p>10.非响应式的属性 (不依赖响应系统的实例属性)  </p><ul><li>methods</li></ul><p>11.渲染 (组件输出的声明式描述)  </p><ul><li>template/render</li><li>renderError</li></ul>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h2 id=&quot;组件名为多个单词&quot;&gt;&lt;a href=&quot;#组件名为多个单词&quot; class=&quot;headerlink&quot; title=&quot;组件名为多个单词&quot;&gt;&lt;/a&gt;组件名为多个单词&lt;/h2&gt;&lt;blockquote&gt;
+&lt;p&gt;好例子&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;pre&gt;&lt;code&gt;
+      
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>VueRouter-知识点总结</title>
+    <link href="https://nutter123.github.io/2018/03/14/VueRouter-%E7%9F%A5%E8%AF%86%E7%82%B9%E6%80%BB%E7%BB%93/"/>
+    <id>https://nutter123.github.io/2018/03/14/VueRouter-知识点总结/</id>
     <published>2018-03-14T02:03:54.000Z</published>
-    <updated>2018-03-14T03:32:49.311Z</updated>
+    <updated>2018-03-14T06:42:21.577Z</updated>
     
     <content type="html"><![CDATA[<h2 id="返回方法"><a href="#返回方法" class="headerlink" title="返回方法"></a>返回方法</h2><pre><code>goBack () {      window.history.length &gt; 1        ? this.$router.go(-1)        : this.$router.push(&apos;/&apos;)    }</code></pre><h2 id="编程式导航"><a href="#编程式导航" class="headerlink" title="编程式导航"></a>编程式导航</h2><blockquote><p>router.push(location, onComplete?, onAbort?)</p></blockquote><ul><li><p>字符串<br>router.push(‘home’)</p></li><li><p>对象<br>router.push({ path: ‘home’ })</p></li><li><p>命名的路由<br>router.push({ name: ‘user’, params: { userId: 123 }})</p></li><li><p>带查询参数，变成 /register?plan=private<br>router.push({ path: ‘register’, query: { plan: ‘private’ }})</p></li></ul><blockquote><p>router.replace(location, onComplete?, onAbort?)</p></blockquote><p>跟 router.push 很像，唯一的不同就是，它不会向 history 添加新记录，而是跟它的方法名一样 —— 替换掉当前的 history 记录。</p><blockquote><p>router.go(n)</p></blockquote><h2 id="重定向和别名"><a href="#重定向和别名" class="headerlink" title="重定向和别名"></a>重定向和别名</h2><blockquote><p>重定向</p></blockquote><pre><code>const router = new VueRouter({  routes: [    { path: &apos;/a&apos;, redirect: { name: &apos;foo&apos; }}  ]})</code></pre><blockquote><p>别名</p></blockquote><pre><code>const router = new VueRouter({  routes: [    { path: &apos;/a&apos;, component: A, alias: &apos;/b&apos; }  ]})</code></pre><p>『别名』的功能让你可以自由地将 UI 结构映射到任意的 URL，而不是受限于配置的嵌套路由结构。</p><h2 id="路由组件传参"><a href="#路由组件传参" class="headerlink" title="路由组件传参"></a>路由组件传参</h2><pre><code>const User = {  template: &apos;&lt;div&gt;User {{ $route.params.id }}&lt;/div&gt;&apos;}const router = new VueRouter({  routes: [    { path: &apos;/user/:id&apos;, component: User }  ]})</code></pre><p>使用 props 将组件和路由解耦：</p><pre><code>const User = {  props: [&apos;id&apos;],  template: &apos;&lt;div&gt;User {{ id }}&lt;/div&gt;&apos;}const router = new VueRouter({  routes: [    { path: &apos;/user/:id&apos;, component: User, props: true },    // 对于包含命名视图的路由，你必须分别为每个命名视图添加 `props` 选项：    {      path: &apos;/user/:id&apos;,      components: { default: User, sidebar: Sidebar },      props: { default: true, sidebar: false }    }  ]})</code></pre><h2 id="导航守卫"><a href="#导航守卫" class="headerlink" title="导航守卫"></a>导航守卫</h2><blockquote><p>heyapass限制登录权限例子</p></blockquote><pre><code>router.beforeEach((to, from, next) =&gt; {  if (cookie.getToken()) { // determine if there has token    /* has token*/    if (to.path === &apos;/login&apos;) {      next()    } else {      next()    }  } else {    /* has no token*/    if (whiteList.indexOf(to.path) !== -1) {      next(&apos;/login&apos;)      Message({        message: &apos;HEYAPASSのアカウントにログインしてください。&apos;,        type: &apos;error&apos;,        showClose:true      });    } else {      next() // 否则全部重定向到登录页    }  }})</code></pre><blockquote><p><strong>完整的导航解析流程</strong></p></blockquote><p>导航被触发。<br>在失活的组件里调用离开守卫。<br>调用全局的 beforeEach 守卫。<br>在重用的组件里调用 beforeRouteUpdate 守卫 (2.2+)。<br>在路由配置里调用 beforeEnter。<br>解析异步路由组件。<br>在被激活的组件里调用 beforeRouteEnter。<br>调用全局的 beforeResolve 守卫 (2.5+)。<br>导航被确认。<br>调用全局的 afterEach 钩子。<br>触发 DOM 更新。<br>用创建好的实例调用 beforeRouteEnter 守卫中传给 next 的回调函数。</p><h2 id="路由元信息-滚动行为"><a href="#路由元信息-滚动行为" class="headerlink" title="路由元信息/滚动行为"></a>路由元信息/滚动行为</h2><blockquote><p>heyapass采用路由元判断滚动行为</p></blockquote><pre><code>const scrollBehavior = (to, from, savedPosition) =&gt; {//vue-router滚动行为  if (savedPosition) {    // savedPosition is only available for popstate navigations.    return savedPosition  } else {    const position = {}    // new navigation.    // scroll to anchor by returning the selector    if (to.hash) {      position.selector = to.hash    }    // check if any matched route config has meta that requires scrolling to top    if (to.matched.some(m =&gt; m.meta.scrollToTop)) {      // cords will be used if no selector is provided,      // or if the selector didn&apos;t match any element.      position.x = 0      position.y = 0    }    // if the returned position is falsy or an empty object,    // will retain current scroll position.    return position  }}</code></pre><h2 id="过渡特效"><a href="#过渡特效" class="headerlink" title="过渡特效"></a>过渡特效</h2><pre><code>&lt;transition&gt;  &lt;router-view&gt;&lt;/router-view&gt;&lt;/transition&gt;</code></pre><h2 id="懒加载"><a href="#懒加载" class="headerlink" title="懒加载"></a>懒加载</h2><p>当打包构建应用时，Javascript 包会变得非常大，影响页面加载。如果我们能把不同路由对应的组件分割成不同的代码块，然后当路由被访问的时候才加载对应组件，这样就更加高效了。</p><pre><code>import Index from &apos;../page/index&apos;-&gt;const Index = () =&gt; import (&apos;../page/index&apos;);</code></pre>]]></content>
     
@@ -40,13 +64,13 @@
   </entry>
   
   <entry>
-    <title>vue知识点总结</title>
-    <link href="http://yoursite.com/2018/03/13/vue%E7%9F%A5%E8%AF%86%E7%82%B9%E6%80%BB%E7%BB%93/"/>
-    <id>http://yoursite.com/2018/03/13/vue知识点总结/</id>
+    <title>Vue-知识点总结</title>
+    <link href="https://nutter123.github.io/2018/03/13/Vue-%E7%9F%A5%E8%AF%86%E7%82%B9%E6%80%BB%E7%BB%93/"/>
+    <id>https://nutter123.github.io/2018/03/13/Vue-知识点总结/</id>
     <published>2018-03-13T09:27:05.000Z</published>
-    <updated>2018-03-14T06:18:23.477Z</updated>
+    <updated>2018-03-14T07:27:54.012Z</updated>
     
-    <content type="html"><![CDATA[<h2 id="计算属性和方法"><a href="#计算属性和方法" class="headerlink" title="计算属性和方法"></a>计算属性和方法</h2><blockquote><p>computed,watch 不应该使用箭头函数定义。</p></blockquote><h2 id="修饰符"><a href="#修饰符" class="headerlink" title="修饰符"></a>修饰符</h2><blockquote><p>v-model.lazy  在“change”时更新而非“input”</p><p>v-on:submit.prevent  提交事件不再重载页面</p><p>v-on:click.stop  阻止单击事件继续传播</p><p>v-on:keyup.enter  只在按下回车键时触发事件</p></blockquote><h2 id="生命周期总结"><a href="#生命周期总结" class="headerlink" title="生命周期总结"></a>生命周期总结</h2><blockquote><p>beforcreate: 可以加个loading事件</p><p>created:  结束loading，做些初始化，实现函数自执行</p><p>beforeDestroy:  你确定删除XX吗</p><p>destroyed:  当前组件已删除，清空相关内容</p></blockquote><h2 id="v-if和v-show的用法"><a href="#v-if和v-show的用法" class="headerlink" title="v-if和v-show的用法"></a>v-if和v-show的用法</h2><blockquote><p>v-if有更高的切换开销  </p></blockquote><p>使用v-if减少不必要的组件加载：v-if指令其实很有用处，它可以让我们项目中暂时不需要的组件不进行渲染，等需要用到的时候在渲染，比如某个弹窗组件等。这样我们可以减少页面首次加载的时间和文件量。</p><blockquote><p>v-show有更高的初始渲染开销</p></blockquote><p>如果需要非常频繁的切换则使用v-show,如果运行时条件是很少改变则使用v-if.</p><h2 id="插件使用"><a href="#插件使用" class="headerlink" title="插件使用"></a>插件使用</h2><p><img src="/2018/03/13/vue知识点总结/vue1.jpg" alt="图片"> </p><p>（一）全局使用</p><p>（1）在index.html引入：这样的方式不推荐使用，因为存在先后加载顺序的问题，有些插件不支持这一方式。 </p><p>（2）通过webpack配置文件引入：主要通过plugin配置项的webpack.ProvidePlugin()方法实现，不过只适合支持CommonJs规范并提供一个全局变量的插件，如jQuery中的$。</p><p>（3）通过import + Vue.use()引入：这种方式需要在全局.vue文件中import需要加载的插件，然后通过Vue.use(‘插件变量名’)来实现，不过此方法只支持遵循Vue.js插件编写规范的插件使用，如vue-resource。</p><p>（二）单文件使用  </p><p>（1）通过import直接引入：这种方式可以在需要调用插件的.vue文件中使用，不过需要注意和实例的创建顺序问题，或者也可以通过require引入。</p><p>（2）import + components注册：此方式为Vue组件的使用方式，可以在一个组件中注册并使用一个子组件。  </p>]]></content>
+    <content type="html"><![CDATA[<h2 id="计算属性和方法"><a href="#计算属性和方法" class="headerlink" title="计算属性和方法"></a>计算属性和方法</h2><blockquote><p>computed,watch 不应该使用箭头函数定义。</p></blockquote><h2 id="修饰符"><a href="#修饰符" class="headerlink" title="修饰符"></a>修饰符</h2><blockquote><p>v-model.lazy  在“change”时更新而非“input”</p><p>v-on:submit.prevent  提交事件不再重载页面</p><p>v-on:click.stop  阻止单击事件继续传播</p><p>v-on:keyup.enter  只在按下回车键时触发事件</p></blockquote><h2 id="生命周期总结"><a href="#生命周期总结" class="headerlink" title="生命周期总结"></a>生命周期总结</h2><blockquote><p>beforcreate: 可以加个loading事件</p><p>created:  结束loading，做些初始化，实现函数自执行</p><p>beforeDestroy:  你确定删除XX吗</p><p>destroyed:  当前组件已删除，清空相关内容</p></blockquote><h2 id="v-if和v-show的用法"><a href="#v-if和v-show的用法" class="headerlink" title="v-if和v-show的用法"></a>v-if和v-show的用法</h2><blockquote><p>v-if有更高的切换开销  </p></blockquote><p>使用v-if减少不必要的组件加载：v-if指令其实很有用处，它可以让我们项目中暂时不需要的组件不进行渲染，等需要用到的时候在渲染，比如某个弹窗组件等。这样我们可以减少页面首次加载的时间和文件量。</p><blockquote><p>v-show有更高的初始渲染开销</p></blockquote><p>如果需要非常频繁的切换则使用v-show,如果运行时条件是很少改变则使用v-if.</p><h2 id="插件使用"><a href="#插件使用" class="headerlink" title="插件使用"></a>插件使用</h2><p><img src="/2018/03/13/Vue-知识点总结/vue1.jpg" alt="图片"> </p><p>（一）全局使用</p><p>（1）在index.html引入：这样的方式不推荐使用，因为存在先后加载顺序的问题，有些插件不支持这一方式。 </p><p>（2）通过webpack配置文件引入：主要通过plugin配置项的webpack.ProvidePlugin()方法实现，不过只适合支持CommonJs规范并提供一个全局变量的插件，如jQuery中的$。</p><p>（3）通过import + Vue.use()引入：这种方式需要在全局.vue文件中import需要加载的插件，然后通过Vue.use(‘插件变量名’)来实现，不过此方法只支持遵循Vue.js插件编写规范的插件使用，如vue-resource。</p><p>（二）单文件使用  </p><p>（1）通过import直接引入：这种方式可以在需要调用插件的.vue文件中使用，不过需要注意和实例的创建顺序问题，或者也可以通过require引入。</p><p>（2）import + components注册：此方式为Vue组件的使用方式，可以在一个组件中注册并使用一个子组件。  </p>]]></content>
     
     <summary type="html">
     
@@ -63,11 +87,11 @@
   </entry>
   
   <entry>
-    <title>ES6知识点总结</title>
-    <link href="http://yoursite.com/2018/03/13/ES6%E7%9F%A5%E8%AF%86%E7%82%B9%E6%80%BB%E7%BB%93/"/>
-    <id>http://yoursite.com/2018/03/13/ES6知识点总结/</id>
+    <title>ES6-知识点总结</title>
+    <link href="https://nutter123.github.io/2018/03/13/ES6-%E7%9F%A5%E8%AF%86%E7%82%B9%E6%80%BB%E7%BB%93/"/>
+    <id>https://nutter123.github.io/2018/03/13/ES6-知识点总结/</id>
     <published>2018-03-13T02:03:01.000Z</published>
-    <updated>2018-03-14T03:46:01.556Z</updated>
+    <updated>2018-03-14T06:39:37.838Z</updated>
     
     <content type="html"><![CDATA[<h2 id="for…of和for…in"><a href="#for…of和for…in" class="headerlink" title="for…of和for…in"></a>for…of和for…in</h2><blockquote><p>for…of 语句遍历可迭代对象定义要迭代的数据。<br>for…in 语句以原始插入顺序迭代对象的可枚举属性。</p></blockquote><pre><code>Object.prototype.objCustom = function() {}; Array.prototype.arrCustom = function() {};let iterable = [3, 5, 7];iterable.foo = &apos;hello&apos;;for (let i in iterable) {  console.log(i); // logs 0, 1, 2, &quot;foo&quot;, &quot;arrCustom&quot;, &quot;objCustom&quot;}for (let i in iterable) {  if (iterable.hasOwnProperty(i)) {    console.log(i); // logs 0, 1, 2, &quot;foo&quot;  }}for (let i of iterable) {  console.log(i); // logs 3, 5, 7}</code></pre><h2 id="箭头函数"><a href="#箭头函数" class="headerlink" title="箭头函数"></a>箭头函数</h2><p>箭头函数表达式的语法比函数表达式更短，并且<strong>不绑定自己的this，arguments，super或 new.target。</strong>这些函数表达式最适合用于<strong>非方法函数</strong>，并且它们不能用作构造函数。  </p><p>在箭头函数出现之前，每个新定义的函数都有它自己的 this值（在构造函数的情况下是一个新对象，在严格模式的函数调用中为 undefined，如果该函数被称为“对象方法”则为基础对象等）。This被证明是令人厌烦的面向对象风格的编程。</p><pre><code>function Person() {  // Person() 构造函数定义 `this`作为它自己的实例.  this.age = 0;  setInterval(function growUp() {    // 在非严格模式, growUp()函数定义 `this`作为全局对象,     // 与在 Person()构造函数中定义的 `this`并不相同.    this.age++;  }, 1000);}var p = new Person();</code></pre><p>在ECMAScript 3/5中，通过将this值分配给封闭的变量，可以解决this问题。</p><pre><code>function Person() {  var that = this;  that.age = 0;  setInterval(function growUp() {    //  回调引用的是`that`变量, 其值是预期的对象.     that.age++;  }, 1000);}</code></pre><p>或者，可以创建绑定函数，以便将预先分配的this值传递到绑定的目标函数（上述示例中的growUp()函数）。</p><p>箭头函数不会创建自己的this；它使用封闭执行上下文的this值。因此，在下面的代码中，传递给setInterval的函数内的this与封闭函数中的this值相同：</p><pre><code>function Person(){  this.age = 0;  setInterval(() =&gt; {    this.age++; // |this| 正确地指向person 对象  }, 1000);}var p = new Person();</code></pre><h2 id="技巧"><a href="#技巧" class="headerlink" title="技巧 "></a>技巧 </h2><blockquote><p>最快捷的数组求最大值 <strong>Math.max(…arr)</strong></p><p>最短的数组去重写法 <strong>[…new Set([2,”12”,2,12,1,2,5])]</strong></p></blockquote>]]></content>
     
@@ -85,13 +109,13 @@
   </entry>
   
   <entry>
-    <title>hexo加载图片</title>
-    <link href="http://yoursite.com/2018/03/12/hexo%E5%8A%A0%E8%BD%BD%E5%9B%BE%E7%89%87/"/>
-    <id>http://yoursite.com/2018/03/12/hexo加载图片/</id>
+    <title>Hexo-加载图片</title>
+    <link href="https://nutter123.github.io/2018/03/12/Hexo-%E5%8A%A0%E8%BD%BD%E5%9B%BE%E7%89%87/"/>
+    <id>https://nutter123.github.io/2018/03/12/Hexo-加载图片/</id>
     <published>2018-03-12T07:09:59.000Z</published>
-    <updated>2018-03-13T07:28:59.703Z</updated>
+    <updated>2018-03-14T07:27:54.002Z</updated>
     
-    <content type="html"><![CDATA[<blockquote><p>使用命令 <strong>npm install <a href="https://github.com/CodeFalling/hexo-asset-image" target="_blank" rel="noopener">https://github.com/CodeFalling/hexo-asset-image</a> –save</strong> 下载插件</p><p>确认_config.yml 中有 post_asset_folder:true(<em>当设置post_asset_folder为true参数后，在建立文件时，Hexo会自动建立一个与文章同名的文件夹，您可以把与该文章相关的所有资源都放到那个文件夹，如此一来，您便可以更方便的使用资源</em>)    </p></blockquote><pre><code>![图片](hexo加载图片/logo.png) </code></pre><p><img src="/2018/03/12/hexo加载图片/logo.png" alt="图片"></p>]]></content>
+    <content type="html"><![CDATA[<blockquote><p>使用命令 <strong>npm install <a href="https://github.com/CodeFalling/hexo-asset-image" target="_blank" rel="noopener">https://github.com/CodeFalling/hexo-asset-image</a> –save</strong> 下载插件</p><p>确认_config.yml 中有 post_asset_folder:true(<em>当设置post_asset_folder为true参数后，在建立文件时，Hexo会自动建立一个与文章同名的文件夹，您可以把与该文章相关的所有资源都放到那个文件夹，如此一来，您便可以更方便的使用资源</em>)    </p></blockquote><pre><code>![图片](hexo加载图片/logo.png) </code></pre><p><img src="/2018/03/12/Hexo-加载图片/logo.png" alt="图片"></p>]]></content>
     
     <summary type="html">
     
@@ -107,11 +131,11 @@
   </entry>
   
   <entry>
-    <title>hexo问题总结</title>
-    <link href="http://yoursite.com/2018/03/12/hexo%E9%97%AE%E9%A2%98%E6%80%BB%E7%BB%93/"/>
-    <id>http://yoursite.com/2018/03/12/hexo问题总结/</id>
+    <title>Hexo-问题总结</title>
+    <link href="https://nutter123.github.io/2018/03/12/Hexo-%E9%97%AE%E9%A2%98%E6%80%BB%E7%BB%93/"/>
+    <id>https://nutter123.github.io/2018/03/12/Hexo-问题总结/</id>
     <published>2018-03-12T06:38:12.000Z</published>
-    <updated>2018-03-13T07:03:59.358Z</updated>
+    <updated>2018-03-14T06:40:28.999Z</updated>
     
     <content type="html"><![CDATA[<h1 id="一-环境搭建问题"><a href="#一-环境搭建问题" class="headerlink" title="一.环境搭建问题"></a>一.环境搭建问题</h1><h2 id="1-安装node-js"><a href="#1-安装node-js" class="headerlink" title="1.安装node.js"></a>1.安装node.js</h2><h2 id="2-安装git"><a href="#2-安装git" class="headerlink" title="2.安装git"></a>2.安装git</h2><pre><code>配置账户$ git config --global user.name “your_username” #设置用户名$ git config --global user.email “your_registered_github_Email” #设置邮箱地址(建议用注册giuhub的邮箱)  关联远程库$ git remote add origin git@github.com:nutter123/nutter123.github.io.git</code></pre><h2 id="3-创建github新远程库"><a href="#3-创建github新远程库" class="headerlink" title="3.创建github新远程库"></a>3.创建github新远程库</h2><blockquote><p>在添加远程库时，由于本地之前已经添加了公司的远程库，在重新注册了账户之后，公司远程由于输错了密码一直无法提交代码。<br>解决方法：<br>进入控制面板\所有控制面板项\凭据管理器中  将windows凭据中找到公司远程库，删除信息</p></blockquote><h1 id="二-hexo命令"><a href="#二-hexo命令" class="headerlink" title="二.hexo命令"></a>二.hexo命令</h1><blockquote><p>hexo init  –初始化hexo环境,这时会在目录下自动生成hexo的文件<br>hexo generate –生成静态页面<br>hexo server –生成本地服务(hexo s –debug 调试模式)<br>hexo deploy –部署我们的个人博客<br>hexo clean –清除缓存  </p></blockquote><pre><code>每次部署步骤：hexo new &quot;hello word&quot;hexo clean hexo g hexo d</code></pre><h1 id="三-连接本地和GitHub"><a href="#三-连接本地和GitHub" class="headerlink" title="三.连接本地和GitHub"></a>三.连接本地和GitHub</h1><blockquote><p>打开_config.yml进行编辑,翻到文件最下方，将deploy的选项改成以下的形式，并将yournmae修改为你自己的名称:</p></blockquote><pre><code>deploy:type: gitrepo: git@github.com:yourname/yourname.github.io.gitbranch: master </code></pre><blockquote><p>然后在GitBash中执行</p></blockquote><pre><code>npm install hexo-deployer-git --save</code></pre><blockquote><p>最后执行 hexo deploy</p></blockquote>]]></content>
     
@@ -125,14 +149,14 @@
     </summary>
     
     
-      <category term="hexo" scheme="http://yoursite.com/tags/hexo/"/>
+      <category term="hexo" scheme="https://nutter123.github.io/tags/hexo/"/>
     
   </entry>
   
   <entry>
     <title>JS基础知识点-函数</title>
-    <link href="http://yoursite.com/2018/03/12/JS%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86%E7%82%B9_%E5%87%BD%E6%95%B0/"/>
-    <id>http://yoursite.com/2018/03/12/JS基础知识点_函数/</id>
+    <link href="https://nutter123.github.io/2018/03/12/JS%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86%E7%82%B9_%E5%87%BD%E6%95%B0/"/>
+    <id>https://nutter123.github.io/2018/03/12/JS基础知识点_函数/</id>
     <published>2018-03-12T06:22:07.000Z</published>
     <updated>2018-03-14T03:46:42.821Z</updated>
     
@@ -152,8 +176,8 @@
   
   <entry>
     <title>JS基础知识点-字符串</title>
-    <link href="http://yoursite.com/2018/03/11/JS%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86%E7%82%B9_%E5%AD%97%E7%AC%A6%E4%B8%B2/"/>
-    <id>http://yoursite.com/2018/03/11/JS基础知识点_字符串/</id>
+    <link href="https://nutter123.github.io/2018/03/11/JS%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86%E7%82%B9_%E5%AD%97%E7%AC%A6%E4%B8%B2/"/>
+    <id>https://nutter123.github.io/2018/03/11/JS基础知识点_字符串/</id>
     <published>2018-03-11T06:22:07.000Z</published>
     <updated>2018-03-14T03:47:21.844Z</updated>
     
@@ -173,8 +197,8 @@
   
   <entry>
     <title>JS基础知识点-数组</title>
-    <link href="http://yoursite.com/2018/03/10/JS%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86%E7%82%B9_%E6%95%B0%E7%BB%84/"/>
-    <id>http://yoursite.com/2018/03/10/JS基础知识点_数组/</id>
+    <link href="https://nutter123.github.io/2018/03/10/JS%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86%E7%82%B9_%E6%95%B0%E7%BB%84/"/>
+    <id>https://nutter123.github.io/2018/03/10/JS基础知识点_数组/</id>
     <published>2018-03-10T06:22:07.000Z</published>
     <updated>2018-03-14T03:47:21.836Z</updated>
     
@@ -194,8 +218,8 @@
   
   <entry>
     <title>JS基础知识点-数据类型</title>
-    <link href="http://yoursite.com/2018/03/09/JS%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86%E7%82%B9_%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/"/>
-    <id>http://yoursite.com/2018/03/09/JS基础知识点_数据类型/</id>
+    <link href="https://nutter123.github.io/2018/03/09/JS%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86%E7%82%B9_%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/"/>
+    <id>https://nutter123.github.io/2018/03/09/JS基础知识点_数据类型/</id>
     <published>2018-03-09T06:21:07.000Z</published>
     <updated>2018-03-14T03:47:21.819Z</updated>
     
@@ -216,11 +240,11 @@
   </entry>
   
   <entry>
-    <title>SASS知识点总结</title>
-    <link href="http://yoursite.com/2018/03/06/SASS%E7%9F%A5%E8%AF%86%E7%82%B9%E6%80%BB%E7%BB%93/"/>
-    <id>http://yoursite.com/2018/03/06/SASS知识点总结/</id>
+    <title>SASS-知识点总结</title>
+    <link href="https://nutter123.github.io/2018/03/06/SASS-%E7%9F%A5%E8%AF%86%E7%82%B9%E6%80%BB%E7%BB%93/"/>
+    <id>https://nutter123.github.io/2018/03/06/SASS-知识点总结/</id>
     <published>2018-03-06T01:32:27.000Z</published>
-    <updated>2018-03-14T03:48:30.562Z</updated>
+    <updated>2018-03-14T06:42:21.528Z</updated>
     
     <content type="html"><![CDATA[<h2 id="变量"><a href="#变量" class="headerlink" title="变量"></a>变量</h2><p>变量支持块级作用域，嵌套规则内定义的变量只能在嵌套规则内使用（局部变量），不在嵌套规则内定义的变量则可在任何地方使用（全局变量）。将局部变量转换为全局变量可以添加 !global 声明：</p><pre><code>#main {  $width: 5em !global;  width: $width;}#sidebar {  width: $width;}</code></pre><p>编译为</p><pre><code>#main {  width: 5em;}#sidebar {  width: 5em;}</code></pre><h2 id="继承"><a href="#继承" class="headerlink" title="继承"></a>继承</h2><p>在设计网页的时候常常遇到这种情况：一个元素使用的样式与另一个元素完全相同，但又添加了额外的样式。通常会在 HTML 中给元素定义两个 class，一个通用样式，一个特殊样式。假设现在要设计一个普通错误样式与一个严重错误样式，一般会这样写：</p><pre><code>.error {  border: 1px #f00;  background-color: #fdd;}.seriousError {  @extend .error;  border-width: 3px;}</code></pre><h2 id="Mixin"><a href="#Mixin" class="headerlink" title="Mixin"></a>Mixin</h2><p>混合指令（Mixin）用于定义可重复使用的样式，避免了使用无语意的 class，比如 .float-left。混合指令可以包含所有的 CSS 规则，绝大部分 Sass 规则，甚至通过参数功能引入变量，输出多样化的样式。</p><blockquote><p>混合指令的用法是在 @mixin 后添加名称与样式，比如名为 large-text 的混合通过下面的代码定义：</p></blockquote><pre><code>@mixin large-text {  font: {    family: Arial;    size: 20px;    weight: bold;  }  color: #ff0000;}</code></pre><blockquote><p>混合也需要包含选择器和属性，甚至可以用 &amp; 引用父选择器：</p></blockquote><pre><code>@mixin clearfix {  display: inline-block;  &amp;:after {    content: &quot;.&quot;;    display: block;    height: 0;    clear: both;    visibility: hidden;  }  * html &amp; { height: 1px }}</code></pre><blockquote><p>使用 @include 指令引用混合样式，格式是在其后添加混合名称，以及需要的参数（可选）：</p></blockquote><pre><code>.page-title {  @include large-text;  padding: 4px;  margin-top: 10px;}</code></pre><h2 id="对比extend和include"><a href="#对比extend和include" class="headerlink" title="对比extend和include"></a>对比extend和include</h2><blockquote><p>3.2版本后，选择器占位符%placeholder能解决继承中的缺点。使用(%)开始，而且编译出来的CSS代码中并不会包括%placeholder规则中的样式，除非是通过@extend对其进行调用。</p></blockquote><pre><code>%icon {  transition: background-color ease .2s;  margin: 0 .5em;}.error-icon {  @extend %icon;  /*错误图标指定的样式... */}.info-icon {  @extend %icon;  /* 信息图标指定的样式... */}</code></pre><p>编译出的CSS:</p><pre><code>.error-icon, .info-icon {  transition: background-color ease .2s;  margin: 0 .5em;}.error-icon {  /*错误图标指定的样式... */}.info-icon {  /* 信息图标指定的样式... */}</code></pre><blockquote><p>使用@mixin .icon来实现上面示例的效果：</p></blockquote><pre><code>@mixin icon {  transition: background-color ease .2s;  margin: 0 .5em;}.error-icon {  @include icon;  /*错误图标指定的样式... */}.info-icon {  @include icon;  /* 信息图标指定的样式... */}</code></pre><p> 编译出来的CSS：</p><pre><code>.error-icon {  transition: background-color ease .2s;  margin: 0 .5em;  /*错误图标指定的样式... */}.info-icon {  transition: background-color ease .2s;  margin: 0 .5em;  /* 信息图标指定的样式... */}</code></pre><blockquote><p>使用@extend调用定义好的选择器占位符%placeholder有所限制，他不能在不同的@media中运行。<br>在某些情况下,@extend可以大大的减化你的CSS输出，并且显著的提高你的CSS性能。</p></blockquote><h2 id="压缩css"><a href="#压缩css" class="headerlink" title="压缩css"></a>压缩css</h2><blockquote><p><strong>sass-loader</strong> -&gt; 编译sass文件为css文件  </p><p><strong>css-loader</strong> -&gt; 编译css文件为字符串</p><p><strong>style-loader</strong> -&gt; 把css字符串打入html文件的style标签中。</p></blockquote>]]></content>
     
@@ -237,11 +261,11 @@
   </entry>
   
   <entry>
-    <title>laravel 环境搭建</title>
-    <link href="http://yoursite.com/2018/03/05/laravel-%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/"/>
-    <id>http://yoursite.com/2018/03/05/laravel-环境搭建/</id>
+    <title>Laravel-环境搭建</title>
+    <link href="https://nutter123.github.io/2018/03/05/Laravel-%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/"/>
+    <id>https://nutter123.github.io/2018/03/05/Laravel-环境搭建/</id>
     <published>2018-03-05T01:40:39.000Z</published>
-    <updated>2018-03-14T03:47:21.852Z</updated>
+    <updated>2018-03-14T06:41:35.164Z</updated>
     
     <content type="html"><![CDATA[<h2 id="php环境搭建"><a href="#php环境搭建" class="headerlink" title="php环境搭建"></a>php环境搭建</h2><p>1.安装phpStudy集成环境<br>2.打开需要安装vc运行库,下载安装<br>3.项目代码路径在 <strong>C:\phpStudy\PHPTutorial\WWW</strong><br>4.将php添加到系统环境变量- <strong>C:\phpStudy\PHPTutorial\php\php-7.2.1-nts\</strong></p><h2 id="laravel环境搭建"><a href="#laravel环境搭建" class="headerlink" title="laravel环境搭建"></a>laravel环境搭建</h2><p>1.安装 Composer  </p><blockquote><p>将<a href="https://getcomposer.org/download/" target="_blank" rel="noopener">composer.phar</a>下载到本地,粘贴到php.exe同级目录下<br>创建composer.bat文件，写入 <strong>@ECHO OFF php “%~dp0composer.phar” %*</strong><br>输入命令 composer -v 查看安装结果  </p></blockquote><p>2.安装laravel</p><blockquote><p>打开phpStudy-&gt;PHP扩展及设置-&gt;PHP扩展-&gt;php_openssl<br>输入命令 <strong>composer global require “laravel/installer=~1.1”</strong><br>在用户环境变量中将composer放入 <strong>C:\Users\viziner\AppData\Roaming\Composer\vendor\bin</strong><br>在 <strong>C:\phpStudy\PHPTutorial\WWW</strong> 目录中，运行命令行 <strong>laravel new blog</strong> 创建工程</p></blockquote>]]></content>
     
@@ -258,11 +282,11 @@
   </entry>
   
   <entry>
-    <title>Markdown示例</title>
-    <link href="http://yoursite.com/2018/03/01/Markdown%E7%A4%BA%E4%BE%8B/"/>
-    <id>http://yoursite.com/2018/03/01/Markdown示例/</id>
+    <title>Markdown示例教学</title>
+    <link href="https://nutter123.github.io/2018/03/01/Markdown%E7%A4%BA%E4%BE%8B%E6%95%99%E5%AD%A6/"/>
+    <id>https://nutter123.github.io/2018/03/01/Markdown示例教学/</id>
     <published>2018-03-01T06:02:46.000Z</published>
-    <updated>2018-03-14T03:47:21.808Z</updated>
+    <updated>2018-03-14T06:41:35.154Z</updated>
     
     <content type="html"><![CDATA[<h2 id="1-标题"><a href="#1-标题" class="headerlink" title="1.标题"></a>1.标题</h2><pre><code>大标题一般显示工程名,类似html的\&lt;h1\&gt;&lt;br /&gt;   你只要在标题下面跟上=====即可 </code></pre><hr><pre><code>中标题一般显示重点项,类似html的\&lt;h2\&gt;&lt;br /&gt;    你只要在标题下面输入------即可   </code></pre><hr><pre><code>小标题类似html的\&lt;h3\&gt;&lt;br /&gt;   小标题的格式如下 ### 小标题&lt;br /&gt;   注意#和标题字符中间要有空格#一级标题##二级标题###三级标题####四级标题#####五级标题######六级标题   </code></pre><h2 id="2-文本框"><a href="#2-文本框" class="headerlink" title="2.文本框"></a>2.文本框</h2><pre><code>单行文本框   这是一个单行的文本框,只要两个Tab再输入文字即可   </code></pre><hr><pre><code>多行文本框     这是一个有多行的文本框   你可以写入代码等,每行文字只要输入两个Tab再输入文字即可   这里你可以输入一段代码   </code></pre><h3 id="比如我们可以在多行文本框里输入一段代码"><a href="#比如我们可以在多行文本框里输入一段代码" class="headerlink" title="比如我们可以在多行文本框里输入一段代码"></a>比如我们可以在多行文本框里输入一段代码</h3><pre><code>function main(){    console.log(&apos;helloword&apos;);};</code></pre><h2 id="3-文字"><a href="#3-文字" class="headerlink" title="3.文字"></a>3.文字</h2><pre><code>*斜体文本*    _斜体文本_**粗体文本**    __粗体文本__***粗斜体文本***    ___粗斜体文本___</code></pre><p><em>斜体文本</em>    <em>斜体文本</em><br><strong>粗体文本</strong>    <strong>粗体文本</strong><br><strong><em>粗斜体文本</em></strong>    <strong><em>粗斜体文本</em></strong></p><h2 id="4-链接"><a href="#4-链接" class="headerlink" title="4.链接"></a>4.链接</h2><pre><code>链接   [点击这里你可以链接到www.baidu.com](http://www.baidu.com)&lt;br /&gt;     </code></pre><hr><pre><code>只是显示图片   ![github](http://github.com/unicorn.png &quot;github&quot;)   </code></pre><hr><pre><code>想点击某个图片进入一个网页,比如我想点击github的icorn然后再进入www.github.com   [![image]](http://www.github.com/)   [image]: http://github.com/github.png &quot;github&quot;  </code></pre><h2 id="5-字符包围"><a href="#5-字符包围" class="headerlink" title="5.字符包围"></a>5.字符包围</h2><h3 id="文字被些字符包围-多重包围"><a href="#文字被些字符包围-多重包围" class="headerlink" title="文字被些字符包围,多重包围"></a>文字被些字符包围,多重包围</h3><pre><code>&gt; 文字被些字符包围开始   &gt;   &gt; &gt; 只要再文字前面加上&gt;空格即可   &gt;   &gt;  &gt; &gt; 如果你要换行的话,新起一行,输入&gt;空格即可,后面不接文字   &gt;   &gt; &gt; &gt; &gt; 但&gt; 只能放在行首才有效   </code></pre><blockquote><p>文字被些字符包围开始   </p><blockquote><p>只要再文字前面加上&gt;空格即可   </p><blockquote><p>如果你要换行的话,新起一行,输入&gt;空格即可,后面不接文字   </p><blockquote><p>但&gt; 只能放在行首才有效   </p></blockquote></blockquote></blockquote></blockquote><h2 id="6-特殊字符处理"><a href="#6-特殊字符处理" class="headerlink" title="6.特殊字符处理"></a>6.特殊字符处理</h2><p>有一些特殊字符如&lt;,#等,只要在特殊字符前面加上转义字符\即可<br><br>你想换行的话其实可以直接用html标签\<br \=""></p><h2 id="7-换行"><a href="#7-换行" class="headerlink" title="7.换行"></a>7.换行</h2><pre><code>在当前行的结尾加 2 个空格  这行就会新起一行如果是要起一个新段落，只需要空出一行即可。</code></pre><h2 id="8-列表"><a href="#8-列表" class="headerlink" title="8.列表"></a>8.列表</h2><pre><code>1. 列出所有元素：    - 无序列表元素 A        1. 元素 A 的有序子列表    - 前面加四个空格2. 列表里的多段换行：    前面必须加四个空格，    这样换行，整体的格式不会乱3. 列表里引用：    &gt; 前面空一行    &gt; 仍然需要在 &gt;  前面加四个空格</code></pre><ol><li>列出所有元素：<ul><li>无序列表元素 A<ol><li>元素 A 的有序子列表</li></ol></li><li>前面加四个空格</li></ul></li><li>列表里的多段换行：<br> 前面必须加四个空格，<br> 这样换行，整体的格式不会乱</li><li><p>列表里引用：</p><blockquote><p>前面空一行<br>仍然需要在 &gt;  前面加四个空格</p></blockquote></li></ol><h2 id="9-主题自带标签"><a href="#9-主题自带标签" class="headerlink" title="9.主题自带标签"></a>9.主题自带标签</h2><blockquote><p>警告框</p></blockquote><pre><code>&lt;div class=&quot;tip&quot;&gt;    预处理器很强大，但它只是编写 CSS 的辅助工具。出于对扩展和维护等方面的考虑，在大型项目中有必要使用预处理器构建 CSS；但是对于小型项目，原生的 CSS 可能是一种更好的选择。不要肆意使用预处理器！&lt;/div&gt;</code></pre><div class="tip"><br>    预处理器很强大，但它只是编写 CSS 的辅助工具。出于对扩展和维护等方面的考虑，在大型项目中有必要使用预处理器构建 CSS；但是对于小型项目，原生的 CSS 可能是一种更好的选择。不要肆意使用预处理器！<br></div><hr><blockquote><p>展示文章的核心内容，文章摘要之后其他内容之前添加。</p></blockquote><pre><code>&lt;!-- more --&gt;</code></pre>]]></content>
     
@@ -280,20 +304,20 @@
   </entry>
   
   <entry>
-    <title>heyapass项目总结</title>
-    <link href="http://yoursite.com/2018/02/20/heyapass%E9%A1%B9%E7%9B%AE%E6%80%BB%E7%BB%93/"/>
-    <id>http://yoursite.com/2018/02/20/heyapass项目总结/</id>
+    <title>Heyapass-项目总结</title>
+    <link href="https://nutter123.github.io/2018/02/20/Heyapass-%E9%A1%B9%E7%9B%AE%E6%80%BB%E7%BB%93/"/>
+    <id>https://nutter123.github.io/2018/02/20/Heyapass-项目总结/</id>
     <published>2018-02-20T07:48:32.000Z</published>
-    <updated>2018-03-14T05:40:19.159Z</updated>
+    <updated>2018-03-14T07:28:31.578Z</updated>
     
-    <content type="html"><![CDATA[<p><img src="/2018/02/20/heyapass项目总结/1.png" alt="图片">  </p><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>去年十二月份开始实习到三月，从一个在学校里的菜鸡变成了菜鸟，经过一个项目的编写了解了前端的许多东西，结合vue文档充分理解了框架的一些基本用法。在此做个总结。</p><blockquote><p>项目理解的技术:</p></blockquote><p>对于数据的存储和传递<br>vue整体技术的实现</p><blockquote><p>之后需要掌握的技术:</p></blockquote><p>代码的编写规范<br>状态管理vuex的使用技巧<br>api返回值得处理<br>sass编写条理的css<br>webpack配置详细了解<br>vue插槽<strong>slot</strong>和混入的理解与使用  </p>]]></content>
+    <content type="html"><![CDATA[<p><img src="/2018/02/20/Heyapass-项目总结/1.png" alt="图片">  </p><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>去年十二月份开始实习到现在，从一个在学校里的菜鸡变成了菜鸟，经过一个项目的编写了解了前端的许多东西，结合vue文档充分理解了框架的一些基本用法。在此做个总结。</p><blockquote><p>项目理解的技术:</p></blockquote><p>对于数据的存储和传递<br>vue整体技术的实现</p><blockquote><p>之后需要掌握的技术:</p></blockquote><p>代码的编写规范<br>状态管理vuex的使用技巧<br>api返回值得处理<br>sass编写条理的css<br>webpack配置详细了解<br>vue插槽<strong>slot</strong>和混入的理解与使用  </p>]]></content>
     
     <summary type="html">
     
       
       
-        &lt;p&gt;&lt;img src=&quot;/2018/02/20/heyapass项目总结/1.png&quot; alt=&quot;图片&quot;&gt;  &lt;/p&gt;
-&lt;h2 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h2&gt;&lt;p&gt;去年十二月份开始实
+        &lt;p&gt;&lt;img src=&quot;/2018/02/20/Heyapass-项目总结/1.png&quot; alt=&quot;图片&quot;&gt;  &lt;/p&gt;
+&lt;h2 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h2&gt;&lt;p&gt;去年十二月份开始
       
     
     </summary>
@@ -303,8 +327,8 @@
   
   <entry>
     <title>前言</title>
-    <link href="http://yoursite.com/2018/02/02/first/"/>
-    <id>http://yoursite.com/2018/02/02/first/</id>
+    <link href="https://nutter123.github.io/2018/02/02/first/"/>
+    <id>https://nutter123.github.io/2018/02/02/first/</id>
     <published>2018-02-02T02:38:38.000Z</published>
     <updated>2018-03-12T07:46:46.249Z</updated>
     

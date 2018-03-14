@@ -1,0 +1,203 @@
+<!DOCTYPE html><html lang="cn"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><title> Vue-代码规范 · nutter</title><meta name="description" content="Vue-代码规范 - nutter"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="icon" href="/favicon.gif"><link rel="stylesheet" href="/css/apollo.css"><link rel="search" type="application/opensearchdescription+xml" href="https://nutter123.github.io/atom.xml" title="nutter"></head><body><div class="wrap"><header><a href="/" class="logo-link"><img src="/favicon.gif" alt="logo"></a><ul class="nav nav-list"><li class="nav-list-item"><a href="/" target="_self" class="nav-list-link">BLOG</a></li><li class="nav-list-item"><a href="/archives/" target="_self" class="nav-list-link">ARCHIVE</a></li><li class="nav-list-item"><a href="https://github.com/nutter123" target="_blank" class="nav-list-link">GITHUB</a></li><li class="nav-list-item"><a href="/atom.xml" target="_self" class="nav-list-link">RSS</a></li></ul></header><main class="container"><div class="post"><article class="post-block"><h1 class="post-title">Vue-代码规范</h1><div class="post-info">Mar 14, 2018</div><div class="post-content"><h2 id="组件名为多个单词"><a href="#组件名为多个单词" class="headerlink" title="组件名为多个单词"></a>组件名为多个单词</h2><blockquote>
+<p>好例子</p>
+</blockquote>
+<pre><code>Vue.component(&apos;todo-item&apos;, {
+  // ...
+})
+export default {
+  name: &apos;TodoItem&apos;,
+  // ...
+}
+</code></pre><h2 id="组件的-data-必须是一个函数。"><a href="#组件的-data-必须是一个函数。" class="headerlink" title="组件的 data 必须是一个函数。"></a>组件的 data 必须是一个函数。</h2><blockquote>
+<p>好例子</p>
+</blockquote>
+<pre><code>// In a .vue file
+export default {
+  data () {
+    return {
+      foo: &apos;bar&apos;
+    }
+  }
+}
+</code></pre><h2 id="Prop-定义应该尽量详细。"><a href="#Prop-定义应该尽量详细。" class="headerlink" title="Prop 定义应该尽量详细。"></a>Prop 定义应该尽量详细。</h2><blockquote>
+<p>好例子</p>
+</blockquote>
+<pre><code>props: {
+  status: String
+}
+</code></pre><p> 更好的做法！</p>
+<pre><code>props: {
+  status: {
+    type: String,
+    required: true,
+    validator: function (value) {
+      return [
+        &apos;syncing&apos;,
+        &apos;synced&apos;,
+        &apos;version-conflict&apos;,
+        &apos;error&apos;
+      ].indexOf(value) !== -1
+    }
+  }
+}
+</code></pre><h2 id="为-v-for-设置键值"><a href="#为-v-for-设置键值" class="headerlink" title="为 v-for 设置键值"></a>为 v-for 设置键值</h2><blockquote>
+<p>好例子</p>
+</blockquote>
+<pre><code>&lt;ul&gt;
+  &lt;li
+    v-for=&quot;todo in todos&quot;
+    :key=&quot;todo.id&quot;
+  &gt;
+    {{ todo.text }}
+  &lt;/li&gt;
+&lt;/ul&gt;
+</code></pre><h2 id="永远不要把-v-if-和-v-for-同时用在同一个元素上。"><a href="#永远不要把-v-if-和-v-for-同时用在同一个元素上。" class="headerlink" title="永远不要把 v-if 和 v-for 同时用在同一个元素上。"></a>永远不要把 v-if 和 v-for 同时用在同一个元素上。</h2><ul>
+<li><p>为了过滤一个列表中的项目 (比如 v-for=”user in users” v-if=”user.isActive”)。在这种情形下，请将 users 替换为一个计算属性 (比如 activeUsers)，让其返回过滤后的列表。  </p>
+</li>
+<li><p>为了避免渲染本应该被隐藏的列表 (比如 v-for=”user in users” v-if=”shouldShowUsers”)。这种情形下，请将 v-if 移动至容器元素上 (比如 ul, ol)。</p>
+</li>
+</ul>
+<blockquote>
+<p>好例子</p>
+</blockquote>
+<pre><code>&lt;ul&gt;
+  &lt;li
+    v-for=&quot;user in activeUsers&quot;
+    :key=&quot;user.id&quot;
+  &gt;
+    {{ user.name }}
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+
+&lt;ul v-if=&quot;shouldShowUsers&quot;&gt;
+  &lt;li
+    v-for=&quot;user in users&quot;
+    :key=&quot;user.id&quot;
+  &gt;
+    {{ user.name }}
+  &lt;/li&gt;
+&lt;/ul&gt;
+</code></pre><h2 id="为组件样式设置作用域"><a href="#为组件样式设置作用域" class="headerlink" title="为组件样式设置作用域"></a>为组件样式设置作用域</h2><blockquote>
+<p>好例子</p>
+</blockquote>
+<pre><code>&lt;template&gt;
+  &lt;button class=&quot;button button-close&quot;&gt;X&lt;/button&gt;
+&lt;/template&gt;
+
+&lt;!-- 使用 `scoped` 特性 --&gt;
+&lt;style scoped&gt;
+.button {
+  border: none;
+  border-radius: 2px;
+}
+
+.button-close {
+  background-color: red;
+}
+&lt;/style&gt;
+</code></pre><hr>
+<pre><code>&lt;template&gt;
+  &lt;button :class=&quot;[$style.button, $style.buttonClose]&quot;&gt;X&lt;/button&gt;
+&lt;/template&gt;
+
+&lt;!-- 使用 CSS Modules --&gt;
+&lt;style module&gt;
+.button {
+  border: none;
+  border-radius: 2px;
+}
+
+.buttonClose {
+  background-color: red;
+}
+&lt;/style&gt;
+</code></pre><hr>
+<pre><code>&lt;template&gt;
+  &lt;button class=&quot;c-Button c-Button--close&quot;&gt;X&lt;/button&gt;
+&lt;/template&gt;
+
+&lt;!-- 使用 BEM 约定 --&gt;
+&lt;style&gt;
+.c-Button {
+  border: none;
+  border-radius: 2px;
+}
+
+.c-Button--close {
+  background-color: red;
+}
+&lt;/style&gt;
+</code></pre><h2 id="私有属性名"><a href="#私有属性名" class="headerlink" title="私有属性名"></a>私有属性名</h2><p>在插件、混入等扩展中始终为自定义的私有属性使用 $_ 前缀。并附带一个命名空间以回避和其它作者的冲突 (比如 $<em>yourPluginName</em>)。</p>
+<blockquote>
+<p>Vue 使用 _ 前缀来定义其自身的私有属性，所以使用相同的前缀 (比如 _update) 有覆写实例属性的风险。即便你检查确认 Vue 当前版本没有用到这个属性名，也不能保证和将来的版本没有冲突。  </p>
+<p>对于 $ 前缀来说，其在 Vue 生态系统中的目的是暴露给用户的一个特殊的实例属性，所以把它用于私有属性并不合适。  </p>
+<p>不过，我们推荐把这两个前缀结合为 $_，作为一个用户定义的私有属性的约定，以确保不会和 Vue 自身相冲突。  </p>
+</blockquote>
+<hr>
+<blockquote>
+<p>好例子</p>
+</blockquote>
+<pre><code>var myGreatMixin = {
+  // ...
+  methods: {
+    $_myGreatMixin_update: function () {
+      // ...
+    }
+  }
+}
+</code></pre><h2 id="组件-实例的选项的顺序"><a href="#组件-实例的选项的顺序" class="headerlink" title="组件/实例的选项的顺序"></a>组件/实例的选项的顺序</h2><p>1.副作用 (触发组件外的影响)  </p>
+<ul>
+<li>el</li>
+</ul>
+<p>2.全局感知 (要求组件以外的知识)</p>
+<ul>
+<li>name</li>
+<li>parent</li>
+</ul>
+<p>3.组件类型 (更改组件的类型)</p>
+<ul>
+<li>functional</li>
+</ul>
+<p>4.模板修改器 (改变模板的编译方式)  </p>
+<ul>
+<li>delimiters</li>
+<li>comments</li>
+</ul>
+<p>5.模板依赖 (模板内使用的资源)  </p>
+<ul>
+<li>components</li>
+<li>directives</li>
+<li>filters</li>
+</ul>
+<p>6.组合 (向选项里合并属性)  </p>
+<ul>
+<li>extends</li>
+<li>mixins</li>
+</ul>
+<p>7.接口 (组件的接口)  </p>
+<ul>
+<li>inheritAttrs</li>
+<li>model</li>
+<li>props/propsData</li>
+</ul>
+<p>8.本地状态 (本地的响应式属性)  </p>
+<ul>
+<li>data</li>
+<li>computed</li>
+</ul>
+<p>9.事件 (通过响应式事件触发的回调)  </p>
+<ul>
+<li>watch</li>
+<li>生命周期钩子 (按照它们被调用的顺序)</li>
+</ul>
+<p>10.非响应式的属性 (不依赖响应系统的实例属性)  </p>
+<ul>
+<li>methods</li>
+</ul>
+<p>11.渲染 (组件输出的声明式描述)  </p>
+<ul>
+<li>template/render</li>
+<li>renderError</li>
+</ul>
+</div></article></div></main><footer><div class="paginator"><a href="/2018/03/14/VueRouter-知识点总结/" class="next">NEXT</a></div><div class="copyright"><p>© 2018 <a href="https://nutter123.github.io">nutter</a>, powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/pinggod/hexo-theme-apollo" target="_blank">hexo-theme-apollo</a>.</p></div></footer></div><script async src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML" integrity="sha384-crwIf/BuaWM9rM65iM+dWFldgQ1Un8jWZMuh3puxb8TOY9+linwLoI7ZHZT+aekW" crossorigin="anonymous"></script><script>(function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;e=o.createElement(i);r=o.getElementsByTagName(i)[0];e.src='//www.google-analytics.com/analytics.js';r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));ga('create',"UA-65933410-1",'auto');ga('send','pageview');</script></body></html>

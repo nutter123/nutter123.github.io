@@ -1,0 +1,32 @@
+<!DOCTYPE html><html lang="cn"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><title> Vue-知识点总结 · nutter</title><meta name="description" content="Vue-知识点总结 - nutter"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="icon" href="/favicon.gif"><link rel="stylesheet" href="/css/apollo.css"><link rel="search" type="application/opensearchdescription+xml" href="https://nutter123.github.io/atom.xml" title="nutter"></head><body><div class="wrap"><header><a href="/" class="logo-link"><img src="/favicon.gif" alt="logo"></a><ul class="nav nav-list"><li class="nav-list-item"><a href="/" target="_self" class="nav-list-link">BLOG</a></li><li class="nav-list-item"><a href="/archives/" target="_self" class="nav-list-link">ARCHIVE</a></li><li class="nav-list-item"><a href="https://github.com/nutter123" target="_blank" class="nav-list-link">GITHUB</a></li><li class="nav-list-item"><a href="/atom.xml" target="_self" class="nav-list-link">RSS</a></li></ul></header><main class="container"><div class="post"><article class="post-block"><h1 class="post-title">Vue-知识点总结</h1><div class="post-info">Mar 13, 2018</div><div class="post-content"><h2 id="计算属性和方法"><a href="#计算属性和方法" class="headerlink" title="计算属性和方法"></a>计算属性和方法</h2><blockquote>
+<p>computed,watch 不应该使用箭头函数定义。</p>
+</blockquote>
+<h2 id="修饰符"><a href="#修饰符" class="headerlink" title="修饰符"></a>修饰符</h2><blockquote>
+<p>v-model.lazy  在“change”时更新而非“input”</p>
+<p>v-on:submit.prevent  提交事件不再重载页面</p>
+<p>v-on:click.stop  阻止单击事件继续传播</p>
+<p>v-on:keyup.enter  只在按下回车键时触发事件</p>
+</blockquote>
+<h2 id="生命周期总结"><a href="#生命周期总结" class="headerlink" title="生命周期总结"></a>生命周期总结</h2><blockquote>
+<p>beforcreate: 可以加个loading事件</p>
+<p>created:  结束loading，做些初始化，实现函数自执行</p>
+<p>beforeDestroy:  你确定删除XX吗</p>
+<p>destroyed:  当前组件已删除，清空相关内容</p>
+</blockquote>
+<h2 id="v-if和v-show的用法"><a href="#v-if和v-show的用法" class="headerlink" title="v-if和v-show的用法"></a>v-if和v-show的用法</h2><blockquote>
+<p>v-if有更高的切换开销  </p>
+</blockquote>
+<p>使用v-if减少不必要的组件加载：v-if指令其实很有用处，它可以让我们项目中暂时不需要的组件不进行渲染，等需要用到的时候在渲染，比如某个弹窗组件等。这样我们可以减少页面首次加载的时间和文件量。</p>
+<blockquote>
+<p>v-show有更高的初始渲染开销</p>
+</blockquote>
+<p>如果需要非常频繁的切换则使用v-show,如果运行时条件是很少改变则使用v-if.</p>
+<h2 id="插件使用"><a href="#插件使用" class="headerlink" title="插件使用"></a>插件使用</h2><p><img src="/2018/03/13/Vue-知识点总结/vue1.jpg" alt="图片"> </p>
+<p>（一）全局使用</p>
+<p>（1）在index.html引入：这样的方式不推荐使用，因为存在先后加载顺序的问题，有些插件不支持这一方式。 </p>
+<p>（2）通过webpack配置文件引入：主要通过plugin配置项的webpack.ProvidePlugin()方法实现，不过只适合支持CommonJs规范并提供一个全局变量的插件，如jQuery中的$。</p>
+<p>（3）通过import + Vue.use()引入：这种方式需要在全局.vue文件中import需要加载的插件，然后通过Vue.use(‘插件变量名’)来实现，不过此方法只支持遵循Vue.js插件编写规范的插件使用，如vue-resource。</p>
+<p>（二）单文件使用  </p>
+<p>（1）通过import直接引入：这种方式可以在需要调用插件的.vue文件中使用，不过需要注意和实例的创建顺序问题，或者也可以通过require引入。</p>
+<p>（2）import + components注册：此方式为Vue组件的使用方式，可以在一个组件中注册并使用一个子组件。  </p>
+</div></article></div></main><footer><div class="paginator"><a href="/2018/03/14/VueRouter-知识点总结/" class="prev">PREV</a><a href="/2018/03/13/ES6-知识点总结/" class="next">NEXT</a></div><div class="copyright"><p>© 2018 <a href="https://nutter123.github.io">nutter</a>, powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/pinggod/hexo-theme-apollo" target="_blank">hexo-theme-apollo</a>.</p></div></footer></div><script async src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML" integrity="sha384-crwIf/BuaWM9rM65iM+dWFldgQ1Un8jWZMuh3puxb8TOY9+linwLoI7ZHZT+aekW" crossorigin="anonymous"></script><script>(function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;e=o.createElement(i);r=o.getElementsByTagName(i)[0];e.src='//www.google-analytics.com/analytics.js';r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));ga('create',"UA-65933410-1",'auto');ga('send','pageview');</script></body></html>
