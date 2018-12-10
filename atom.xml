@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://nutter123.github.io/"/>
-  <updated>2018-12-10T08:07:48.925Z</updated>
+  <updated>2018-12-10T08:11:09.948Z</updated>
   <id>https://nutter123.github.io/</id>
   
   <author>
@@ -21,15 +21,15 @@
     <link href="https://nutter123.github.io/2018/12/10/%E5%B1%80%E5%9F%9F%E7%BD%91%E4%B8%8B%E5%85%B1%E4%BA%ABvue%E9%A1%B9%E7%9B%AE/"/>
     <id>https://nutter123.github.io/2018/12/10/局域网下共享vue项目/</id>
     <published>2018-12-10T07:59:33.000Z</published>
-    <updated>2018-12-10T08:07:48.925Z</updated>
+    <updated>2018-12-10T08:11:09.948Z</updated>
     
-    <content type="html"><![CDATA[<p>1.将vue项目下package文件中的 ‘run dev’ 命令添加 ‘–host 0.0.0.0’<br><img src="/2018/12/10/局域网下共享vue项目/1.png" alt="图片"><br>2.查看本地局域网ip<br><img src="/2018/12/10/局域网下共享vue项目/2.png" alt="图片"><br>3.关闭防火墙</p>]]></content>
+    <content type="html"><![CDATA[<h2 id="1-将vue项目下package文件中的-‘run-dev’-命令添加-‘–host-0-0-0-0’"><a href="#1-将vue项目下package文件中的-‘run-dev’-命令添加-‘–host-0-0-0-0’" class="headerlink" title="1.将vue项目下package文件中的 ‘run dev’ 命令添加 ‘–host 0.0.0.0’"></a>1.将vue项目下package文件中的 ‘run dev’ 命令添加 ‘–host 0.0.0.0’</h2><p><img src="/2018/12/10/局域网下共享vue项目/1.png" alt="图片"></p><h2 id="2-查看本地局域网ip"><a href="#2-查看本地局域网ip" class="headerlink" title="2.查看本地局域网ip"></a>2.查看本地局域网ip</h2><p><img src="/2018/12/10/局域网下共享vue项目/2.png" alt="图片"></p><h2 id="3-关闭防火墙"><a href="#3-关闭防火墙" class="headerlink" title="3.关闭防火墙"></a>3.关闭防火墙</h2>]]></content>
     
     <summary type="html">
     
       
       
-        &lt;p&gt;1.将vue项目下package文件中的 ‘run dev’ 命令添加 ‘–host 0.0.0.0’&lt;br&gt;&lt;img src=&quot;/2018/12/10/局域网下共享vue项目/1.png&quot; alt=&quot;图片&quot;&gt;&lt;br&gt;2.查看本地局域网ip&lt;br&gt;&lt;img src=&quot;/20
+        &lt;h2 id=&quot;1-将vue项目下package文件中的-‘run-dev’-命令添加-‘–host-0-0-0-0’&quot;&gt;&lt;a href=&quot;#1-将vue项目下package文件中的-‘run-dev’-命令添加-‘–host-0-0-0-0’&quot; class=&quot;headerlin
       
     
     </summary>
