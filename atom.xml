@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://nutter123.github.io/"/>
-  <updated>2019-04-18T02:27:01.503Z</updated>
+  <updated>2019-04-18T05:57:32.185Z</updated>
   <id>https://nutter123.github.io/</id>
   
   <author>
@@ -21,15 +21,15 @@
     <link href="https://nutter123.github.io/2019/04/18/%E8%99%9A%E6%8B%9FDOM%E5%92%8Cdiff%E7%AE%97%E6%B3%95/"/>
     <id>https://nutter123.github.io/2019/04/18/虚拟DOM和diff算法/</id>
     <published>2019-04-18T02:14:50.000Z</published>
-    <updated>2019-04-18T02:27:01.503Z</updated>
+    <updated>2019-04-18T05:57:32.185Z</updated>
     
-    <content type="html"><![CDATA[<h1 id="虚拟DOM"><a href="#虚拟DOM" class="headerlink" title="虚拟DOM"></a>虚拟DOM</h1><p>相对于DOM对象，原生的JavaScript对象处理起来更快，而且更简单，因此我们可以使用JavaScript对象来表示DOM树上的结构信息。</p><h3 id="JavaScript对象"><a href="#JavaScript对象" class="headerlink" title="JavaScript对象"></a>JavaScript对象</h3><p>   var element = {<br>     tagName: ‘ul’,<br>     props: {<br>       id: ‘list’<br>     },<br>     children: {<br>       {<br>         tagName: ‘li’,<br>         props: {<br>           class: ‘item’<br>         },<br>         children: [‘Item1’]<br>       },<br>       {<br>         tagName: ‘li’,<br>         props: {<br>           class: ‘item’<br>         },<br>         children: [‘Item1’]<br>       },<br>       {<br>         tagName: ‘li’,<br>         props: {<br>           class: ‘item’<br>         },<br>         children: [‘Item1’]<br>       }<br>     }<br>   }</p><p>上面对象使用html表示就是：</p><h3 id="HTML"><a href="#HTML" class="headerlink" title="HTML"></a>HTML</h3><pre><code>&lt;ul id=&apos;list&apos;&gt;  &lt;li class=&apos;item&apos;&gt;Item 1&lt;/li&gt;  &lt;li class=&apos;item&apos;&gt;Item 2&lt;/li&gt;  &lt;li class=&apos;item&apos;&gt;Item 3&lt;/li&gt;&lt;/ul&gt;</code></pre><p>Virtual DOM的本质就是在JS和DOM之间做一个缓存，可以类比CPU和硬盘，既然硬盘这么慢，我们就也在他们之间添加一个缓存； 既然DOM这么慢，我们就可以在JS和DOM之间添加一个缓存。 CPU（JS）只操作内存（虚拟DOM），最后的时候在把变更写入硬盘（DOM）。</p><h1 id="diff算法"><a href="#diff算法" class="headerlink" title="diff算法"></a>diff算法</h1><p>1.深度遍历优先，记录差异</p><p>在深度优先遍历的时候，每遍历到一个节点就把该节点和新的树进行对比，如果有差异的话就记录到一个对象里面。</p><p>2.差异类型</p><p>3.列表对比算法</p><p>4.把差异引用到真正的DOM树上</p>]]></content>
+    <content type="html"><![CDATA[<h2 id="虚拟DOM"><a href="#虚拟DOM" class="headerlink" title="虚拟DOM"></a>虚拟DOM</h2><p>相对于DOM对象，原生的JavaScript对象处理起来更快，而且更简单，因此我们可以使用JavaScript对象来表示DOM树上的结构信息。</p><h3 id="JavaScript对象"><a href="#JavaScript对象" class="headerlink" title="JavaScript对象"></a>JavaScript对象</h3><pre><code>var element = {    tagName: &apos;ul&apos;,    props: {        id: &apos;list&apos;    },    children: {        {            tagName: &apos;li&apos;,             props: {               class: &apos;item&apos;             },             children: [&apos;Item1&apos;]        },        {         tagName: &apos;li&apos;,         props: {           class: &apos;item&apos;         },         children: [&apos;Item1&apos;]        },        {         tagName: &apos;li&apos;,         props: {           class: &apos;item&apos;         },         children: [&apos;Item1&apos;]        }    }}</code></pre><p>上面对象使用html表示就是：</p><h3 id="HTML"><a href="#HTML" class="headerlink" title="HTML"></a>HTML</h3><pre><code>&lt;ul id=&apos;list&apos;&gt;  &lt;li class=&apos;item&apos;&gt;Item 1&lt;/li&gt;  &lt;li class=&apos;item&apos;&gt;Item 2&lt;/li&gt;  &lt;li class=&apos;item&apos;&gt;Item 3&lt;/li&gt;&lt;/ul&gt;</code></pre><p>Virtual DOM的本质就是在JS和DOM之间做一个缓存，可以类比CPU和硬盘，既然硬盘这么慢，我们就也在他们之间添加一个缓存； 既然DOM这么慢，我们就可以在JS和DOM之间添加一个缓存。 CPU（JS）只操作内存（虚拟DOM），最后的时候在把变更写入硬盘（DOM）。</p><h2 id="diff算法"><a href="#diff算法" class="headerlink" title="diff算法"></a>diff算法</h2><p>1.深度遍历优先，记录差异</p><p>在深度优先遍历的时候，每遍历到一个节点就把该节点和新的树进行对比，如果有差异的话就记录到一个对象里面。<br>2.差异类型<br>3.列表对比算法<br>4.把差异引用到真正的DOM树上</p>]]></content>
     
     <summary type="html">
     
       
       
-        &lt;h1 id=&quot;虚拟DOM&quot;&gt;&lt;a href=&quot;#虚拟DOM&quot; class=&quot;headerlink&quot; title=&quot;虚拟DOM&quot;&gt;&lt;/a&gt;虚拟DOM&lt;/h1&gt;&lt;p&gt;相对于DOM对象，原生的JavaScript对象处理起来更快，而且更简单，因此我们可以使用JavaScript对象来
+        &lt;h2 id=&quot;虚拟DOM&quot;&gt;&lt;a href=&quot;#虚拟DOM&quot; class=&quot;headerlink&quot; title=&quot;虚拟DOM&quot;&gt;&lt;/a&gt;虚拟DOM&lt;/h2&gt;&lt;p&gt;相对于DOM对象，原生的JavaScript对象处理起来更快，而且更简单，因此我们可以使用JavaScript对象来
       
     
     </summary>
@@ -42,15 +42,15 @@
     <link href="https://nutter123.github.io/2019/04/17/%E8%B7%A8%E5%9F%9F%E9%97%AE%E9%A2%98/"/>
     <id>https://nutter123.github.io/2019/04/17/跨域问题/</id>
     <published>2019-04-17T09:14:29.000Z</published>
-    <updated>2019-04-17T09:30:17.428Z</updated>
+    <updated>2019-04-18T05:57:32.198Z</updated>
     
-    <content type="html"><![CDATA[<h1 id="同源策略（Same-origin-policy）是一种约定，它是浏览器最核心也最基本的安全功能-分为以下两种："><a href="#同源策略（Same-origin-policy）是一种约定，它是浏览器最核心也最基本的安全功能-分为以下两种：" class="headerlink" title="同源策略（Same origin policy）是一种约定，它是浏览器最核心也最基本的安全功能,分为以下两种："></a>同源策略（Same origin policy）是一种约定，它是浏览器最核心也最基本的安全功能,分为以下两种：</h1><p>1.DOM 同源策略：禁止对不同源页面 DOM 进行操作。这里主要场景是 iframe 跨域的情况，不同域名的 iframe 是限制互相访问的。</p><p>2.XMLHttpRequest 同源策略：禁止使用 XHR 对象向不同源的服务器地址发起 HTTP 请求。</p><p>#解决方法：</p><p>1.CORS（跨域资源共享）</p><p>2.JSONP 跨域</p><p>3.图像 Ping 跨域</p><p>4.服务器代理</p><p>5.document.domain 跨域</p><p>6.window.name 跨域</p><p>7.location.hash 跨域</p><p>8.postMessage 跨域</p>]]></content>
+    <content type="html"><![CDATA[<h2 id="同源策略（Same-origin-policy）是一种约定，它是浏览器最核心也最基本的安全功能-分为以下两种："><a href="#同源策略（Same-origin-policy）是一种约定，它是浏览器最核心也最基本的安全功能-分为以下两种：" class="headerlink" title="同源策略（Same origin policy）是一种约定，它是浏览器最核心也最基本的安全功能,分为以下两种："></a>同源策略（Same origin policy）是一种约定，它是浏览器最核心也最基本的安全功能,分为以下两种：</h2><p>1.DOM 同源策略：禁止对不同源页面 DOM 进行操作。这里主要场景是 iframe 跨域的情况，不同域名的 iframe 是限制互相访问的。</p><p>2.XMLHttpRequest 同源策略：禁止使用 XHR 对象向不同源的服务器地址发起 HTTP 请求。</p><h2 id="解决方法："><a href="#解决方法：" class="headerlink" title="解决方法："></a>解决方法：</h2><p>1.CORS（跨域资源共享）</p><p>2.JSONP 跨域</p><p>3.图像 Ping 跨域</p><p>4.服务器代理</p><p>5.document.domain 跨域</p><p>6.window.name 跨域</p><p>7.location.hash 跨域</p><p>8.postMessage 跨域</p>]]></content>
     
     <summary type="html">
     
       
       
-        &lt;h1 id=&quot;同源策略（Same-origin-policy）是一种约定，它是浏览器最核心也最基本的安全功能-分为以下两种：&quot;&gt;&lt;a href=&quot;#同源策略（Same-origin-policy）是一种约定，它是浏览器最核心也最基本的安全功能-分为以下两种：&quot; class=&quot;h
+        &lt;h2 id=&quot;同源策略（Same-origin-policy）是一种约定，它是浏览器最核心也最基本的安全功能-分为以下两种：&quot;&gt;&lt;a href=&quot;#同源策略（Same-origin-policy）是一种约定，它是浏览器最核心也最基本的安全功能-分为以下两种：&quot; class=&quot;h
       
     
     </summary>
