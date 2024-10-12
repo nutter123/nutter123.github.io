@@ -1,9 +1,11 @@
 ---
 title: Hexo
-date: 2024-10-12 16:14:26
-tags: [hexo]
+date: 2018-02-12 16:14:26
+tags: [Hexo]
 toc: true
 ---
+
+Hexo 是基于 Node.js 的静态站点生成器,本文记录常用Hexo命令, 以及一些常用配置。
 
 <!-- more -->
 
@@ -47,7 +49,4 @@ hexo deploy
 
 # 更多
 
-- [Writing](https://hexo.io/docs/writing.html)
-- [Server](https://hexo.io/docs/server.html)
-- [Generating](https://hexo.io/docs/generating.html)
-- [Deployment](https://hexo.io/docs/one-command-deployment.html)
+- [Hexo文档](https://hexo.io/zh-cn/docs/index.html)

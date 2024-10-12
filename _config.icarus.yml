@@ -113,10 +113,12 @@ navbar:
         关于: /about
     # Links to be shown on the right of the navigation bar
     links:
-        Github: 'https://github.com/nutter123'
-        Download on GitHub:
+        Github:
             icon: fab fa-github
-            url: https://github.com/ppoffice/hexo-theme-icarus
+            url: 'https://github.com/nutter123'
+#        Download on GitHub:
+#            icon: fab fa-github
+#            url: https://github.com/ppoffice/hexo-theme-icarus
 # Page footer configurations
 footer:
     # Copyright text
@@ -217,7 +219,7 @@ sidebar:
     # Left sidebar configurations
     left:
         # Whether the sidebar sticks to the top when page scrolls
-        sticky: false
+        sticky: true
     # Right sidebar configurations
     right:
         # Whether the sidebar sticks to the top when page scrolls
@@ -258,14 +260,13 @@ widgets:
         # Maximum level of headings to show (1-6)
         depth: 3
     # Recommendation links widget configurations
-    -
-        # Where should the widget be placed, left sidebar or right sidebar
-        position: left
-        type: links
-        # Names and URLs of the sites
-        links:
-            Hexo: https://hexo.io
-            Bulma: https://bulma.io
+#    -
+#        # Where should the widget be placed, left sidebar or right sidebar
+#        position: left
+#        type: links
+#        # Names and URLs of the sites
+#        links:
+#            Hexo: https://hexo.io
     # Categories widget configurations
     -
         # Where should the widget be placed, left sidebar or right sidebar
@@ -350,17 +351,17 @@ plugins:
         web_id:
     # Alerting users about the use of cookies
     # https://www.osano.com/cookieconsent/
-    cookie_consent:
-        # The compliance type. Can be "info", "opt-in", or "opt-out"
-        type: info
-        # Theme of the popup. Can be "block", "edgeless", or "classic"
-        theme: edgeless
-        # Whether the popup should stay static regardless of the page scrolls
-        static: false
-        # Where on the screen the consent popup should display
-        position: bottom-left
-        # URL to your site's cookie policy
-        policyLink: https://www.cookiesandyou.com/
+#    cookie_consent:
+#        # The compliance type. Can be "info", "opt-in", or "opt-out"
+#        type: info
+#        # Theme of the popup. Can be "block", "edgeless", or "classic"
+#        theme: edgeless
+#        # Whether the popup should stay static regardless of the page scrolls
+#        static: false
+#        # Where on the screen the consent popup should display
+#        position: bottom-left
+#        # URL to your site's cookie policy
+#        policyLink: https://www.cookiesandyou.com/
     # Enable the lightGallery and Justified Gallery plugins
     gallery: true
     # Google Analytics plugin settings
@@ -404,6 +405,6 @@ providers:
     # Name or URL template of the JavaScript and/or stylesheet CDN provider
     cdn: jsdelivr
     # Name or URL template of the webfont CDN provider
-    fontcdn: google
+    fontcdn: ustc
     # Name or URL of the fontawesome icon font CDN provider
     iconcdn: fontawesome
