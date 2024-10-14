@@ -6,9 +6,8 @@ tags:
 - 前端bug
 categories:
 - 前端
-cover: /imgs/guiji1.png
-thumbnail: /imgs/guiji1.png
-toc: true
+cover: /imgs/img5.jpg
+thumbnail: /imgs/img5.jpg
 ---
 
 快递柜样式实行个性化定制,实现对柜机模板的增删改查，以便在网点柜机添加时能选择不同柜机模板。
