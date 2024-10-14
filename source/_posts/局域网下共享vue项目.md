@@ -1,7 +1,11 @@
 ---
 title: 局域网下共享vue项目
 date: 2018-12-10 15:18:26
-tags: [Vue]
+tags:
+  - Vue
+categories:
+  - 前端
+cover: /imgs/img7.jpg
 toc: true
 ---
 

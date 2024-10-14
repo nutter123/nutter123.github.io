@@ -1,7 +1,11 @@
 ---
 title: Hexo-问题总结
 date: 2018-03-12 14:14:26
-tags: [Hexo]
+tags:
+  - Hexo
+categories:
+  - 其他技术
+cover: /imgs/img3.jpg
 toc: true
 ---
 

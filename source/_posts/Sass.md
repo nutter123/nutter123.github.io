@@ -1,7 +1,11 @@
 ---
 title: Sass
 date: 2018-03-06 16:14:26
-tags: [Css]
+tags:
+  - Css
+categories:
+  - 前端
+cover: /imgs/img5.jpg
 toc: true
 ---
 

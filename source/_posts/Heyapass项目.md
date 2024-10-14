@@ -1,7 +1,11 @@
 ---
 title: Heyapass项目
 date: 2018-04-02 18:14:26
-tags: [项目]
+tags:
+- 项目
+categories:
+- 项目
+cover: /imgs/heyapass2.png
 toc: true
 ---
 

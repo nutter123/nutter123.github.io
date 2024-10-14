@@ -1,7 +1,11 @@
 ---
 title: icarus-Hexo主题
 date: 2018-02-12 16:30:28
-tags: [Hexo]
+tags:
+  - Hexo
+categories:
+  - 其他技术
+cover: /imgs/img2.jpg
 toc: true
 ---
 

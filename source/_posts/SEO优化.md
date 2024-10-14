@@ -1,7 +1,11 @@
 ---
 title: SEO优化
 date: 2019-04-17 15:18:26
-tags: [前端]
+tags:
+  - 前端优化
+categories:
+  - 前端
+cover: /imgs/img6.jpg
 toc: true
 ---
 

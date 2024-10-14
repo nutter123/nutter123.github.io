@@ -1,7 +1,11 @@
 ---
 title: Markdown
 date: 2018-03-01 16:14:26
-tags: [Markdown]
+tags:
+  - Markdown
+categories:
+  - 其他技术
+cover: /imgs/img4.jpg
 toc: true
 ---
 

@@ -1,7 +1,11 @@
 ---
 title: Yolulu项目
 date: 2018-11-16 18:14:26
-tags: [项目]
+tags: 
+- 项目
+categories:
+- 项目
+cover: /imgs/yolulu1.png
 toc: true
 ---
 

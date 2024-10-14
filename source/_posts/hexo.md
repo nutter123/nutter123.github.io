@@ -1,7 +1,11 @@
 ---
 title: Hexo
 date: 2018-02-12 16:14:26
-tags: [Hexo]
+tags:
+  - Hexo
+categories:
+  - 其他技术
+cover: /imgs/img1.jpg
 toc: true
 ---
 
