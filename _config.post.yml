@@ -1,0 +1,65 @@
+sidebar:
+    # Left sidebar configurations
+    left:
+        # Whether the sidebar sticks to the top when page scrolls
+        sticky: true
+    # Right sidebar configurations
+    right:
+        # Whether the sidebar sticks to the top when page scrolls
+        sticky: false
+# Sidebar widget configurations
+# http://ppoffice.github.io/hexo-theme-icarus/categories/Widgets/
+widgets:
+    - # Where should the widget be placed, left sidebar or right sidebar
+        position: left
+        type: profile
+        # Author name
+        author: 坚果
+        # Author title
+        author_title: 软件工程师
+        # Author's current location
+        location: 南宁
+        # URL or path to the avatar image
+        avatar: https://octodex.github.com/images/maxtocat.gif
+        # Whether show the rounded avatar image
+        avatar_rounded: false
+        # Email address for the Gravatar
+        gravatar:
+        # URL or path for the follow button
+        follow_link: https://github.com/nutter123
+        # Links to be shown on the bottom of the profile widget
+        social_links:
+    # Table of contents widget configurations
+    -
+        # Where should the widget be placed, left sidebar or right sidebar
+        position: left
+        type: toc
+        # Whether to show the index of each heading
+        index: true
+        # Whether to collapse sub-headings when they are out-of-view
+        collapsed: true
+        # Maximum level of headings to show (1-6)
+        depth: 3
+    # Recommendation links widget configurations
+    #    -
+    #        # Where should the widget be placed, left sidebar or right sidebar
+    #        position: left
+    #        type: links
+    #        # Names and URLs of the sites
+    #        links:
+    #            Hexo: https://hexo.io
+    # Categories widget configurations
+    -
+        # Where should the widget be placed, left sidebar or right sidebar
+        position: left
+        type: categories
+    # Tags widget configurations
+    - # Where should the widget be placed, left sidebar or right sidebar
+        position: left
+        type: tags
+        # How to order tags. For example 'name' to order by name in ascending order, and '-length' to order by number of posts in each tags in descending order
+        order_by: name
+        # Amount of tags to show. Will show all if not set.
+        amount: 20
+        # Whether to show tags count, i.e. number of posts in the tag.
+        show_count: true
