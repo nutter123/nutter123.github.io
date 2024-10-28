@@ -5,6 +5,16 @@
 1. hexo
 2. icarus
 
+## 命令
+
+```bash
+hexo new "新文章"
+```
+
+- 发布通过git提交到github,触发github action自动部署
+
+```bash
+
 ## 分类
 ```markdown
 categories:
